@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 const RootLayouts = () => {
 	return (
-		<div className="container mx-auto">
+		<div className="">
 			<Navbar />
 			<Outlet />
 		</div>

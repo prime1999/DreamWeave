@@ -16,7 +16,7 @@ import {
 } from "../components/ui/navigation-menu";
 const Navbar = () => {
 	return (
-		<div className="flex items-center justify-between px-8">
+		<div className="w-11/12 mx-auto flex items-center justify-between px-8">
 			<Link to="/" className="flex items-center py-4 font-poppins">
 				<img className="w-12" src={logo} alt="logo" />
 				<h1 className="font-kenia text-xl ml-1 text-black">DREAMWEAVE</h1>

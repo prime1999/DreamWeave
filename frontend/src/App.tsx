@@ -4,8 +4,10 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router-dom";
+import store from "./store";
 import RootLayouts from "./layouts/RootLayouts";
 import HomePage from "./pages/HomePage";
+import { Provider } from "react-redux";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -16,7 +18,9 @@ function App() {
 	);
 	return (
 		<>
-			<RouterProvider router={router} />
+			<Provider store={store}>
+				<RouterProvider router={router} />
+			</Provider>
 		</>
 	);
 }

@@ -7,6 +7,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { ProductType } from "@/DataTypes/ProductType";
+import Rating from "./Rating";
 
 type Props = {
 	product: ProductType;
@@ -14,7 +15,7 @@ type Props = {
 
 const ProductCard = ({ product }: Props) => {
 	return (
-		<Card className="w-[300px]">
+		<Card className="w-[300px] mt-4 hover:cursor-pointer hover:shadow-md">
 			<CardHeader className="w-full">
 				<div className="w-full h-[250px]">
 					<img
@@ -27,17 +28,19 @@ const ProductCard = ({ product }: Props) => {
 					<CardTitle className="font-poppins text-md truncate">
 						{product.name}
 					</CardTitle>
-					<p className="font-semibold">${product.price}</p>
+					<p className="font-semibold text-md">${product.price}</p>
 				</div>
 				<CardDescription className="truncate font-semibold text-blue">
 					{product.description}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Card Content</p>
+				<Rating value={product.rating} text={product.numReviews} />
 			</CardContent>
 			<CardFooter>
-				<p>Card Footer</p>
+				<button className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white">
+					Add to cart
+				</button>
 			</CardFooter>
 		</Card>
 	);

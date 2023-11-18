@@ -1,12 +1,15 @@
 import { PRODUCTS_URL } from "@/Contants";
 import { apiSlice } from "./ApiSlice";
-import { ProductType } from "@/DataTypes/ProductType";
+import { DataType } from "@/DataTypes/DataType";
 
 export const productSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getProducts: builder.query<ProductType[], undefined>({
-			query: () => ({
+		getProducts: builder.query<DataType, any>({
+			query: ({ pageNumber }) => ({
 				url: PRODUCTS_URL as string,
+				params: {
+					pageNumber,
+				},
 			}),
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],

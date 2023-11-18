@@ -13,6 +13,7 @@ function App() {
 		createRoutesFromElements(
 			<Route path="/" element={<RootLayouts />}>
 				<Route index={true} path="/" element={<HomePage />} />
+				<Route path="/page/:pageNumber" element={<HomePage />} />
 			</Route>
 		)
 	);

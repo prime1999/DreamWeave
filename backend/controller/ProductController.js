@@ -23,7 +23,6 @@ const getProducts = asyncHandler(async (req, res) => {
 			// throw an error
 			throw new Error("No product available");
 		}
-
 		// if there are send them to the frontend
 		res
 			.status(200)
@@ -35,4 +34,18 @@ const getProducts = asyncHandler(async (req, res) => {
 	}
 });
 
-export { getProducts };
+// --------------------------- function to get highly rated products (>= 4.5) ----------------------------- //
+const getHighlyRatedProducts = asyncHandler(async (req, res) => {
+	try {
+		// find the products in the DB that have their rating above 4.5
+		const products = await Product.find({ rating: { $gt: 4.5 } });
+		// send the products to the frontend
+		res.status(200).json(products);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.satus(400);
+		throw new Error(error.message);
+	}
+});
+
+export { getProducts, getHighlyRatedProducts };

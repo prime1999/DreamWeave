@@ -17,9 +17,9 @@ const ProductCard = ({ product }: Props) => {
 	return (
 		<Card className="w-[300px] mt-4 hover:cursor-pointer hover:shadow-md">
 			<CardHeader className="w-full">
-				<div className="w-full h-[250px]">
+				<div className="w-full h-[200px]">
 					<img
-						className="w-full max-h-[250px]"
+						className="w-full max-h-full"
 						src={product.image}
 						alt="product's image"
 					/>

@@ -1,12 +1,17 @@
 import express from "express";
-import { getProducts } from "../controller/ProductController.js";
+import {
+	getHighlyRatedProducts,
+	getProducts,
+} from "../controller/ProductController.js";
 
 const ProductRouter = express.Router();
 
 /*
-GETPRODUCTS: GET public
+GETPRODUCTS: GET public;
+GETHIGHLYRATEDPRODUCTS: GET public;
 */
 
 ProductRouter.get("/", getProducts);
+ProductRouter.get("/highlyRated", getHighlyRatedProducts);
 
 export default ProductRouter;

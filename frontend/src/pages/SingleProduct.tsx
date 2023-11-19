@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
@@ -17,7 +17,7 @@ const SingleProduct = () => {
 	const { data: products } = useGetProductsByCategoryQuery({ productId });
 	console.log(products);
 
-	const handleCountIncrease = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleCountIncrease = () => {
 		if (count === data?.countInStock) {
 			setCount(data?.countInStock);
 		} else {
@@ -25,7 +25,7 @@ const SingleProduct = () => {
 		}
 	};
 
-	const handleCountDecrease = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleCountDecrease = () => {
 		if (count > 1) {
 			setCount((prevState) => prevState - 1);
 		} else {

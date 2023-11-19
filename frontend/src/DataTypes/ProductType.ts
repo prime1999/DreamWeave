@@ -13,4 +13,5 @@ export interface ProductType {
 	review?: any[];
 	createdAt?: Date;
 	updatedAt?: Date;
+	qty?: number;
 }

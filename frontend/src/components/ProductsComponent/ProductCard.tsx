@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
 	Card,
 	CardContent,
@@ -8,37 +11,52 @@ import {
 } from "@/components/ui/card";
 import { ProductType } from "@/DataTypes/ProductType";
 import Rating from "./Rating";
+import { addToCart } from "@/slices/CartSlice";
 
 type Props = {
 	product: ProductType;
 };
 
 const ProductCard = ({ product }: Props) => {
+	const [qty, setQty] = useState<number>(1);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const handleCart = (product: ProductType) => {
+		dispatch(addToCart({ ...product, qty }));
+		navigate("/cart");
+	};
+
 	return (
 		<Card className="w-[300px] mt-4 hover:cursor-pointer hover:shadow-md">
-			<CardHeader className="w-full">
-				<div className="w-full h-[200px]">
-					<img
-						className="w-full max-h-full"
-						src={product.image}
-						alt="product's image"
-					/>
-				</div>
-				<div className="flex justify-between">
-					<CardTitle className="font-poppins text-md truncate">
-						{product.name}
-					</CardTitle>
-					<p className="font-semibold text-md">${product.price}</p>
-				</div>
-				<CardDescription className="truncate font-semibold text-blue">
-					{product.description}
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<Rating value={product.rating} text={product.numReviews} />
-			</CardContent>
+			<Link to={`/product/${product._id}`}>
+				<CardHeader className="w-full">
+					<div className="w-full h-[200px]">
+						<img
+							className="w-full max-h-full"
+							src={product.image}
+							alt="product's image"
+						/>
+					</div>
+					<div className="flex justify-between">
+						<CardTitle className="font-poppins text-md truncate">
+							{product.name}
+						</CardTitle>
+						<p className="font-semibold text-md">${product.price}</p>
+					</div>
+					<CardDescription className="truncate font-semibold text-blue">
+						{product.description}
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<Rating value={product.rating} text={product.numReviews} />
+				</CardContent>
+			</Link>
 			<CardFooter>
-				<button className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white">
+				<button
+					onClick={() => handleCart(product)}
+					className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white"
+				>
 					Add to cart
 				</button>
 			</CardFooter>

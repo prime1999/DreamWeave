@@ -9,6 +9,7 @@ import RootLayouts from "./layouts/RootLayouts";
 import HomePage from "./pages/HomePage";
 import { Provider } from "react-redux";
 import SingleProduct from "./pages/SingleProduct";
+import CartPage from "./pages/CartPage";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -16,6 +17,7 @@ function App() {
 				<Route index={true} path="/" element={<HomePage />} />
 				<Route path="/page/:pageNumber" element={<HomePage />} />
 				<Route path="/product/:productId" element={<SingleProduct />} />
+				<Route path="/cart" element={<CartPage />} />
 			</Route>
 		)
 	);

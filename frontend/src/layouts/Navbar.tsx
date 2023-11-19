@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { MdPersonPin } from "react-icons/md";
-import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import logo from "../assets/images/logo.png";
 import laptop from "../assets/images/d1.jpg";
 import phone from "../assets/images/d2.jpg";
 import watch from "../assets/images/d9.webp";
@@ -15,6 +16,7 @@ import {
 	NavigationMenuTrigger,
 } from "../components/ui/navigation-menu";
 const Navbar = () => {
+	const { cartItems } = useSelector((state) => (state as any).cart);
 	return (
 		<div className="w-11/12 mx-auto flex items-center justify-between px-8">
 			<Link to="/" className="flex items-center py-4 font-poppins">
@@ -94,9 +96,18 @@ const Navbar = () => {
 						Account
 					</p>
 				</Link>
-				<Link to="/" className="flex items-center">
-					<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
-					<p className="font-poppins text-black text-sm font-semibold">Cart</p>
+				<Link to="/" className="flex items-end">
+					<div className="relative">
+						<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
+						{cartItems && (
+							<p className="absolute -top-4 -right-3 w-2 h-2 text-sm text-light font-semibold flex justify-center items-center p-3 rounded-[100%] bg-blue border-2 border-white">
+								{cartItems.length}
+							</p>
+						)}
+					</div>
+					<p className="font-poppins text-black text-sm font-semibold z-50">
+						Cart
+					</p>
 				</Link>
 			</div>
 		</div>

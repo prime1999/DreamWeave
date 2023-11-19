@@ -6,7 +6,7 @@ import {
 } from "@/slices/ProductSlice";
 import ProductCard from "@/components/ProductsComponent/ProductCard";
 import Paginate from "@/components/Paginate";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 
 const HomePage = () => {
@@ -26,7 +26,9 @@ const HomePage = () => {
 							<h6 className="font-bold text-black text-2xl">New Products</h6>
 							<div className="grid grid-cols-4 gap-2">
 								{data.products.map((product) => (
-									<ProductCard key={product._id} product={product} />
+									<Link key={product._id} to={`/product/${product._id}`}>
+										<ProductCard product={product} />
+									</Link>
 								))}
 							</div>
 						</div>

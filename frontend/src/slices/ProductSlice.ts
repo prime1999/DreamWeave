@@ -22,6 +22,20 @@ export const productSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],
 		}),
+		getSingleProduct: builder.query<ProductType, any>({
+			query: ({ productId }) => ({
+				url: `${PRODUCTS_URL}/${productId}`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Product"],
+		}),
+		getProductsByCategory: builder.query<ProductType[], any>({
+			query: ({ productId }) => ({
+				url: `${PRODUCTS_URL}/category/${productId}`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Product"],
+		}),
 	}),
 });
 
@@ -29,3 +43,7 @@ export const productSlice = apiSlice.injectEndpoints({
 export const useGetProductsQuery = productSlice.endpoints.getProducts.useQuery;
 export const useGetHighlyRatedProductsQuery =
 	productSlice.endpoints.getHighlyRatedProducts.useQuery;
+export const useGetSinlgeProductQuery =
+	productSlice.endpoints.getSingleProduct.useQuery;
+export const useGetProductsByCategoryQuery =
+	productSlice.endpoints.getProductsByCategory.useQuery;

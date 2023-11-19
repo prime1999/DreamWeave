@@ -48,4 +48,45 @@ const getHighlyRatedProducts = asyncHandler(async (req, res) => {
 	}
 });
 
-export { getProducts, getHighlyRatedProducts };
+// ---------------------------- funcntion to get a single product ------------------------------------ //
+const getSingleProduct = asyncHandler(async (req, res) => {
+	// make a try-catch block
+	try {
+		// get the product that as has the same id as the d sent from the frontend from the DB
+		const product = await Product.findById(req.params.productId);
+		// send the found product to the frontend
+		res.status(200).json(product);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+// --------------------------------- function to get products based on there category ------------------------ //
+const getProductsByCategory = asyncHandler(async (req, res) => {
+	// make a try-catch block
+	try {
+		// get the product that as has the same id as the d sent from the frontend from the DB
+		const product = await Product.find({ _id: req.params.productId });
+		// show error message if the product does noot exist in the DB
+		if (!product) {
+			throw new Error("Product not in stock");
+		}
+		// find the products that have the same brand as the brand in the found product
+		const products = await Product.find({ category: product[0].category });
+		// send the found products to the frontend
+		res.status(200).json(products);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export {
+	getProducts,
+	getHighlyRatedProducts,
+	getSingleProduct,
+	getProductsByCategory,
+};

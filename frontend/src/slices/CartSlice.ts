@@ -4,6 +4,7 @@ import { updateCart } from "@/utils/CartUtils";
 
 type cartStateType = {
 	cartItems: ProductType[];
+	user?: string;
 };
 
 const storedCartData = localStorage.getItem("Cart");

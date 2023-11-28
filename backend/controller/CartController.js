@@ -16,4 +16,6 @@ const addToCart = asyncHandler(async (req, res) => {
 	}
 });
 
+// --------------------------------------- function to get the cart items of a user --------------------- //
+
 export { addToCart };

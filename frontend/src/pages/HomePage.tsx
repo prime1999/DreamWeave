@@ -1,39 +1,54 @@
+import { Suspense, lazy } from "react";
 import Sorting from "../components/layouts/Sorting";
 import Hero from "../components/layouts/Hero";
 import {
 	useGetHighlyRatedProductsQuery,
 	useGetProductsQuery,
 } from "@/slices/ProductSlice";
-import ProductCard from "@/components/ProductsComponent/ProductCard";
+//import ProductCard from "@/components/ProductsComponent/ProductCard";
 import Paginate from "@/components/Paginate";
 import { useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
+import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
+import Loader from "@/components/Loader";
+
+// for the lazy loading
+const ProductCard = lazy(
+	() => import("@/components/ProductsComponent/ProductCard")
+);
 
 const HomePage = () => {
 	const { pageNumber } = useParams();
-	const { data } = useGetProductsQuery({ pageNumber });
+	const { data, isLoading: loadingProducts } = useGetProductsQuery({
+		pageNumber,
+	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
 
 	return (
 		<div>
 			<Hero />
-			<div className="container mx-auto my-8 w-full">
+			<div className="relative container mx-auto my-8 w-full">
+				{loadingProducts && <Loader />}
 				<Sorting />
 
 				{data && (
 					<>
 						<div className="mt-8">
 							<h6 className="font-bold text-black text-2xl">New Products</h6>
-							<div className="grid grid-cols-4 gap-2">
-								{data.products.map((product) => (
-									<ProductCard key={product._id} product={product} />
-								))}
+							<div className="flex justify-center items-center">
+								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+									{data.products.map((product) => (
+										<Suspense key={product._id} fallback={<CardSkeleton />}>
+											<ProductCard product={product} />
+										</Suspense>
+									))}
+								</div>
 							</div>
 						</div>
 						<Paginate pages={data.pages} page={data.page} />
 					</>
 				)}
-				<div>
+				<div className="h-full">
 					{products && (
 						<div className="w-11/12 mx-auto">
 							<h6 className="font-bold text-black text-2xl">

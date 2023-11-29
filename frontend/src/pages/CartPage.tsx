@@ -8,11 +8,11 @@ const CartPage = () => {
 
 	return (
 		<>
-			<div className="w-10/12 mx-auto mb-8">
+			<div className="w-11/12 mx-auto mb-8">
 				<hr className="mt-4 mb-8" />
 				{cartItems && (
-					<div className="flex justify-between">
-						<div className="w-2/3 border rounded-3xl p-8">
+					<div className="flex flex-col justify-between md:flex-row">
+						<div className="w-full border rounded-3xl p-8 md:w-2/3">
 							<div className="flex justify-between items-center">
 								<div className="flex items-end">
 									<h1 className="font-semibold text-2xl">Cart</h1>
@@ -30,7 +30,7 @@ const CartPage = () => {
 								))}
 							</div>
 						</div>
-						<div className="w-1/3 ml-4 bg-gray-200 rounded-3xl">
+						<div className="w-full mt-4 bg-gray-200 rounded-3xl md:w-1/3 md:mt-0 md:ml-4">
 							<form className="relative h-full w-11/12 mx-auto my-4">
 								<h6 className="my-2 font-semibold">Promo Code</h6>
 								<div className="relative">

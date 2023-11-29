@@ -37,9 +37,9 @@ const SingleProduct = () => {
 		<>
 			{data && (
 				<>
-					<div className="w-11/12 mx-auto">
+					<div className="w-10/12 md:mx-auto md:w-11/12">
 						<hr />
-						<div className="my-4">
+						<div className="my-4 w-11/12 mx-auto md:mx-0">
 							<p className="text-md text-gray-400 font-semibold">
 								<span className="mr-2">products</span>/
 								<span className="mx-2">{data?.category}</span>/
@@ -47,11 +47,11 @@ const SingleProduct = () => {
 								<span className="mx-2 text-black">{data?.name}</span>
 							</p>
 						</div>
-						<div className="flex w-11/12 mx-auto my-8">
-							<div className="w-[500px]">
+						<div className="flex flex-col w-11/12 mx-auto my-8 md:flex-row">
+							<div className="max-w-[500px]">
 								<img src={data?.image} alt="" />
 							</div>
-							<div className="ml-28">
+							<div className="md:ml-28">
 								<h1 className="font-poppins font-bold text-3xl mb-4">
 									{data?.name}
 								</h1>
@@ -95,14 +95,14 @@ const SingleProduct = () => {
 									</div>
 								</div>
 								<div className="flex justify-between mt-4">
-									<button className="px-16 py-3 text-light bg-blue font-semibold rounded-full duration-500 hover:bg-light hover:text-blue">
+									<button className="px-4 py-3 text-light bg-blue font-semibold rounded-full duration-500 hover:bg-light hover:text-blue md:px-8">
 										Buy Now
 									</button>
-									<button className="px-16 py-3 ml-4 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light">
+									<button className="px-4 py-3 ml-4 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8">
 										Add to cart
 									</button>
 								</div>
-								<div className="border mt-4">
+								<div className="border mt-4 max-w-[450px]">
 									<div className="flex items-start w-11/12 mx-auto py-4">
 										<FaTruck className="text-xl text-orange-500" />
 										<div className="font-poppins text-sm ml-4">

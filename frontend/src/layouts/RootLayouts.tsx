@@ -3,10 +3,14 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 const RootLayouts = () => {
 	return (
-		<div className="">
-			<Navbar />
-			<Outlet />
-			<Footer />
+		<div className="flex flex-col min-h-screen m-0">
+			<div className="grow">
+				<Navbar />
+				<Outlet />
+			</div>
+			<div className="shrink-0">
+				<Footer />
+			</div>
 		</div>
 	);
 };

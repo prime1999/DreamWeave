@@ -108,7 +108,7 @@ const Navbar = () => {
 							Account
 						</p>
 					</Link>
-					<Link to="/" className="flex items-end">
+					<Link to="/cart" className="flex items-end">
 						<div className="relative">
 							<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
 							{cartItems && (

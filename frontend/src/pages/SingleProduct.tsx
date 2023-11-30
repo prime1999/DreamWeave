@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
@@ -9,13 +9,14 @@ import {
 } from "@/slices/ProductSlice";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import { ProductType } from "@/DataTypes/ProductType";
+import SingleProductSkeleton from "@/components/miscelleneous/SingleProductSkeleton";
 
 const SingleProduct = () => {
 	const [count, setCount] = useState<number>(1);
 	const { productId } = useParams();
 	const { data } = useGetSinlgeProductQuery({ productId });
-	const { data: products } = useGetProductsByCategoryQuery({ productId });
-	console.log(products);
+	const { data: products, isLoading: productLoading } =
+		useGetProductsByCategoryQuery({ productId });
 
 	const handleCountIncrease = () => {
 		if (count === data?.countInStock) {
@@ -35,6 +36,7 @@ const SingleProduct = () => {
 
 	return (
 		<>
+			{productLoading && <SingleProductSkeleton />}
 			{data && (
 				<>
 					<div className="w-10/12 md:mx-auto md:w-11/12">

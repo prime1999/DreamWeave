@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";

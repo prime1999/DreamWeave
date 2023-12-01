@@ -4,6 +4,8 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import store from "./store";
 import RootLayouts from "./layouts/RootLayouts";
 import HomePage from "./pages/HomePage";
@@ -31,6 +33,7 @@ function App() {
 		<>
 			<Provider store={store}>
 				<RouterProvider router={router} />
+				<ToastContainer />
 			</Provider>
 		</>
 	);

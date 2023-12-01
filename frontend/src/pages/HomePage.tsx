@@ -30,7 +30,6 @@ const HomePage = () => {
 			<div className="relative container mx-auto my-8 w-full">
 				{loadingProducts && <Loader />}
 				<Sorting />
-
 				{data && (
 					<>
 						<div className="mt-8">

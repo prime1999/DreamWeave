@@ -5,8 +5,13 @@ import Cart from "../models/CartModel.js";
 const addToCart = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
-		// add the details sent from the front end to the DB
-		const cart = await Cart.create(req.body);
+		// create the cart data to send to the DB
+		const cartData = {
+			items: [req.body],
+			user: req.user._id,
+		};
+		// add the details sent from the cart data to the DB
+		const cart = await Cart.create(cartData);
 		// send the result to the frontend
 		res.status(201).json(cart);
 	} catch (error) {

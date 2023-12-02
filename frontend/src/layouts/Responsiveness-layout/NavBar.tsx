@@ -2,7 +2,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoIosMenu, IoIosArrowDown } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
-import { MdPersonPin, MdOutlineDiscount } from "react-icons/md";
+import {
+	MdPersonPin,
+	MdOutlineDiscount,
+	MdLogin,
+	MdCreate,
+} from "react-icons/md";
 import { FaQuestion, FaTruckFast } from "react-icons/fa6";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import logo from "../../assets/images/logo.png";
@@ -134,10 +139,16 @@ const NavBar = () => {
 										</DropdownMenuTrigger>
 										<DropdownMenuContent>
 											<DropdownMenuItem className="font-cour">
-												Sign-Up
+												<Link to="/register" className="flex items-center">
+													<MdCreate className="mr-2" />
+													Sign-Up
+												</Link>
 											</DropdownMenuItem>
 											<DropdownMenuItem className="font-cour">
-												Sign-In
+												<Link to="/logIn" className="flex items-center">
+													<MdLogin className="mr-2" />
+													Sign-In
+												</Link>
 											</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>

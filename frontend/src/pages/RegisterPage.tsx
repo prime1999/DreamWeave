@@ -12,53 +12,63 @@ import { useRegisterUserMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
 
 const RegisterPage = () => {
+	// define the type of data that will be in the formData
 	type formData = {
 		name: string;
 		email: string;
 		password: string;
 		confirmPassword: string;
 	};
+	// init the useNavigae hook
 	const navigate = useNavigate();
+	// get the search param from the current location
 	const { search } = useLocation();
 	const sp = new URLSearchParams(search);
+	// get the value of the redirect key, if there is none then using the / for the homepage
 	const redirect = sp.get("redirect") || "/";
-
+	// get the user's info from the redux store named auth
 	const { userInfo } = useSelector((state: any) => state.auth);
 
 	useEffect(() => {
+		// check if there is a userInfo in te redux state
 		if (userInfo) {
+			// if there is one then the user is logged in, redirect the user to there wanted destination
 			navigate(redirect);
 		}
 	}, [navigate, redirect, userInfo]);
 
+	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [showConfirmPassword, setShowConfirmPassword] =
 		useState<boolean>(false);
+	// state for the form data
 	const [formData, setFormData] = useState<formData>({
 		name: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 	});
-
+	// destructure the form data keys from there object
 	const { name, email, password, confirmPassword } = formData;
-
+	// get the register function as well as the isLaoding boolen from the userApiSlice
 	const [register, { isLoading }] = useRegisterUserMutation();
-
+	// init the useDispatch hook
 	const dispatch = useDispatch();
-
+	// function to handle the change event on te input in the form
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// set the input fields to the value that is been inputted
 		setFormData((prevState) => ({
 			...prevState,
 			[e.target.id]: e.target.value,
 		}));
 	};
-
+	// function to handle the submit event
 	const handleRegister = async (e: React.FormEvent) => {
+		// prevent the default action of the form
 		e.preventDefault();
 
 		const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
+		// chek if the fields meet all required parameters
 		if (
 			password !== confirmPassword ||
 			!password ||
@@ -66,18 +76,24 @@ const RegisterPage = () => {
 			!email ||
 			!emailRegex.test(email)
 		) {
+			// throw an error if they don't
 			toast.error("try again", {
 				className: "bg-red-200",
 				bodyClassName: "text-light",
 				progressClassName: "bg-transparent",
 			});
 		} else {
+			// if they do, then:
+			// send the form data to the backend and get the response.
 			const res = await register({ name, email, password }).unwrap();
+			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
+			// navigate to the redirect
 			navigate(redirect);
+			// show a success message
 			toast.success("welcome to DreamWeave", {
 				className: "bg-green-200",
-				bodyClassName: "text-light",
+				bodyClassName: "text-black font-poppins font-semibold",
 				progressClassName: "bg-transparent",
 			});
 		}
@@ -160,8 +176,15 @@ const RegisterPage = () => {
 								{showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
 							</span>
 						</div>
-						<button className="w-full text-center py-2 mt-4 text-light font-poppins font-semibold bg-blue rounded-full duration-500 hover:shadow-md hover:shadow-blue">
-							Sign Up
+						<button
+							disabled={isLoading}
+							className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
+								isLoading
+									? "bg-other hover:shadow-none"
+									: "bg-blue hover:shadow-blue"
+							} rounded-full duration-500 hover:shadow-md`}
+						>
+							{isLoading && <span className="btnLoader"></span>}Sign Up
 						</button>
 						<div className="flex items-center justify-between mt-4">
 							<hr className="w-36" />

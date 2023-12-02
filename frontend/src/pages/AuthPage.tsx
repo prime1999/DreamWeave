@@ -1,13 +1,91 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import image from "@/assets/images/Mobile login-amico.png";
 import logo from "@/assets/images/logo.png";
+import { useLogUserInMutation } from "@/slices/UserSlice";
+import { setCredentials } from "@/slices/AuthSlice";
 
 const AuthPage = () => {
+	// define the type of data that will be in the formData
+	type formData = {
+		email: string;
+		password: string;
+	};
+	// init the useNavigae hook
+	const navigate = useNavigate();
+	// init the useDispatch hook
+	const dispatch = useDispatch();
+	// get the search param from the current location
+	const { search } = useLocation();
+	const sp = new URLSearchParams(search);
+	// get the value of the redirect key, if there is none then using the / for the homepage
+	const redirect = sp.get("redirect") || "/";
+	// get the user's info from the redux store named auth
+	const { userInfo } = useSelector((state: any) => state.auth);
+	const [logIn, { isLoading }] = useLogUserInMutation();
+
+	useEffect(() => {
+		// check if there is a userInfo in te redux state
+		if (userInfo) {
+			// if there is one then the user is logged in, redirect the user to there wanted destination
+			navigate(redirect);
+		}
+	}, [navigate, redirect, userInfo]);
+	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
+
+	// state for the form data
+	const [formData, setFormData] = useState<formData>({
+		email: "",
+		password: "",
+	});
+	// destructure the form data keys from there object
+	const { email, password } = formData;
+	// function to handle the change event on te input in the form
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// set the input fields to the value that is been inputted
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.id]: e.target.value,
+		}));
+	};
+
+	// function to handle the submit event
+	const handleRegister = async (e: React.FormEvent) => {
+		// prevent the default action of the form
+		e.preventDefault();
+
+		const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		// chek if the fields meet all required parameters
+		if (!password || !email || !emailRegex.test(email)) {
+			// throw an error if they don't
+			toast.error("try again", {
+				className: "bg-red-200",
+				bodyClassName: "text-light",
+				progressClassName: "bg-transparent",
+			});
+		} else {
+			// if they do, then:
+			// send the form data to the backend and get the response.
+			const res = await logIn({ email, password }).unwrap();
+			// save the response to local storage and redux auth store
+			dispatch(setCredentials({ ...res }));
+			// navigate to the redirect
+			navigate(redirect);
+			// show a success message
+			toast.success("welcome back", {
+				className: "bg-green-200",
+				bodyClassName: "text-black font-poppins font-semibold",
+				progressClassName: "bg-transparent",
+			});
+		}
+	};
+
 	return (
 		<div className="w-full h-screen flex items-center justify-center">
 			<div className="flex justify-between items-center">
@@ -26,11 +104,14 @@ const AuthPage = () => {
 					<p className="text-blue font-cour text-sm">
 						Get back to your shopping
 					</p>
-					<form className="w-full mt-4 text-black">
+					<form onSubmit={handleRegister} className="w-full mt-4 text-black">
 						<div className="relative">
 							<input
-								type="email"
+								type="text"
 								placeholder="Your Email"
+								id="email"
+								value={email}
+								onChange={(e) => handleChange(e)}
 								className="bg-light rounded-3xl px-4 py-2 pr-8 my-4 w-full focus:outline-none"
 							/>
 							<span className="absolute top-7 right-3 text-blue">
@@ -41,6 +122,9 @@ const AuthPage = () => {
 							<input
 								type={showPassword ? "text" : "password"}
 								placeholder="Enter password"
+								id="password"
+								value={password}
+								onChange={(e) => handleChange(e)}
 								className="bg-light rounded-3xl px-4 py-2 mb-4 w-full focus:outline-none"
 							/>
 							<span
@@ -50,8 +134,15 @@ const AuthPage = () => {
 								{showPassword ? <FaEyeSlash /> : <FaEye />}
 							</span>
 						</div>
-						<button className="w-full text-center py-2 mt-4 text-light font-poppins font-semibold bg-blue rounded-full duration-500 hover:shadow-md hover:shadow-blue">
-							Sign In
+						<button
+							disabled={isLoading}
+							className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
+								isLoading
+									? "bg-other hover:shadow-none"
+									: "bg-blue hover:shadow-blue"
+							} rounded-full duration-500 hover:shadow-md`}
+						>
+							{isLoading && <span className="btnLoader"></span>}Sign In
 						</button>
 						<div className="flex items-center justify-between mt-4">
 							<hr className="w-36" />
@@ -67,7 +158,12 @@ const AuthPage = () => {
 							<h6>
 								Don't have an account?{" "}
 								<span>
-									<Link to="/logIn" className="text-blue font-bold">
+									<Link
+										to={
+											redirect ? `/register?redirect=${redirect}` : "/register"
+										}
+										className="text-blue font-bold"
+									>
 										register here
 									</Link>
 								</span>

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type UserInfo = {
-	// Define the properties of UserInfo as needed
 	username: string;
 	email: string;
-	// ...
+	isAdmin: boolean;
+	_id: string;
 };
 
 type initialStateType = {
@@ -24,14 +24,23 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
+		// function to set the user details to the localstorage and redux auth store
 		setCredentials: (state, action) => {
+			// store to the redux auth store
 			state.userInfo = action.payload;
-
+			// save the details to local storage
 			localStorage.setItem("userInfo", JSON.stringify(action.payload));
+		},
+		// function to clear the userInfo from the local storage and redux auth store (log a user out)
+		logOut: (state) => {
+			// clear the state
+			state.userInfo = null;
+			// clear the local storage
+			localStorage.clear();
 		},
 	},
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, logOut } = authSlice.actions;
 
 export default authSlice.reducer;

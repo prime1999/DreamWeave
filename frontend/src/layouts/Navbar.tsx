@@ -1,8 +1,11 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { TbShoppingCartPlus } from "react-icons/tb";
-import { MdPersonPin } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { BsFillPersonLinesFill } from "react-icons/bs";
+import { MdPersonPin, MdLogout, MdLogin, MdCreate } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../assets/images/logo.png";
 import laptop from "../assets/images/d1.jpg";
 import phone from "../assets/images/d2.jpg";
@@ -15,10 +18,39 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from "../components/ui/navigation-menu";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useLogUserOutMutation } from "@/slices/UserSlice";
+import { logOut } from "@/slices/AuthSlice";
 
 import NavBar from "./Responsiveness-layout/NavBar";
 const Navbar = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { cartItems } = useSelector((state) => (state as any).cart);
+	const { userInfo } = useSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (!userInfo) {
+			navigate("/");
+		}
+	}, [navigate, userInfo]);
+
+	const [logOutApiCall] = useLogUserOutMutation() as any;
+
+	const logOutUser = async () => {
+		await logOutApiCall().unwrap();
+		dispatch(logOut());
+		toast.info("User logged out", {
+			className: "bg-white",
+			bodyClassName: "text-black font-poppins font-semibold",
+			progressClassName: "bg-transparent",
+		});
+	};
 	return (
 		<>
 			<div className="w-11/12 mx-auto hidden items-center justify-between px-8 lg:flex lg:w-full xl:w-11/12">
@@ -102,13 +134,55 @@ const Navbar = () => {
 					</form>
 				</div>
 				<div className="flex items-center justify-between">
-					<Link to="/" className="flex items-center mr-4">
-						<MdPersonPin className="w-18 text-3xl text-blue" />
-						<p className="font-poppins text-black text-sm font-semibold">
-							Account
-						</p>
-					</Link>
-					<Link to="/cart" className="flex items-end">
+					{/* show user profile link if user is logged in */}
+					{userInfo ? (
+						<DropdownMenu>
+							<DropdownMenuTrigger className="flex items-center">
+								<MdPersonPin className="w-18 text-3xl text-blue" />
+								<p className="font-poppins text-black text-sm font-semibold">
+									Account
+								</p>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuItem className="font-cour hover:cursor-pointer">
+									<BsFillPersonLinesFill className="mr-2" />
+									Profile
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									onClick={logOutUser}
+									className="font-cour hover:cursor-pointers"
+								>
+									<MdLogout className="mr-2" />
+									Log Out
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : (
+						<DropdownMenu>
+							<DropdownMenuTrigger className="flex items-center">
+								<MdPersonPin className="w-18 text-3xl text-blue" />
+								<p className="font-poppins text-black text-sm font-semibold">
+									Account
+								</p>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuItem className="font-cour">
+									<Link to="/register" className="flex items-center">
+										<MdCreate className="mr-2" />
+										Sign-Up
+									</Link>
+								</DropdownMenuItem>
+								<DropdownMenuItem className="font-cour">
+									<Link to="/logIn" className="flex items-center">
+										<MdLogin className="mr-2" />
+										Sign-In
+									</Link>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					)}
+					{/* ends here */}
+					<Link to="/cart" className="flex items-end ml-4">
 						<div className="relative">
 							<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
 							{cartItems && (

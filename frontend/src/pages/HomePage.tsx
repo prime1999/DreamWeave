@@ -1,4 +1,5 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Sorting from "../components/layouts/Sorting";
 import Hero from "../components/layouts/Hero";
 import {
@@ -11,6 +12,9 @@ import { useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
+import { useGetUserCartQuery } from "@/slices/CartApiSlice";
+import { updateCart, setLocalCart } from "@/utils/CartUtils";
+import { addToCart } from "@/slices/CartSlice";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -18,11 +22,35 @@ const ProductCard = lazy(
 );
 
 const HomePage = () => {
+	const dispatch = useDispatch();
+	const [fetchData, setFetchData] = useState<boolean>(false);
+	const { userInfo } = useSelector((state: any) => state.auth);
 	const { pageNumber } = useParams();
 	const { data, isLoading: loadingProducts } = useGetProductsQuery({
 		pageNumber,
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
+
+	const { data: cartData, isLoading } = useGetUserCartQuery({
+		skip: !userInfo,
+	});
+
+	useEffect(() => {
+		if (userInfo) {
+			//console.log(userInfo);
+			if (isLoading) {
+				console.log("loading...");
+			} else {
+				console.log("not loading");
+			}
+			if (cartData) {
+				console.log(cartData);
+				console.log({ cartItems: cartData.cartItems });
+				//setLocalCart({ cartItems: cartData.cartItems });
+				cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+			}
+		}
+	}, [userInfo, isLoading]);
 
 	return (
 		<div>

@@ -27,6 +27,15 @@ const addToCart = asyncHandler(async (req, res) => {
 			},
 			{ upsert: true, new: true }
 		);
+
+		if (!newCart) {
+			const cartDetails = {
+				user: req.user._id,
+				cartItems: [{ product: req.body.product, quantity: req.body.quantity }],
+			};
+			const cart = await Cart.create(cartDetails);
+			res.status(201).json(cart);
+		}
 		// send the result to the frontend
 		res.status(201).json(newCart);
 	} catch (error) {
@@ -56,14 +65,13 @@ const getUserCart = asyncHandler(async (req, res) => {
 		if (!cart) {
 			throw new Error("No items in user's cart");
 		}
-
+		// add the quantity to each product in the cart
 		const cartItems = cart[0].items.map((item) => {
 			const productObject = item.product.toObject(); // Convert the Mongoose document to a plain object
 			productObject.qty = item.quantity; // Add the qty property
 			return productObject;
 		});
 
-		console.log(cartItems);
 		// if an item is in the user's cart, then send the cartItems to the frontend
 		res.status(200).json({ _id: cart[0]._id, cartItems });
 	} catch (error) {

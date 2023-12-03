@@ -6,6 +6,7 @@ export const getDecimal = (num: number) => {
 
 type cartStateType = {
 	cartItems: ProductType[];
+	_id?: string;
 	itemsPrice?: number;
 	shippingPrice?: number;
 	taxPrice?: number;
@@ -30,4 +31,8 @@ export const updateCart = (state: cartStateType) => {
 	localStorage.setItem("Cart", JSON.stringify(state));
 
 	return state;
+};
+
+export const setLocalCart = (items: any) => {
+	localStorage.setItem("Cart", JSON.stringify(items));
 };

@@ -10,8 +10,16 @@ export const CartApiSlice = apiSlice.injectEndpoints({
 				body: cartDetails,
 			}),
 		}),
+		getUserCart: builder.query<any, any>({
+			query: () => ({
+				url: `${CART_URL}`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Cart"],
+		}),
 	}),
 });
 
 export const useAddToCartMutation =
 	CartApiSlice.endpoints.addToCart.useMutation;
+export const useGetUserCartQuery = CartApiSlice.endpoints.getUserCart.useQuery;

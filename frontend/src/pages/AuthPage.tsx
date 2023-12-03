@@ -9,8 +9,10 @@ import image from "@/assets/images/Mobile login-amico.png";
 import logo from "@/assets/images/logo.png";
 import { useLogUserInMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
+import { useGetUserCartQuery } from "@/slices/CartApiSlice";
+import { updateCart } from "@/utils/CartUtils";
 
-const AuthPage = () => {
+const AuthPage: React.FC = () => {
 	// define the type of data that will be in the formData
 	type formData = {
 		email: string;
@@ -76,7 +78,7 @@ const AuthPage = () => {
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
 			// navigate to the redirect
-			navigate(redirect);
+			// navigate(redirect);
 			// show a success message
 			toast.success("welcome back", {
 				className: "bg-green-200",
@@ -84,6 +86,12 @@ const AuthPage = () => {
 				progressClassName: "bg-transparent",
 			});
 		}
+	};
+
+	const handleSync = async () => {
+		const { data, isLoading: cartLoading } = useGetUserCartQuery({});
+		console.log(data);
+		updateCart(data);
 	};
 
 	return (

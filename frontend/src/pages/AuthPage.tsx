@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -11,6 +11,7 @@ import { useLogUserInMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
 import { useGetUserCartQuery } from "@/slices/CartApiSlice";
 import { updateCart } from "@/utils/CartUtils";
+import { addToCart } from "@/slices/CartSlice";
 
 const AuthPage: React.FC = () => {
 	// define the type of data that will be in the formData
@@ -30,14 +31,27 @@ const AuthPage: React.FC = () => {
 	// get the user's info from the redux store named auth
 	const { userInfo } = useSelector((state: any) => state.auth);
 	const [logIn, { isLoading }] = useLogUserInMutation();
+	const { data: cartData, isLoading: loadingCart } = useGetUserCartQuery({
+		skip: !userInfo,
+	});
 
 	useEffect(() => {
 		// check if there is a userInfo in te redux state
 		if (userInfo) {
-			// if there is one then the user is logged in, redirect the user to there wanted destination
-			navigate(redirect);
+			//console.log(userInfo);
+			if (loadingCart) {
+				console.log("loading...");
+			} else {
+				console.log("not loading");
+			}
+			if (cartData) {
+				//setLocalCart({ cartItems: cartData.cartItems });
+				cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+				// if there is one then the user is logged in, redirect the user to there wanted destination
+				navigate(redirect);
+			}
 		}
-	}, [navigate, redirect, userInfo]);
+	}, [navigate, redirect, userInfo, loadingCart]);
 	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -87,13 +101,6 @@ const AuthPage: React.FC = () => {
 			});
 		}
 	};
-
-	const handleSync = async () => {
-		const { data, isLoading: cartLoading } = useGetUserCartQuery({});
-		console.log(data);
-		updateCart(data);
-	};
-
 	return (
 		<div className="w-full h-screen flex items-center justify-center">
 			<div className="flex justify-between items-center">
@@ -143,14 +150,16 @@ const AuthPage: React.FC = () => {
 							</span>
 						</div>
 						<button
-							disabled={isLoading}
+							disabled={isLoading || loadingCart}
 							className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
-								isLoading
+								isLoading || loadingCart
 									? "bg-other hover:shadow-none"
 									: "bg-blue hover:shadow-blue"
 							} rounded-full duration-500 hover:shadow-md`}
 						>
-							{isLoading && <span className="btnLoader"></span>}Sign In
+							{isLoading ||
+								(loadingCart && <span className="btnLoader"></span>)}
+							Sign In
 						</button>
 						<div className="flex items-center justify-between mt-4">
 							<hr className="w-36" />

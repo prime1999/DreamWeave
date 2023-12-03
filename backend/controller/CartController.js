@@ -80,4 +80,6 @@ const getUserCart = asyncHandler(async (req, res) => {
 	}
 });
 
+// ------------------------------- function to delete a cart item ----------------------------- //
+
 export { addToCart, getUserCart };

@@ -10,6 +10,7 @@ import image from "@/assets/images/Filing system-amico.png";
 import logo from "@/assets/images/logo.png";
 import { useRegisterUserMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
+import { useAddToCartMutation } from "@/slices/CartApiSlice";
 
 const RegisterPage = () => {
 	// define the type of data that will be in the formData
@@ -28,12 +29,23 @@ const RegisterPage = () => {
 	const redirect = sp.get("redirect") || "/";
 	// get the user's info from the redux store named auth
 	const { userInfo } = useSelector((state: any) => state.auth);
+	const { cartItems } = useSelector((state: any) => state.cart);
+	const [addToCart, { isLoading: loadingCart }] = useAddToCartMutation();
 
 	useEffect(() => {
 		// check if there is a userInfo in te redux state
 		if (userInfo) {
 			// if there is one then the user is logged in, redirect the user to there wanted destination
-			navigate(redirect);
+			if (loadingCart) {
+				console.log("loading...");
+			} else {
+				console.log("not loading");
+				navigate(redirect);
+			}
+			// send the registered user's cart to the DB
+			cartItems.forEach((item: any) =>
+				addToCart({ product: item._id, quantity: item.qty })
+			);
 		}
 	}, [navigate, redirect, userInfo]);
 
@@ -88,8 +100,6 @@ const RegisterPage = () => {
 			const res = await register({ name, email, password }).unwrap();
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
-			// navigate to the redirect
-			navigate(redirect);
 			// show a success message
 			toast.success("welcome to DreamWeave", {
 				className: "bg-green-200",

@@ -31,26 +31,26 @@ const HomePage = () => {
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
 
-	const { data: cartData, isLoading } = useGetUserCartQuery({
-		skip: !userInfo,
-	});
+	// const { data: cartData, isLoading } = useGetUserCartQuery({
+	// 	skip: !userInfo,
+	// });
 
-	useEffect(() => {
-		if (userInfo) {
-			//console.log(userInfo);
-			if (isLoading) {
-				console.log("loading...");
-			} else {
-				console.log("not loading");
-			}
-			if (cartData) {
-				console.log(cartData);
-				console.log({ cartItems: cartData.cartItems });
-				//setLocalCart({ cartItems: cartData.cartItems });
-				cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
-			}
-		}
-	}, [userInfo, isLoading]);
+	// useEffect(() => {
+	// 	if (userInfo) {
+	// 		//console.log(userInfo);
+	// 		if (isLoading) {
+	// 			console.log("loading...");
+	// 		} else {
+	// 			console.log("not loading");
+	// 		}
+	// 		if (cartData) {
+	// 			console.log(cartData);
+	// 			console.log({ cartItems: cartData.cartItems });
+	// 			//setLocalCart({ cartItems: cartData.cartItems });
+	// 			cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+	// 		}
+	// 	}
+	// }, [userInfo, isLoading]);
 
 	return (
 		<div>

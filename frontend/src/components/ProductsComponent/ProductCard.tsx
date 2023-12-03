@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
 	Card,
@@ -12,6 +12,7 @@ import {
 import { ProductType } from "@/DataTypes/ProductType";
 import Rating from "./Rating";
 import { addToCart } from "@/slices/CartSlice";
+import { useAddToCartMutation } from "@/slices/CartApiSlice";
 
 type Props = {
 	product: ProductType;
@@ -22,8 +23,14 @@ const ProductCard = ({ product }: Props) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+	const { userInfo } = useSelector((state: any) => state.auth);
+	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
+
 	const handleCart = (product: ProductType) => {
 		dispatch(addToCart({ ...product, qty }));
+		if (userInfo) {
+			addItemToCart({ product: product._id, quantity: qty });
+		}
 		navigate("/cart");
 	};
 

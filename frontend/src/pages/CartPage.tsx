@@ -11,7 +11,7 @@ const CartPage = () => {
 			<div className="w-11/12 mx-auto mb-8">
 				<hr className="mt-4 mb-8" />
 				{cartItems && (
-					<div className="flex flex-col justify-between md:flex-row">
+					<div className="flex items-start flex-col justify-between md:flex-row">
 						<div className="w-full border rounded-3xl p-8 md:w-2/3">
 							<div className="flex justify-between items-center">
 								<div className="flex items-end">
@@ -50,19 +50,11 @@ const CartPage = () => {
 										<p>${itemsPrice}</p>
 									</span>
 									<span className="flex justify-between my-4 text-gray-400">
-										<p className="">Shipping</p>
-										<p>${shippingPrice}</p>
-									</span>
-									<span className="flex justify-between mb-4 text-gray-400">
-										<p className="">Tax</p>
-										<p>${taxPrice}</p>
-									</span>
-									<span className="flex justify-between font-semibold">
-										<p className="">Total</p>
-										<p className="text-lg">${totalPrice}</p>
+										<p className="">Discount</p>
+										<p>$0</p>
 									</span>
 								</div>
-								<button className="absolute bottom-8 w-full py-2 mx-auto bg-black text-light rounded-xl text-center">
+								<button className="mt-4 w-full py-2 mx-auto bg-black text-light rounded-xl text-center">
 									Place Order
 								</button>
 							</form>

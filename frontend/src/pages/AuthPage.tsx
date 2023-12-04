@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -10,7 +10,6 @@ import logo from "@/assets/images/logo.png";
 import { useLogUserInMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
 import { useGetUserCartQuery } from "@/slices/CartApiSlice";
-import { updateCart } from "@/utils/CartUtils";
 import { addToCart } from "@/slices/CartSlice";
 
 const AuthPage: React.FC = () => {

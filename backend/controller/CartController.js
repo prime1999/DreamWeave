@@ -80,6 +80,32 @@ const getUserCart = asyncHandler(async (req, res) => {
 	}
 });
 
-// ------------------------------- function to delete a cart item ----------------------------- //
+// ------------------------------- function to update cart item ----------------------------- //
+const removeCartItem = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
 
-export { addToCart, getUserCart };
+	// if the user does not exist, then
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if the user is authorized, then
+	// make a try-catch block
+	try {
+		// find the user's cart and update
+		const newCart = await Cart.findOneAndUpdate(
+			{ user: req.user._id },
+			{ $pull: { items: { _id: req.body.itemId } } },
+			{ new: true }
+		);
+
+		res.status(200).json(newCart);
+	} catch (error) {
+		// if an error occured in the try block then
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { addToCart, getUserCart, removeCartItem };

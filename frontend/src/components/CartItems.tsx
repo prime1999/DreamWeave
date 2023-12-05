@@ -11,7 +11,7 @@ type Props = {
 
 const CartItems = ({ item }: Props) => {
 	const dispatch = useDispatch();
-	const [qty, setQty] = useState<number>(1);
+	const [qty, setQty] = useState<number>(item.qty ? item.qty : 1);
 	const handleCountIncrease = (item: ProductType) => {
 		if (qty === item?.countInStock) {
 			setQty(item.countInStock as number);

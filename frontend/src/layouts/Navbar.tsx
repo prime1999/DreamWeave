@@ -43,9 +43,11 @@ const Navbar = () => {
 	const [logOutApiCall] = useLogUserOutMutation() as any;
 
 	const logOutUser = async () => {
-		await logOutApiCall().unwrap();
+		console.log(123);
+		await logOutApiCall({ cartItems }).unwrap();
 		dispatch(logOut());
-		toast.info("User logged out", {
+		console.log(23);
+		toast.success("User logged out", {
 			className: "bg-white",
 			bodyClassName: "text-black font-poppins font-semibold",
 			progressClassName: "bg-transparent",

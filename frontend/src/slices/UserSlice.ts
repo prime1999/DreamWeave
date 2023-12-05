@@ -20,10 +20,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				body: userData,
 			}),
 		}),
-		logUserOut: builder.mutation({
-			query: () => ({
+		logUserOut: builder.mutation<any, any>({
+			query: (cartItems) => ({
 				url: `${USERS_URL}/logUserOut`,
 				method: "POST",
+				body: cartItems,
 			}),
 		}),
 	}),

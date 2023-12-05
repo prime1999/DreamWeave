@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { ProductType } from "@/DataTypes/ProductType";
 import DeleteCartModal from "./Modals/DeleteCartModal";
+import { addToCart } from "@/slices/CartSlice";
 
 type Props = {
 	item: ProductType;
 };
 
 const CartItems = ({ item }: Props) => {
+	const dispatch = useDispatch();
 	const [qty, setQty] = useState<number>(1);
 	const handleCountIncrease = (item: ProductType) => {
 		if (qty === item?.countInStock) {
@@ -15,6 +18,7 @@ const CartItems = ({ item }: Props) => {
 		} else {
 			setQty((prevState) => prevState + 1);
 		}
+		dispatch(addToCart({ ...item, qty: qty + 1 }));
 	};
 
 	const handleCountDecrease = () => {
@@ -23,6 +27,7 @@ const CartItems = ({ item }: Props) => {
 		} else {
 			setQty(1);
 		}
+		dispatch(addToCart({ ...item, qty: qty > 1 ? qty - 1 : 1 }));
 	};
 
 	return (

@@ -4,6 +4,7 @@ import {
 	authUser,
 	logUserOut,
 } from "../controller/UserController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const UserRouter = express.Router();
 
@@ -15,6 +16,6 @@ POST: logUserOut Private
 
 UserRouter.post("/registerUser", registerUser);
 UserRouter.post("/authUser", authUser);
-UserRouter.post("/logUserOut", logUserOut);
+UserRouter.post("/logUserOut", protect, logUserOut);
 
 export default UserRouter;

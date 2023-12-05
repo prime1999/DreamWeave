@@ -58,9 +58,11 @@ const CartItems = ({ item }: Props) => {
 			<DeleteCartModal itemId={item._id}>
 				<button className="hidden text-red-500 font-bold md:block">X</button>
 			</DeleteCartModal>
-			<button className="bg-red-500 text-white rounded-md p-2 font-bold ml-16 duration-500 hover:bg-red-600 md:hidden">
-				Remove Item
-			</button>
+			<DeleteCartModal itemId={item._id}>
+				<button className="bg-red-500 text-white rounded-md p-2 font-bold ml-16 duration-500 hover:bg-red-600 md:hidden">
+					Remove Item
+				</button>
+			</DeleteCartModal>
 		</div>
 	);
 };

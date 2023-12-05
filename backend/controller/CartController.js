@@ -108,4 +108,28 @@ const removeCartItem = asyncHandler(async (req, res) => {
 	}
 });
 
-export { addToCart, getUserCart, removeCartItem };
+// ------------------------------- function to clear all items in a cart ------------------------------ //
+const clearAllItems = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if the user does not exist, then
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if the user is authorized, then
+	// make a try-catch block
+	try {
+		// find the user's cart and delete it
+		await Cart.findOneAndDelete({ user: req.user._id });
+		//send a success message to the frontend
+		res.status(200).json({ messae: "Cart cleared" });
+	} catch (error) {
+		// if an error occured in the try block then
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { addToCart, getUserCart, removeCartItem, clearAllItems };

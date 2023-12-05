@@ -45,7 +45,7 @@ const DeleteCartModal = ({ children, itemId }: Props) => {
 		<div>
 			<Dialog>
 				<DialogTrigger className="w-full">{children}</DialogTrigger>
-				<DialogContent className="w-96 rounded-lg shadow-light">
+				<DialogContent className="w-72 rounded-lg shadow-light md:w-96">
 					<DialogHeader>
 						<DialogTitle className="mb-4">Are You Sure?</DialogTitle>
 						<DialogDescription className="flex justify-between items-center">

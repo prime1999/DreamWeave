@@ -1,6 +1,7 @@
-import { ProductType } from "@/DataTypes/ProductType";
 import { useSelector } from "react-redux";
+import { ProductType } from "@/DataTypes/ProductType";
 import CartItems from "@/components/CartItems";
+import ClearCartModal from "@/components/Modals/ClearCartModal";
 
 const CartPage = () => {
 	const { cartItems, itemsPrice } = useSelector((state) => (state as any).cart);
@@ -19,9 +20,11 @@ const CartPage = () => {
 										({cartItems.length} products)
 									</p>
 								</div>
-								<button className="text-red-500 font-semibold">
-									X Clear Cart
-								</button>
+								<ClearCartModal>
+									<button className="text-red-500 font-semibold">
+										X Clear Cart
+									</button>
+								</ClearCartModal>
 							</div>
 							<div className="mt-4">
 								{cartItems.map((item: ProductType) => (

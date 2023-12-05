@@ -24,6 +24,12 @@ export const CartApiSlice = apiSlice.injectEndpoints({
 				body: itemId,
 			}),
 		}),
+		clearCart: builder.mutation<any, any>({
+			query: () => ({
+				url: `${CART_URL}/clearCart`,
+				method: "DELETE",
+			}),
+		}),
 	}),
 });
 
@@ -35,3 +41,6 @@ export const useGetUserCartQuery = CartApiSlice.endpoints.getUserCart.useQuery;
 //
 export const useRemoveItemFromCartMutation =
 	CartApiSlice.endpoints.removeItemFromCart.useMutation;
+//
+export const useClearCartMutation =
+	CartApiSlice.endpoints.clearCart.useMutation;

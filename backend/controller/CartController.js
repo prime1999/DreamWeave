@@ -96,7 +96,7 @@ const removeCartItem = asyncHandler(async (req, res) => {
 		// find the user's cart and update
 		const newCart = await Cart.findOneAndUpdate(
 			{ user: req.user._id },
-			{ $pull: { items: { _id: req.body.itemId } } },
+			{ $pull: { items: { product: req.body.itemId } } },
 			{ new: true }
 		);
 

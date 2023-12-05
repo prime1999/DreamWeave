@@ -1,5 +1,7 @@
-import { ProductType } from "@/DataTypes/ProductType";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ProductType } from "@/DataTypes/ProductType";
+import DeleteCartModal from "./Modals/DeleteCartModal";
 
 type Props = {
 	item: ProductType;
@@ -22,15 +24,18 @@ const CartItems = ({ item }: Props) => {
 			setQty(1);
 		}
 	};
+
 	return (
 		<div
 			key={item._id}
 			className="flex flex-col items-center justify-between p-4 border rounded-3xl mb-4 px-4 md:flex-row"
 		>
-			<div className="flex flex- items-center">
-				<img className="w-28 h-24" src={item.image} alt="" />
+			<div className="flex flex- items-center w-72">
+				<Link className="w-28 h-24" to={`/product/${item._id}`}>
+					<img className="w-full h-full" src={item.image} alt="" />
+				</Link>
 				<div className="ml-4 flex flex-col">
-					<h6 className="font-semibold">{item.name}</h6>
+					<h6 className="font-semibold truncate">{item.name}</h6>
 					<p className="text-gray-300">{item.brand}</p>
 				</div>
 			</div>
@@ -50,7 +55,9 @@ const CartItems = ({ item }: Props) => {
 				</button>
 			</div>
 			<h6 className="font-semibold ml-8 my-4">${item.price}</h6>
-			<button className="hidden text-red-500 font-bold md:block">X</button>
+			<DeleteCartModal itemId={item._id}>
+				<button className="hidden text-red-500 font-bold md:block">X</button>
+			</DeleteCartModal>
 			<button className="bg-red-500 text-white rounded-md p-2 font-bold ml-16 duration-500 hover:bg-red-600 md:hidden">
 				Remove Item
 			</button>

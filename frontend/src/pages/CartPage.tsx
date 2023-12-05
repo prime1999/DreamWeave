@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import CartItems from "@/components/CartItems";
 
 const CartPage = () => {
-	const { cartItems, itemsPrice, shippingPrice, taxPrice, totalPrice } =
-		useSelector((state) => (state as any).cart);
+	const { cartItems, itemsPrice } = useSelector((state) => (state as any).cart);
 
 	return (
 		<>

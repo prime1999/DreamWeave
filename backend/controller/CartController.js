@@ -76,6 +76,7 @@ const getUserCart = asyncHandler(async (req, res) => {
 		res.status(200).json({ _id: cart[0]._id, cartItems });
 	} catch (error) {
 		// if an error occured in the try block, then:
+		res.status(400);
 		throw new Error(error.message);
 	}
 });

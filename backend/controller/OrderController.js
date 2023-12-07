@@ -23,7 +23,6 @@ const placeOrder = asyncHandler(async (req, res) => {
 		const orderCart = await Cart.find({ user: req.user._id }).populate(
 			"items.product"
 		);
-		console.log(orderCart);
 		if (!orderCart) {
 			throw new Error("cart not found");
 		}
@@ -52,4 +51,33 @@ const placeOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-export { placeOrder };
+// --------------------------- function to get the order of a user ------------------------------- //
+const getUserOrder = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// find the user's order in the DB
+		const userOrder = await Order.find({ user: req.user._id }).populate(
+			"items.product"
+		);
+		// if the user has not placed any orders, the
+		if (!userOrder) {
+			throw new Error("User had not placed any order");
+		}
+		// if the order was found then send the order to the frontend
+		res.status(200).json(userOrder);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { placeOrder, getUserOrder };

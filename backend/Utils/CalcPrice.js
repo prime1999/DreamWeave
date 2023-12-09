@@ -3,7 +3,6 @@ const getDecimal = (num) => {
 };
 
 export const calcPrice = (cartItems) => {
-	console.log({ cart: cartItems[0].product, qty: cartItems[0].quantity });
 	const itemsPrice = cartItems.reduce(
 		(acc, item) => acc + (item.product.price * 100 * item.quantity) / 100,
 		0

@@ -75,7 +75,7 @@ const authUser = asyncHandler(async (req, res) => {
 
 // -------------------------------- function to log a user out ------------------------------ //
 const logUserOut = asyncHandler(async (req, res) => {
-	// // check if the user is authorized
+	// check if the user is authorized
 	const userExist = await User.findById(req.user._id);
 
 	// if the user does not exist, then
@@ -88,10 +88,13 @@ const logUserOut = asyncHandler(async (req, res) => {
 	try {
 		// get the cart currenty in the local storage
 		const localCart = req.body.cartItems;
+
 		// get the current user's cart from te DB
 		const dbCart = await Cart.findOne({ user: req.user._id });
+
 		// check if any of the items in the cart are different
 		const cartDiffer = !isEqual(localCart, dbCart);
+
 		// if the cart are different, then:
 		if (cartDiffer) {
 			let newCart = [];
@@ -111,7 +114,7 @@ const logUserOut = asyncHandler(async (req, res) => {
 				newCart.push(cart);
 			}
 			// if the cart was updated then
-			if (newCart) {
+			if (newCart.length > 0) {
 				// proceed to log user out
 				// clear the cookie "jwt"
 				res.cookie("jwt", "", {
@@ -123,6 +126,15 @@ const logUserOut = asyncHandler(async (req, res) => {
 					.status(200)
 					.json({ cart: newCart, message: "User logged out successfully" });
 			}
+		} else {
+			// proceed to log user out
+			// clear the cookie "jwt"
+			res.cookie("jwt", "", {
+				httpOnly: true,
+				expires: new Date(0),
+			});
+			// send a message  to the frontend
+			res.status(200).json({ message: "User logged out successfully" });
 		}
 	} catch (error) {
 		// if an error occured in the try block, then:

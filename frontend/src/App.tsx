@@ -14,6 +14,7 @@ import SingleProduct from "./pages/SingleProduct";
 import CartPage from "./pages/CartPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthPage from "./pages/AuthPage";
+import OrderPage from "./pages/OrderPage";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -23,6 +24,7 @@ function App() {
 					<Route path="/page/:pageNumber" element={<HomePage />} />
 					<Route path="/product/:productId" element={<SingleProduct />} />
 					<Route path="/cart" element={<CartPage />} />
+					<Route path="/order" element={<OrderPage />} />
 				</Route>
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/logIn" element={<AuthPage />} />

@@ -23,9 +23,9 @@ export const updateCart = (state: cartStateType) => {
 
 	state.itemsPrice = getDecimal(num);
 
-	//state.shippingPrice = getDecimal(state.itemsPrice > 100 ? 10 : 0);
+	state.shippingPrice = getDecimal(state.itemsPrice > 100 ? 10 : 0);
 
-	//state.taxPrice = getDecimal(Number((0.15 * state.itemsPrice).toFixed(2)));
+	state.taxPrice = getDecimal(Number((0.15 * state.itemsPrice).toFixed(2)));
 
 	state.totalPrice = getDecimal(state.itemsPrice);
 	localStorage.setItem("Cart", JSON.stringify(state));

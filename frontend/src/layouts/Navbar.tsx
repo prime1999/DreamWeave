@@ -40,18 +40,31 @@ const Navbar = () => {
 		}
 	}, [navigate, userInfo]);
 
-	const [logOutApiCall] = useLogUserOutMutation() as any;
+	const [logOutApiCall, { isLoading: logOutLoading }] =
+		useLogUserOutMutation() as any;
 
 	const logOutUser = async () => {
-		console.log(123);
-		await logOutApiCall({ cartItems }).unwrap();
-		dispatch(logOut());
-		console.log(23);
-		toast.success("User logged out", {
-			className: "bg-white",
-			bodyClassName: "text-black font-poppins font-semibold",
-			progressClassName: "bg-transparent",
-		});
+		try {
+			console.log(123);
+			// if (logOutLoading) {
+			// 	console.log("true");
+			// } else {
+			// 	console.log("false");
+			// }
+			const res = await logOutApiCall({ cartItems }).unwrap();
+			console.log({ ...res });
+			console.log(456);
+			dispatch(logOut());
+			console.log(23);
+
+			toast.success("User logged out", {
+				className: "bg-white",
+				bodyClassName: "text-black font-poppins font-semibold",
+				progressClassName: "bg-transparent",
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<>

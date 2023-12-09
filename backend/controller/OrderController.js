@@ -51,7 +51,7 @@ const placeOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-// --------------------------- function to get the order of a user ------------------------------- //
+// --------------------------- function to get all the order of a user ------------------------------- //
 const getUserOrder = asyncHandler(async (req, res) => {
 	// check if the user is authorized
 	const userExist = await User.findById(req.user._id);
@@ -69,7 +69,7 @@ const getUserOrder = asyncHandler(async (req, res) => {
 		);
 		// if the user has not placed any orders, the
 		if (!userOrder) {
-			throw new Error("User had not placed any order");
+			throw new Error("User has not placed any order");
 		}
 		// if the order was found then send the order to the frontend
 		res.status(200).json(userOrder);
@@ -80,4 +80,35 @@ const getUserOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-export { placeOrder, getUserOrder };
+// ------------------------- function to get a certain order of a user ---------------------------------- //
+const getOneOrder = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// check if the order is in the database
+		const order = await Order.find({
+			_id: req.params.orderId,
+			user: req.user._id,
+		});
+
+		// if the order is not in the DB
+		if (order.length === 0) {
+			throw new Error("Order not placed");
+		}
+		// if the order was found, then:
+		res.status(200).json(order);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { placeOrder, getUserOrder, getOneOrder };

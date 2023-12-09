@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { ProductType } from "@/DataTypes/ProductType";
 import CartItems from "@/components/CartItems";
 import ClearCartModal from "@/components/Modals/ClearCartModal";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
 	const { cartItems, itemsPrice } = useSelector((state) => (state as any).cart);
@@ -56,9 +57,12 @@ const CartPage = () => {
 										<p>$0</p>
 									</span>
 								</div>
-								<button className="mt-4 w-full py-2 mx-auto bg-black text-light rounded-xl text-center">
+								<Link
+									to="/login?redirect=/order"
+									className="flex items-center justify-center mt-4 w-full py-2 px-36 mx-auto bg-black text-light rounded-xl text-center"
+								>
 									Place Order
-								</button>
+								</Link>
 							</form>
 						</div>
 					</div>

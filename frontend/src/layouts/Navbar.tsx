@@ -31,7 +31,7 @@ import NavBar from "./Responsiveness-layout/NavBar";
 const Navbar = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { cartItems } = useSelector((state) => (state as any).cart);
+	const { cartItems } = useSelector((state: any) => state.cart);
 	const { userInfo } = useSelector((state: any) => state.auth);
 
 	useEffect(() => {
@@ -45,17 +45,9 @@ const Navbar = () => {
 
 	const logOutUser = async () => {
 		try {
-			console.log(123);
-			// if (logOutLoading) {
-			// 	console.log("true");
-			// } else {
-			// 	console.log("false");
-			// }
 			const res = await logOutApiCall({ cartItems }).unwrap();
-			console.log({ ...res });
-			console.log(456);
+
 			dispatch(logOut());
-			console.log(23);
 
 			toast.success("User logged out", {
 				className: "bg-white",
@@ -200,7 +192,7 @@ const Navbar = () => {
 					<Link to="/cart" className="flex items-end ml-4">
 						<div className="relative">
 							<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
-							{cartItems.length > 0 && (
+							{cartItems.length > 0 && userInfo && (
 								<p className="absolute -top-4 -right-3 w-2 h-2 text-sm text-light font-semibold flex justify-center items-center p-3 rounded-[100%] bg-blue border-2 border-white">
 									{cartItems.length}
 								</p>

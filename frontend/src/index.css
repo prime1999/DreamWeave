@@ -177,4 +177,9 @@
     input[type="number"] {
     -moz-appearance: textfield;
     }
+
+    #pending{
+      background-color: rgba(0, 0, 255, 0.2);
+      color: blue;
+    }
       

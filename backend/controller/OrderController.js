@@ -97,7 +97,6 @@ const getOneOrder = asyncHandler(async (req, res) => {
 			_id: req.params.orderId,
 			user: req.user._id,
 		});
-
 		// if the order is not in the DB
 		if (order.length === 0) {
 			throw new Error("Order not placed");

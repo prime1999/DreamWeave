@@ -14,4 +14,5 @@ export interface ProductType {
 	createdAt?: Date;
 	updatedAt?: Date;
 	qty?: number;
+	isPaid?: boolean;
 }

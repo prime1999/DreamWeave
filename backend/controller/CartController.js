@@ -61,7 +61,7 @@ const getUserCart = asyncHandler(async (req, res) => {
 		const cart = await Cart.find({ user: req.user._id }).populate(
 			"items.product"
 		);
-		// if not cart was found then
+		// if no cart was found then
 		if (!cart) {
 			throw new Error("No items in user's cart");
 		}

@@ -12,13 +12,13 @@ type Props = {
 const CartItems = ({ item }: Props) => {
 	const dispatch = useDispatch();
 	const [qty, setQty] = useState<number>(item.qty ? item.qty : 1);
-	const handleCountIncrease = (item: ProductType) => {
+	const handleCountIncrease = (item: any) => {
 		if (qty === item?.countInStock) {
 			setQty(item.countInStock as number);
 		} else {
 			setQty((prevState) => prevState + 1);
 		}
-		dispatch(addToCart({ ...item, qty: qty + 1 }));
+		dispatch(addToCart({ ...item, qty: item.qty + 1 }));
 	};
 
 	const handleCountDecrease = () => {
@@ -27,7 +27,12 @@ const CartItems = ({ item }: Props) => {
 		} else {
 			setQty(1);
 		}
-		dispatch(addToCart({ ...item, qty: qty > 1 ? qty - 1 : 1 }));
+		dispatch(
+			addToCart({
+				...item,
+				qty: (item.qty as any) > 1 ? (item.qty as any) - 1 : 1,
+			})
+		);
 	};
 
 	return (
@@ -60,10 +65,10 @@ const CartItems = ({ item }: Props) => {
 				</button>
 			</div>
 			<h6 className="font-semibold ml-8 my-4">${item.price}</h6>
-			<DeleteCartModal itemId={item._id}>
+			<DeleteCartModal itemId={item._id as string}>
 				<button className="hidden text-red-500 font-bold md:block">X</button>
 			</DeleteCartModal>
-			<DeleteCartModal itemId={item._id}>
+			<DeleteCartModal itemId={item._id as string}>
 				<button className="bg-red-500 text-white rounded-md p-2 font-bold ml-16 duration-500 hover:bg-red-600 md:hidden">
 					Remove Item
 				</button>

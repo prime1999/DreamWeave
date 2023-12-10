@@ -55,11 +55,26 @@ const authUser = asyncHandler(async (req, res) => {
 		// if the user has been registered then:
 		if (user && (await user.matchPassword(password))) {
 			generateToken(res, user._id);
+			// check if the user has any items in their cart
+			const checkCart = await Cart.find({ user: user._id }).populate(
+				"items.product"
+			);
+
+			// add the quantity to each product in the cart
+			const cartItems = checkCart[0].items.map((item) => {
+				const productObject = item.product.toObject(); // Convert the Mongoose document to a plain object
+				productObject.qty = item.quantity; // Add the qty property
+				return productObject;
+			});
+
+			console.log(cartItems);
+
 			// send this details back to the frontend
 			res.status(200).json({
 				_id: user._id,
 				name: user.name,
 				email: user.email,
+				cart: checkCart ? { _id: checkCart[0]._id, cartItems } : null,
 				isAdmin: user.isAdmin,
 			});
 		} else {
@@ -114,7 +129,7 @@ const logUserOut = asyncHandler(async (req, res) => {
 				newCart.push(cart);
 			}
 			// if the cart was updated then
-			if (newCart.length > 0) {
+			if (newCart) {
 				// proceed to log user out
 				// clear the cookie "jwt"
 				res.cookie("jwt", "", {

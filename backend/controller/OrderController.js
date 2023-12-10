@@ -23,6 +23,7 @@ const placeOrder = asyncHandler(async (req, res) => {
 		const orderCart = await Cart.find({ user: req.user._id }).populate(
 			"items.product"
 		);
+		console.log(orderCart);
 		if (!orderCart) {
 			throw new Error("cart not found");
 		}

@@ -45,7 +45,7 @@ const Navbar = () => {
 
 	const logOutUser = async () => {
 		try {
-			const res = await logOutApiCall({ cartItems }).unwrap();
+			await logOutApiCall({ cartItems }).unwrap();
 
 			dispatch(logOut());
 
@@ -192,7 +192,7 @@ const Navbar = () => {
 					<Link to="/cart" className="flex items-end ml-4">
 						<div className="relative">
 							<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
-							{cartItems.length > 0 && userInfo && (
+							{cartItems.length > 0 && (
 								<p className="absolute -top-4 -right-3 w-2 h-2 text-sm text-light font-semibold flex justify-center items-center p-3 rounded-[100%] bg-blue border-2 border-white">
 									{cartItems.length}
 								</p>

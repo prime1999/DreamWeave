@@ -9,7 +9,10 @@ import image from "@/assets/images/Mobile login-amico.png";
 import logo from "@/assets/images/logo.png";
 import { useLogUserInMutation } from "@/slices/UserSlice";
 import { setCredentials } from "@/slices/AuthSlice";
-import { useGetUserCartQuery } from "@/slices/CartApiSlice";
+import {
+	useGetUserCartQuery,
+	useAddToCartMutation,
+} from "@/slices/CartApiSlice";
 import { addToCart } from "@/slices/CartSlice";
 
 const AuthPage: React.FC = () => {
@@ -29,28 +32,40 @@ const AuthPage: React.FC = () => {
 	const redirect = sp.get("redirect") || "/";
 	// get the user's info from the redux store named auth
 	const { userInfo } = useSelector((state: any) => state.auth);
+	const { cartItems } = useSelector((state: any) => state.cart);
 	const [logIn, { isLoading }] = useLogUserInMutation();
-	const { data: cartData, isLoading: loadingCart } = useGetUserCartQuery({
-		skip: !userInfo,
-	});
+	const [addProductToCart, { isLoading: addingToCart }] = useAddToCartMutation(
+		{}
+	);
+	// const { data: cartData, isLoading: loadingCart } = useGetUserCartQuery({
+	// 	skip: !userInfo,
+	// });
 
 	useEffect(() => {
 		// check if there is a userInfo in te redux state
 		if (userInfo) {
 			//console.log(userInfo);
-			if (loadingCart) {
+			if (isLoading) {
 				console.log("loading...");
-			} else {
-				console.log("not loading");
 			}
-			if (cartData) {
-				//setLocalCart({ cartItems: cartData.cartItems });
-				cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
-				// if there is one then the user is logged in, redirect the user to there wanted destination
+
+			// if (cartData) {
+			// 	//setLocalCart({ cartItems: cartData.cartItems });
+			// 	cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+			// 	// if there is one then the user is logged in, redirect the user to there wanted destination
+			// }
+			userInfo.cart.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+			if (cartItems) {
+				cartItems.forEach((item: any) =>
+					addProductToCart({ product: item._id, quantity: item.qty })
+				);
 				navigate(redirect);
 			}
+
+			console.log("done");
+			navigate(redirect);
 		}
-	}, [navigate, redirect, userInfo, loadingCart]);
+	}, [navigate, redirect, userInfo]);
 	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -91,7 +106,9 @@ const AuthPage: React.FC = () => {
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
 			// navigate to the redirect
-			// navigate(redirect);
+			// if (!loadingCart) {
+			// 	navigate(redirect);
+			// }
 			// show a success message
 			toast.success("welcome back", {
 				className: "bg-green-200",
@@ -149,15 +166,14 @@ const AuthPage: React.FC = () => {
 							</span>
 						</div>
 						<button
-							disabled={isLoading || loadingCart}
+							disabled={isLoading}
 							className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
-								isLoading || loadingCart
+								isLoading
 									? "bg-other hover:shadow-none"
 									: "bg-blue hover:shadow-blue"
 							} rounded-full duration-500 hover:shadow-md`}
 						>
-							{isLoading ||
-								(loadingCart && <span className="btnLoader"></span>)}
+							{isLoading && <span className="btnLoader"></span>}
 							Sign In
 						</button>
 						<div className="flex items-center justify-between mt-4">

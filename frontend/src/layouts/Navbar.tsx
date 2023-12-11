@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { MdPersonPin, MdLogout, MdLogin, MdCreate } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import logo from "../assets/images/logo.png";
 import laptop from "../assets/images/d1.jpg";
 import phone from "../assets/images/d2.jpg";
@@ -48,7 +48,7 @@ const Navbar = () => {
 			await logOutApiCall({ cartItems }).unwrap();
 
 			dispatch(logOut());
-
+			navigate("/");
 			toast.success("User logged out", {
 				className: "bg-white",
 				bodyClassName: "text-black font-poppins font-semibold",

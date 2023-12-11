@@ -41,7 +41,6 @@ const authSlice = createSlice({
 		},
 		clearUserInfoCart: (state) => {
 			// cler the cart in the userInfo
-			console.log(state);
 			state.userInfo = {
 				...(state.userInfo as UserInfo),
 				cart: {},

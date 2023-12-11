@@ -42,28 +42,11 @@ const AuthPage: React.FC = () => {
 			if (isLoading) {
 				console.log("loading...");
 			}
-			// if there is a cart object in the userInfo object
-			if (userInfo.cart) {
-				// iterate through each items in the cart and add them to the cart in the local storage and redux store
-				userInfo.cart.cartItems?.forEach((item: any) =>
-					dispatch(addToCart(item))
-				);
-				// after all this is done, clear the cart in the userInfo
-				dispatch(clearUserInfoCart());
-			}
-			// if there was an item in the cart before te user logged in then,
-			if (cartItems) {
-				// iterate through the cart and send them to the user cart collection in te DB
-				cartItems.forEach((item: any) =>
-					addProductToCart({ product: item._id, quantity: item.qty })
-				);
-				// then navigate to the initial location the user wants to go
-				navigate(redirect);
-			}
+
 			// navigate to the initial location the user wants to go
 			navigate(redirect);
 		}
-	}, [navigate, redirect, userInfo]);
+	}, [navigate, redirect, userInfo, cartItems, dispatch, isLoading]);
 	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -103,6 +86,22 @@ const AuthPage: React.FC = () => {
 			const res = await logIn({ email, password }).unwrap();
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
+			console.log(res);
+			// if there was an item in the cart before te user logged in then,
+			if (cartItems) {
+				// iterate through the cart and send them to the user cart collection in te DB
+				cartItems.forEach((item: any) =>
+					addProductToCart({ product: item._id, quantity: item.qty })
+				);
+			}
+			if (res.cart) {
+				// if there is a cart object in the userInfo object
+				const { cartItems } = res.cart as any;
+				// iterate through each items in the cart and add them to the cart in the local storage and redux store
+				cartItems?.forEach((item: any) => dispatch(addToCart(item)));
+				// after all this is done, clear the cart in the userInfo
+				dispatch(clearUserInfoCart());
+			}
 			// show a success message
 			toast.success("welcome back", {
 				className: "bg-green-200",

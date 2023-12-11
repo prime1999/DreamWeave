@@ -3,4 +3,5 @@ export interface UserType {
 	name: string;
 	email: string;
 	isAdmin: boolean;
+	cart?: Object;
 }

@@ -52,9 +52,9 @@ const OrderPage = () => {
 			});
 			const { data } = res as any;
 			setResId(data._id);
+			setOpenModal(true);
 			await clearCart({});
 			dispatch(clearCartItems());
-			setOpenModal(true);
 			address = "";
 			city = "";
 			country = "";

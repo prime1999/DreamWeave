@@ -99,32 +99,40 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 											))}
 										</div>
 										<div>
-											<div>
-												<p>Subtotal</p>
-												<p>{order.itemsPrice}</p>
+											<div className="flex items-center justify-between">
+												<p className="text-gray-400 font-semibold">Subtotal</p>
+												<p className="font-semibold">${order.itemsPrice}</p>
 											</div>
-											<div>
-												<p>Shipping</p>
-												<p>${order.shippingPrice}</p>
+											<div className="flex items-center justify-between">
+												<p className="text-gray-400 font-semibold">Shipping</p>
+												<p className="font-semibold">${order.shippingPrice}</p>
 											</div>
-											<div>
-												<p>Tax</p>
-												<p>{order.taxPrice}</p>
+											<div className="flex items-center justify-between">
+												<p className="text-gray-400 font-semibold">Tax</p>
+												<p className="font-semibold">{order.taxPrice}</p>
 											</div>
-											<div>
-												<p>Discount</p>
-												<p>$0</p>
+											<div className="flex items-center justify-between mb-4">
+												<p className="text-gray-400 font-semibold">Discount</p>
+												<p className="font-semibold">$0</p>
 											</div>
 											<hr />
-											<div>
-												<p>Total</p>
-												<p>${order.totalAmount}</p>
+											<div className="my-4 flex items-center justify-between">
+												<p className="text-lg font-bold">Total</p>
+												<p className="text-lg font-bold">
+													${order.totalAmount}
+												</p>
 											</div>
+											<hr />
 										</div>
 										<DialogClose asChild>
-											<button className="bg-red-500 px-4 py-2 rounded-lg w-24 duration-500 text-light font-semibold hover:bg-red-600">
-												Cancel
-											</button>
+											<div className="flex items-center justify-between mt-4">
+												<button className="bg-red-500 px-4 py-2 rounded-lg w-24 duration-500 text-light font-semibold hover:bg-red-600">
+													Cancel
+												</button>
+												<button className="px-4 py-2 rounded-lg text-white font-semibold duration-500 bg-blue hover:bg-cyan-800">
+													Pay with PayPal
+												</button>
+											</div>
 										</DialogClose>
 									</DialogDescription>
 								</DialogHeader>

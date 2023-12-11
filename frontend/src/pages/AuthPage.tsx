@@ -46,7 +46,7 @@ const AuthPage: React.FC = () => {
 			// navigate to the initial location the user wants to go
 			navigate(redirect);
 		}
-	}, [navigate, redirect, userInfo, cartItems, dispatch, isLoading]);
+	}, [navigate, redirect, userInfo, isLoading]);
 	// state to hide and show te password been inputted
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -86,7 +86,6 @@ const AuthPage: React.FC = () => {
 			const res = await logIn({ email, password }).unwrap();
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
-			console.log(res);
 			// if there was an item in the cart before te user logged in then,
 			if (cartItems) {
 				// iterate through the cart and send them to the user cart collection in te DB
@@ -102,6 +101,7 @@ const AuthPage: React.FC = () => {
 				// after all this is done, clear the cart in the userInfo
 				dispatch(clearUserInfoCart());
 			}
+
 			// show a success message
 			toast.success("welcome back", {
 				className: "bg-green-200",

@@ -5,6 +5,7 @@ type UserInfo = {
 	email: string;
 	isAdmin: boolean;
 	_id: string;
+	cart: object;
 };
 
 type initialStateType = {
@@ -38,9 +39,19 @@ const authSlice = createSlice({
 			// clear the local storage
 			localStorage.clear();
 		},
+		clearUserInfoCart: (state) => {
+			// cler the cart in the userInfo
+			console.log(state);
+			state.userInfo = {
+				...(state.userInfo as UserInfo),
+				cart: {},
+			};
+			// save the details to local storage
+			localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
+		},
 	},
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, clearUserInfoCart } = authSlice.actions;
 
 export default authSlice.reducer;

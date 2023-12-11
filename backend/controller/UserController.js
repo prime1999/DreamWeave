@@ -52,6 +52,7 @@ const authUser = asyncHandler(async (req, res) => {
 		const { email, password } = req.body;
 		// check if the user is registered
 		const user = await User.findOne({ email });
+
 		// if the user has been registered then:
 		if (user && (await user.matchPassword(password))) {
 			generateToken(res, user._id);
@@ -59,22 +60,22 @@ const authUser = asyncHandler(async (req, res) => {
 			const checkCart = await Cart.find({ user: user._id }).populate(
 				"items.product"
 			);
-
-			// add the quantity to each product in the cart
-			const cartItems = checkCart[0].items.map((item) => {
-				const productObject = item.product.toObject(); // Convert the Mongoose document to a plain object
-				productObject.qty = item.quantity; // Add the qty property
-				return productObject;
-			});
-
-			console.log(cartItems);
+			let cartItems;
+			if (checkCart.length > 0) {
+				// add the quantity to each product in the cart
+				cartItems = checkCart[0].items.map((item) => {
+					const productObject = item.product.toObject(); // Convert the Mongoose document to a plain object
+					productObject.qty = item.quantity; // Add the qty property
+					return productObject;
+				});
+			}
 
 			// send this details back to the frontend
 			res.status(200).json({
 				_id: user._id,
 				name: user.name,
 				email: user.email,
-				cart: checkCart ? { _id: checkCart[0]._id, cartItems } : null,
+				cart: checkCart.length > 0 ? { _id: checkCart[0]._id, cartItems } : {},
 				isAdmin: user.isAdmin,
 			});
 		} else {

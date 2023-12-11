@@ -8,11 +8,8 @@ import { MdEmail } from "react-icons/md";
 import image from "@/assets/images/Mobile login-amico.png";
 import logo from "@/assets/images/logo.png";
 import { useLogUserInMutation } from "@/slices/UserSlice";
-import { setCredentials } from "@/slices/AuthSlice";
-import {
-	useGetUserCartQuery,
-	useAddToCartMutation,
-} from "@/slices/CartApiSlice";
+import { clearUserInfoCart, setCredentials } from "@/slices/AuthSlice";
+import { useAddToCartMutation } from "@/slices/CartApiSlice";
 import { addToCart } from "@/slices/CartSlice";
 
 const AuthPage: React.FC = () => {
@@ -37,32 +34,33 @@ const AuthPage: React.FC = () => {
 	const [addProductToCart, { isLoading: addingToCart }] = useAddToCartMutation(
 		{}
 	);
-	// const { data: cartData, isLoading: loadingCart } = useGetUserCartQuery({
-	// 	skip: !userInfo,
-	// });
 
 	useEffect(() => {
 		// check if there is a userInfo in te redux state
 		if (userInfo) {
-			//console.log(userInfo);
+			// check if the userinfo is still loading
 			if (isLoading) {
 				console.log("loading...");
 			}
-
-			// if (cartData) {
-			// 	//setLocalCart({ cartItems: cartData.cartItems });
-			// 	cartData.cartItems.forEach((item: any) => dispatch(addToCart(item)));
-			// 	// if there is one then the user is logged in, redirect the user to there wanted destination
-			// }
-			userInfo.cart.cartItems.forEach((item: any) => dispatch(addToCart(item)));
+			// if there is a cart object in the userInfo object
+			if (userInfo.cart) {
+				// iterate through each items in the cart and add them to the cart in the local storage and redux store
+				userInfo.cart.cartItems?.forEach((item: any) =>
+					dispatch(addToCart(item))
+				);
+				// after all this is done, clear the cart in the userInfo
+				dispatch(clearUserInfoCart());
+			}
+			// if there was an item in the cart before te user logged in then,
 			if (cartItems) {
+				// iterate through the cart and send them to the user cart collection in te DB
 				cartItems.forEach((item: any) =>
 					addProductToCart({ product: item._id, quantity: item.qty })
 				);
+				// then navigate to the initial location the user wants to go
 				navigate(redirect);
 			}
-
-			console.log("done");
+			// navigate to the initial location the user wants to go
 			navigate(redirect);
 		}
 	}, [navigate, redirect, userInfo]);
@@ -105,10 +103,6 @@ const AuthPage: React.FC = () => {
 			const res = await logIn({ email, password }).unwrap();
 			// save the response to local storage and redux auth store
 			dispatch(setCredentials({ ...res }));
-			// navigate to the redirect
-			// if (!loadingCart) {
-			// 	navigate(redirect);
-			// }
 			// show a success message
 			toast.success("welcome back", {
 				className: "bg-green-200",

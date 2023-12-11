@@ -45,20 +45,16 @@ const OrderPage = () => {
 	};
 
 	const handlePlaceOrder = async () => {
-		const shippingAddress = {
-			address,
-			city,
-			country,
-			postalCode,
-			zipCode,
-		};
 		try {
-			const res = await placeOrder({ shippingAddress, paymentMethod });
+			const res = await placeOrder({
+				shippingAddress: formData,
+				paymentMethod,
+			});
 			const { data } = res as any;
 			setResId(data._id);
-			setOpenModal(true);
 			await clearCart({});
 			dispatch(clearCartItems());
+			setOpenModal(true);
 			address = "";
 			city = "";
 			country = "";

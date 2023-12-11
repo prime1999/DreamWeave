@@ -98,6 +98,29 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 												</div>
 											))}
 										</div>
+										<div>
+											<div>
+												<p>Subtotal</p>
+												<p>{order.itemsPrice}</p>
+											</div>
+											<div>
+												<p>Shipping</p>
+												<p>${order.shippingPrice}</p>
+											</div>
+											<div>
+												<p>Tax</p>
+												<p>{order.taxPrice}</p>
+											</div>
+											<div>
+												<p>Discount</p>
+												<p>$0</p>
+											</div>
+											<hr />
+											<div>
+												<p>Total</p>
+												<p>${order.totalAmount}</p>
+											</div>
+										</div>
 										<DialogClose asChild>
 											<button className="bg-red-500 px-4 py-2 rounded-lg w-24 duration-500 text-light font-semibold hover:bg-red-600">
 												Cancel

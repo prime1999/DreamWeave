@@ -23,10 +23,11 @@ const placeOrder = asyncHandler(async (req, res) => {
 		const orderCart = await Cart.find({ user: req.user._id }).populate(
 			"items.product"
 		);
-		console.log(orderCart);
+
 		if (!orderCart) {
 			throw new Error("cart not found");
 		}
+		console.log(orderCart);
 		// calculate the prices needed for the order
 		const { shippingPrice, taxPrice, itemsPrice, totalPrice } = calcPrice(
 			orderCart[0].items

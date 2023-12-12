@@ -10,6 +10,7 @@ import store from "./store";
 import RootLayouts from "./layouts/RootLayouts";
 import HomePage from "./pages/HomePage";
 import { Provider } from "react-redux";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import SingleProduct from "./pages/SingleProduct";
 import CartPage from "./pages/CartPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -36,8 +37,10 @@ function App() {
 	return (
 		<>
 			<Provider store={store}>
-				<RouterProvider router={router} />
-				<ToastContainer />
+				<PayPalScriptProvider deferLoading={true}>
+					<RouterProvider router={router} />
+					<ToastContainer />
+				</PayPalScriptProvider>
 			</Provider>
 		</>
 	);

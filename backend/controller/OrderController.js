@@ -112,4 +112,42 @@ const getOneOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-export { placeOrder, getUserOrder, getOneOrder };
+// ------------------------------ function to update order to paid ----------------------------------- //
+const payOrder = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// get the order from the request params
+		const order = await Order.findById(req.params.id);
+
+		// if the order was not found then
+		if (!order) {
+			throw new Error("order not placed");
+		}
+		// if the order was found then
+		order.isPaid = true;
+		order.paidAt = Date.now();
+		order.paymentResult = {
+			id: req.body.id,
+			status: req.body.status,
+			update_time: req.body.update_time,
+			email_address: req.body.payer.email_address,
+		};
+		// save the updated order to the DB
+		const updatedOrder = await order.save();
+		res.status(201).json(updatedOrder);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { placeOrder, getUserOrder, getOneOrder, payOrder };

@@ -125,7 +125,10 @@ const payOrder = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// get the order from the request params
-		const order = await Order.findById(req.params.id);
+		const order = await Order.findById(req.params.orderId);
+		console.log(req.params.orderId);
+
+		console.log(order);
 
 		// if the order was not found then
 		if (!order) {
@@ -133,6 +136,7 @@ const payOrder = asyncHandler(async (req, res) => {
 		}
 		// if the order was found then
 		order.isPaid = true;
+		order.status = "processing";
 		order.paidAt = Date.now();
 		order.paymentResult = {
 			id: req.body.id,

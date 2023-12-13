@@ -11,6 +11,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import PaypalProvider from "../PaypalProvider";
 
 type Props = {
 	orderId: string;
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const PaymentModal = ({ orderId, open, setOpen }: Props) => {
-	const { data, isLoading } = useGetAnOrderQuery({ orderId });
+	const { data, isLoading, refetch } = useGetAnOrderQuery({ orderId });
 
 	console.log(data);
 	return (
@@ -126,12 +127,13 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 										</div>
 										<DialogClose asChild>
 											<div className="flex items-center justify-between mt-4">
-												<button className="bg-red-500 px-4 py-2 rounded-lg w-24 duration-500 text-light font-semibold hover:bg-red-600">
+												{/* <button className="bg-red-500 px-4 py-2 rounded-lg w-24 duration-500 text-light font-semibold hover:bg-red-600">
 													Cancel
 												</button>
 												<button className="px-4 py-2 rounded-lg text-white font-semibold duration-500 bg-blue hover:bg-cyan-800">
 													Pay with PayPal
-												</button>
+												</button> */}
+												<PaypalProvider refetch={refetch} order={order} />
 											</div>
 										</DialogClose>
 									</DialogDescription>

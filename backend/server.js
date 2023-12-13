@@ -30,7 +30,7 @@ app.use("/api/products", ProductRouter);
 app.use("/api/cart", CartRouter);
 app.use("/api/user", UserRouter);
 app.use("/api/order", OrderRouter);
-app.use("/api/config/paypal", (req, res) => {
+app.get("/api/config/paypal", (req, res) => {
 	res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 

@@ -4,13 +4,12 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./store";
+import { Provider } from "react-redux";
 import RootLayouts from "./layouts/RootLayouts";
 import HomePage from "./pages/HomePage";
-import { Provider } from "react-redux";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import SingleProduct from "./pages/SingleProduct";
 import CartPage from "./pages/CartPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -37,10 +36,8 @@ function App() {
 	return (
 		<>
 			<Provider store={store}>
-				<PayPalScriptProvider deferLoading={true}>
-					<RouterProvider router={router} />
-					<ToastContainer />
-				</PayPalScriptProvider>
+				<RouterProvider router={router} />
+				<ToastContainer />
 			</Provider>
 		</>
 	);

@@ -36,6 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
 				name: user.name,
 				email: user.email,
 				phoneNumber: "",
+				pic: user.pic,
 				isAdmin: user.isAdmin,
 			});
 		}
@@ -77,6 +78,7 @@ const authUser = asyncHandler(async (req, res) => {
 				name: user.name,
 				email: user.email,
 				phoneNumber: user.phoneNumber ? user.phoneNumber : "",
+				pic: user.pic,
 				cart: checkCart.length > 0 ? { _id: checkCart[0]._id, cartItems } : {},
 				isAdmin: user.isAdmin,
 			});

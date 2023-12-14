@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
 				_id: user._id,
 				name: user.name,
 				email: user.email,
+				phoneNumber: "",
 				isAdmin: user.isAdmin,
 			});
 		}
@@ -75,6 +76,7 @@ const authUser = asyncHandler(async (req, res) => {
 				_id: user._id,
 				name: user.name,
 				email: user.email,
+				phoneNumber: user.phoneNumber ? user.phoneNumber : "",
 				cart: checkCart.length > 0 ? { _id: checkCart[0]._id, cartItems } : {},
 				isAdmin: user.isAdmin,
 			});
@@ -159,4 +161,31 @@ const logUserOut = asyncHandler(async (req, res) => {
 	}
 });
 
-export { registerUser, authUser, logUserOut };
+// ------------------- function to update a user's info ------------------------------ //
+const updateUser = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	let userExist = await User.findById(req.user._id);
+
+	// if the user does not exist, then
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// make a try-catch block
+	try {
+		// destructure the key and value sent with the request
+		const { key, value } = req.body;
+		// Dynamically update the userExist object based on the key
+		userExist[key] = value;
+
+		// Save the updated user
+		await userExist.save();
+
+		res.status(200).json(userExist);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { registerUser, authUser, logUserOut, updateUser };

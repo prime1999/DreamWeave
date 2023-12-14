@@ -18,7 +18,8 @@ const placeOrder = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// get the following info from the request body
-		const { shippingAddress, paymentMethod } = req.body;
+		const { shippingDetails, paymentMethod } = req.body;
+		const { shippingAddress, phoneNumber } = shippingDetails;
 		// find the cart of items the user wants to order using the user's id
 		const orderCart = await Cart.find({ user: req.user._id }).populate(
 			"items.product"
@@ -27,7 +28,7 @@ const placeOrder = asyncHandler(async (req, res) => {
 		if (!orderCart) {
 			throw new Error("cart not found");
 		}
-		console.log(orderCart);
+
 		// calculate the prices needed for the order
 		const { shippingPrice, taxPrice, itemsPrice, totalPrice } = calcPrice(
 			orderCart[0].items
@@ -38,6 +39,7 @@ const placeOrder = asyncHandler(async (req, res) => {
 			items: orderCart[0].items,
 			itemsPrice,
 			shippingAddress,
+			contactInfo: phoneNumber,
 			paymentMethod,
 			shippingPrice,
 			taxPrice,

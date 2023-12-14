@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 import { usePlaceOrderMutation, useGetAnOrderQuery } from "@/slices/OrderSlice";
 import { useClearCartMutation } from "@/slices/CartApiSlice";
 import Loader from "@/components/Loader";
@@ -31,6 +33,8 @@ const OrderPage = () => {
 		postalCode: "",
 		zipCode: "",
 	});
+	// state for the phone number value
+	const [value, setValue] = useState<string>("");
 	const [paymentMethod, setPaymentMethod] = useState<string>("PayPal");
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const [resId, setResId] = useState<string>("");
@@ -46,8 +50,13 @@ const OrderPage = () => {
 
 	const handlePlaceOrder = async () => {
 		try {
-			const res = await placeOrder({
+			console.log(value);
+			const shippingDetails = {
 				shippingAddress: formData,
+				phoneNumber: value,
+			};
+			const res = await placeOrder({
+				shippingDetails,
 				paymentMethod,
 			});
 			const { data } = res as any;
@@ -143,6 +152,7 @@ const OrderPage = () => {
 										/>
 									</div>
 								</div>
+
 								<div className="flex justify-between mb-4">
 									<div>
 										<label>Country</label>
@@ -165,6 +175,13 @@ const OrderPage = () => {
 										/>
 									</div>
 								</div>
+								<PhoneInput
+									className={`custom-phone-input mb-4 rounded-md py-2 px-4 bg-transparent border border-gray-200 focus:outline-none`}
+									placeholder="Enter phone number"
+									value={value}
+									international={true}
+									onChange={(newValue) => setValue(newValue as string)}
+								/>
 							</form>
 						</div>
 						<div className="border p-4 mt-4">

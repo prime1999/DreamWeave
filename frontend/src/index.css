@@ -183,3 +183,19 @@
       color: blue;
     }
       
+    .custom-phone-input {
+      width: 100% !important;
+      height: 50px !important;
+      /* Add your other custom styles here */
+    }
+  
+    .PhoneInputInput {
+      position: relative;
+      background-color: transparent;
+      height: 100% !important;
+    }
+  
+  .PhoneInputInput:focus {
+     border: none;
+     outline: none;
+  }

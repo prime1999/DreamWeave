@@ -22,7 +22,6 @@ type Props = {
 const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 	const { data, isLoading, refetch } = useGetAnOrderQuery({ orderId });
 
-	console.log(data);
 	return (
 		<div>
 			<Dialog open={open} onOpenChange={setOpen}>
@@ -133,7 +132,11 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 												<button className="px-4 py-2 rounded-lg text-white font-semibold duration-500 bg-blue hover:bg-cyan-800">
 													Pay with PayPal
 												</button> */}
-												<PaypalProvider refetch={refetch} order={order} />
+												<PaypalProvider
+													setOpen={setOpen}
+													refetch={refetch}
+													order={order}
+												/>
 											</div>
 										</DialogClose>
 									</DialogDescription>

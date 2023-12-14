@@ -6,9 +6,14 @@ import PaymentButton from "./PaymentButton";
 type Props = {
 	order: any;
 	refetch: any;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PaypalProvider: React.FC<Props> = ({ order, refetch }: Props) => {
+const PaypalProvider: React.FC<Props> = ({
+	setOpen,
+	order,
+	refetch,
+}: Props) => {
 	// const [payPalScriptOptions, setPayPalScriptOptions] = useState<any>({});
 	// const {
 	// 	data: paypal,
@@ -35,7 +40,7 @@ const PaypalProvider: React.FC<Props> = ({ order, refetch }: Props) => {
 				currency: "USD",
 			}}
 		>
-			<PaymentButton order={order} refetch={refetch} />
+			<PaymentButton order={order} setOpen={setOpen} refetch={refetch} />
 		</PayPalScriptProvider>
 	);
 };

@@ -7,9 +7,10 @@ import { usePayOrderMutation } from "@/slices/OrderSlice";
 type Props = {
 	order: any;
 	refetch: any;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PaymentButton = ({ order, refetch }: Props) => {
+const PaymentButton = ({ setOpen, order, refetch }: Props) => {
 	const [payOrder] = usePayOrderMutation();
 
 	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -18,13 +19,11 @@ const PaymentButton = ({ order, refetch }: Props) => {
 	// }, []);
 
 	const onApprove = (data: any, actions: any) => {
-		console.log(4546);
 		return actions.order.capture().then(async function (details: any) {
 			try {
-				console.log(123);
 				await payOrder({ orderId: order._id, details });
 				refetch();
-				console.log(99);
+				setOpen(false);
 				toast.success("Order is paid");
 			} catch (err: any) {
 				toast.error(err?.data?.message || err.error);

@@ -157,7 +157,7 @@ const Navbar = () => {
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									onClick={logOutUser}
-									className="font-cour hover:cursor-pointers"
+									className="font-cour hover:cursor-pointer"
 								>
 									<MdLogout className="mr-2" />
 									Log Out

@@ -34,6 +34,10 @@ const orderSchema = new Schema(
 			zipCode: { type: String, required: true },
 			country: { type: String, required: true },
 		},
+		contactInfo: {
+			type: String,
+			required: true,
+		},
 		paymentMethod: {
 			type: String,
 			required: true,

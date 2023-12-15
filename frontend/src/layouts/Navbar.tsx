@@ -151,9 +151,14 @@ const Navbar = () => {
 								</p>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
-								<DropdownMenuItem className="font-cour hover:cursor-pointer">
-									<BsFillPersonLinesFill className="mr-2" />
-									Profile
+								<DropdownMenuItem>
+									<Link
+										to="/account"
+										className="flex font-cour hover:cursor-pointer"
+									>
+										<BsFillPersonLinesFill className="mr-2" />
+										Profile
+									</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									onClick={logOutUser}

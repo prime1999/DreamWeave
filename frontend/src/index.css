@@ -199,3 +199,8 @@
      border: none;
      outline: none;
   }
+
+  .order-table tr:nth-child(even){
+    background-color: #3894A3;
+    color: white
+  }

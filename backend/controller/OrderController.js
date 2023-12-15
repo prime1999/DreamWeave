@@ -128,9 +128,6 @@ const payOrder = asyncHandler(async (req, res) => {
 	try {
 		// get the order from the request params
 		const order = await Order.findById(req.params.orderId);
-		console.log(req.params.orderId);
-
-		console.log(order);
 
 		// if the order was not found then
 		if (!order) {
@@ -156,4 +153,28 @@ const payOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-export { placeOrder, getUserOrder, getOneOrder, payOrder };
+// ------------------------------ function to delete an order ----------------------------------- //
+const deleteOrder = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		const deletedOrder = await Order.findOneAndDelete({
+			_id: req.params.orderId,
+		});
+		// show the deleted order in response
+		res.json(200).json(deletedOrder);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export { placeOrder, getUserOrder, getOneOrder, payOrder, deleteOrder };

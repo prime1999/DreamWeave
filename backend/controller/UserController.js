@@ -166,44 +166,50 @@ const logUserOut = asyncHandler(async (req, res) => {
 
 // ------------------- function to update a user's info ------------------------------ //
 const updateUser = asyncHandler(async (req, res) => {
-	// check if the user is authorized
-	let userExist = await User.findById(req.user._id);
-
-	// if the user does not exist, then
-	if (!userExist) {
-		throw new Error("User not authorized");
-	}
-	// make a try-catch block
 	try {
-		// destructure the key and value sent with the request
-		const { key, value, oldPassword } = req.body;
-		// check if the field the user wants to update is the passord and the user inpuuted the old password
-		if (key === "password" && oldPassword === "") {
-			throw new Error("please confirm old password");
+		// check if the user is authorized
+		let userExist = await User.findById(req.user._id);
+
+		// if the user does not exist, throw an error
+		if (!userExist) {
+			throw new Error("User not authorized");
 		}
-		if (key === "password" && oldPassword !== "") {
-			// ceck if the old passord the user inpputted is correct
-			if (
-				userExist &&
-				(await bcrypt.compare(oldPassword, userExist.password))
-			) {
-				// if it is correct then hash the password and update the password field in the DB
-				const salt = await bcrypt.genSalt(10);
-				let hashedPassword = await bcrypt.hash(value, salt);
-				userExist[key] = hashedPassword;
-			} else {
-				throw new Error("Wrong user crendential");
+
+		// destructure the updates sent with the request
+		const updates = req.body;
+
+		// iterate over the updates and apply them to the userExist object
+		for (const key in updates) {
+			if (Object.hasOwnProperty.call(updates, key)) {
+				const value = updates[key];
+
+				// handle special case for updating the password
+				if (key === "password" && value.oldPassword === "") {
+					throw new Error("Please confirm the old password");
+				}
+
+				if (key === "password" && value.oldPassword !== "") {
+					// check if the old password provided is correct
+					if (userExist && (await userExist.matchPassword(value.oldPassword))) {
+						userExist[key] = value.newPassword;
+					} else {
+						throw new Error("Wrong user credentials");
+					}
+				} else {
+					// dynamically update the userExist object based on the key
+					userExist[key] = value;
+				}
 			}
 		}
-		// Dynamically update the userExist object based on the key
-		userExist[key] = value;
-		// Save the updated user
+
+		// save the updated user
 		await userExist.save();
+
+		// send the updated user object in the response
 		res.status(200).json(userExist);
 	} catch (error) {
-		// if an error occured in the try block, then:
-		res.status(400);
-		throw new Error(error.message);
+		// if an error occurred, send a 400 response with the error message
+		res.status(400).json({ error: error.message });
 	}
 });
 

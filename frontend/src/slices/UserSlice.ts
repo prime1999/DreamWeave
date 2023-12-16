@@ -20,6 +20,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				body: userData,
 			}),
 		}),
+		updateUser: builder.mutation<any, any>({
+			query: (updateDetails) => ({
+				url: `${USERS_URL}/updateUser`,
+				method: "PATCH",
+			}),
+		}),
 		logUserOut: builder.mutation<any, any>({
 			query: (cartItems) => ({
 				url: `${USERS_URL}/logUserOut`,

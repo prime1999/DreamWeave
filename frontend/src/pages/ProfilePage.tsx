@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
 import { MdEdit } from "react-icons/md";
-
 import { FiEdit } from "react-icons/fi";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useGetUserOrderQuery } from "@/slices/OrderSlice";
 import { useState } from "react";
-
 import { columns } from "@/components/table/Columns";
 import { DataTable } from "@/components/table/TableData";
 import Loader from "@/components/Loader";
@@ -37,9 +35,11 @@ const ProfilePage = () => {
 						<MdEdit className="absolute bottom-3 right-0 text-xl bg-light text-blue p-1 w-6 h-6 rounded-full hover:cursor-pointer" />
 					</div>
 					<div className="w-2/3 ml-4 font-poppins md:ml-12">
-						<div className="flex items-end justify-end">
-							<FiEdit />
-						</div>
+						{!edit && (
+							<div className="flex items-end justify-end hover:cursor-pointer">
+								<FiEdit onClick={() => setEdit(true)} />
+							</div>
+						)}
 						<form className="w-full">
 							<div className="flex flex-col">
 								<label className="text-blue">Name</label>
@@ -79,18 +79,28 @@ const ProfilePage = () => {
 									onChange={(newValue) => setValue(newValue as string)}
 								/>
 							</div>
-							<div className="flex flex-col my-4">
+							<div className="relative flex flex-col my-4">
 								<label className="text-blue">Password</label>
+
 								<input
 									type="password"
 									value={password}
 									className={`border h-10 px-4 rounded-md focus:outline-none ${
 										!edit ? "bg-light" : "bg-transparent"
 									}`}
-									disabled={!edit}
+									disabled={true}
 									id="password"
 								/>
+
+								<button className="absolute top-2.5 right-2 w-36 rounded-md bg-red-600 text-sm mt-4 py-2 text-light duration-500 hover:cursor-pointer hover:bg-red-700">
+									Change password
+								</button>
 							</div>
+							{edit && (
+								<button className="w-full py-2 bg-light text-blue font-semibold rounded-md duration-500 hover:bg-other">
+									Save Changes
+								</button>
+							)}
 						</form>
 					</div>
 				</div>

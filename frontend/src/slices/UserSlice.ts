@@ -24,6 +24,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 			query: (updateDetails) => ({
 				url: `${USERS_URL}/updateUser`,
 				method: "PATCH",
+				body: updateDetails,
 			}),
 		}),
 		logUserOut: builder.mutation<any, any>({
@@ -36,9 +37,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
 	}),
 });
 
+//
 export const useRegisterUserMutation =
 	userApiSlice.endpoints.registerUser.useMutation;
+//
 export const useLogUserInMutation =
 	userApiSlice.endpoints.logUserIn.useMutation;
+//
 export const useLogUserOutMutation =
 	userApiSlice.endpoints.logUserOut.useMutation;
+//
+export const useUpdateUserMutation =
+	userApiSlice.endpoints.updateUser.useMutation;

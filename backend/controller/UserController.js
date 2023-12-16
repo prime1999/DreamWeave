@@ -206,7 +206,15 @@ const updateUser = asyncHandler(async (req, res) => {
 		await userExist.save();
 
 		// send the updated user object in the response
-		res.status(200).json(userExist);
+		res.status(200).json({
+			_id: userExist._id,
+			name: userExist.name,
+			email: userExist.email,
+			pic: userExist.pic,
+			isAdmin: userExist.isAdmin,
+			cart: {},
+			phoneNumber: userExist.phoneNumber ? userExist.phoneNumber : "",
+		});
 	} catch (error) {
 		// if an error occurred, send a 400 response with the error message
 		res.status(400).json({ error: error.message });

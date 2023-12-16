@@ -91,7 +91,7 @@ const RegisterPage = () => {
 			// throw an error if they don't
 			toast.error("try again", {
 				className: "bg-red-200",
-				bodyClassName: "text-light",
+				bodyClassName: "text-black",
 				progressClassName: "bg-transparent",
 			});
 		} else {

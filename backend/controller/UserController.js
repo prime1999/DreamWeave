@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import User from "../models/UserModel.js";
 import Cart from "../models/CartModel.js";
 import { isEqual } from "../Utils/CheckCartEquality.js";
@@ -175,13 +176,29 @@ const updateUser = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// destructure the key and value sent with the request
-		const { key, value } = req.body;
+		const { key, value, oldPassword } = req.body;
+		// check if the field the user wants to update is the passord and the user inpuuted the old password
+		if (key === "password" && oldPassword === "") {
+			throw new Error("please confirm old password");
+		}
+		if (key === "password" && oldPassword !== "") {
+			// ceck if the old passord the user inpputted is correct
+			if (
+				userExist &&
+				(await bcrypt.compare(oldPassword, userExist.password))
+			) {
+				// if it is correct then hash the password and update the password field in the DB
+				const salt = await bcrypt.genSalt(10);
+				let hashedPassword = await bcrypt.hash(value, salt);
+				userExist[key] = hashedPassword;
+			} else {
+				throw new Error("Wrong user crendential");
+			}
+		}
 		// Dynamically update the userExist object based on the key
 		userExist[key] = value;
-
 		// Save the updated user
 		await userExist.save();
-
 		res.status(200).json(userExist);
 	} catch (error) {
 		// if an error occured in the try block, then:

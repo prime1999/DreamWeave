@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { MdEdit } from "react-icons/md";
-import { MdCancel } from "react-icons/md";
+
 import { FiEdit } from "react-icons/fi";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useGetUserOrderQuery } from "@/slices/OrderSlice";
 import { useState } from "react";
-//import { changeDateFormat } from "@/utils/dateUtils";
+
 import { columns } from "@/components/table/Columns";
 import { DataTable } from "@/components/table/TableData";
 import Loader from "@/components/Loader";
@@ -95,60 +95,14 @@ const ProfilePage = () => {
 					</div>
 				</div>
 				{/* -------------------- orders ------------------------ */}
-				<div className="font-poppins mt-12">
+				<div className="font-poppins mt-4">
 					{loadingOrder ? (
 						<Loader />
 					) : (
 						<>
-							<h4 className="text-3xl text-blue font-semibold mb-4">
-								My Orders
-							</h4>
-							<div>
-								{/* <table className="w-[900px] text-center order-table">
-									<thead className="bg-light h-10">
-										<th>SN</th>
-										<th>Items</th>
-										<th>Order-Date</th>
-										<th>Payment-Date</th>
-										<th>Amount</th>
-										<th>Status</th>
-										<th>isPaid</th>
-										<th></th>
-									</thead>
-									<tbody className="bg-other py-4">
-										{orders &&
-											orders.map((order: any, index: any) => (
-												<>
-													<tr className="h-10">
-														<td>{index + 1}</td>
-														<td>{order.items.length}</td>
-														<td>{changeDateFormat(order.createdAt)}</td>
-														<td>
-															{order.paymentResult
-																? changeDateFormat(
-																		order.paymentResult.update_time
-																  )
-																: "not Paid"}
-														</td>
-														<td>${order.totalAmount}</td>
-														<td>{order.status}</td>
-														<td>{order.isPaid ? "paid" : "not-Paid"}</td>
-														<td className="flex items-center justify-center mt-2">
-															<button className="flex items-center text-sm">
-																<MdEdit className="mr-1" /> Change
-															</button>
-															<button className="flex items-center text-sm ml-2">
-																<MdCancel className="mr-1" /> Remove
-															</button>
-														</td>
-													</tr>
-												</>
-											))}
-									</tbody>
-								</table> */}
-								<div className="container mx-auto py-10">
-									<DataTable columns={columns} data={orders} />
-								</div>
+							<div className="container mx-auto py-10">
+								<h4 className="text-3xl text-blue font-semibold">My Orders</h4>
+								<DataTable columns={columns} data={orders} />
 							</div>
 						</>
 					)}

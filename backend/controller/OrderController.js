@@ -177,4 +177,41 @@ const deleteOrder = asyncHandler(async (req, res) => {
 	}
 });
 
-export { placeOrder, getUserOrder, getOneOrder, payOrder, deleteOrder };
+// -------------------------------- function to update shipping address ----------------------------------- //
+const updateShippingAddress = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// get the order based on it's Id
+		const order = await Order.findById(req.params.orderId);
+		const { contactInfo, shippingAddress } = req.body;
+		if (contactInfo === "" || shippingAddress == {}) {
+			throw new Error("No Update Info");
+		}
+		order.shippingAddress = shippingAddress;
+		order.contactInfo = contactInfo;
+
+		await order.save();
+		res.status(200).json(order);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+export {
+	placeOrder,
+	getUserOrder,
+	getOneOrder,
+	payOrder,
+	deleteOrder,
+	updateShippingAddress,
+};

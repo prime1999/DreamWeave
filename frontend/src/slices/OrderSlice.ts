@@ -31,7 +31,7 @@ export const OrderSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		deleteOrder: builder.mutation<string, any>({
-			query: ({ orderId }) => ({
+			query: (orderId) => ({
 				url: `${ORDER_URL}/deleteOrder/${orderId}`,
 				method: "DELETE",
 			}),
@@ -39,6 +39,13 @@ export const OrderSlice = apiSlice.injectEndpoints({
 		getPayPalClientId: builder.query<any, any>({
 			query: () => ({
 				url: `${PAYPAL_URL}`,
+			}),
+		}),
+		updateOrder: builder.mutation<any, any>({
+			query: ({ orderId, details }) => ({
+				url: `${ORDER_URL}/updateOrder/${orderId}`,
+				method: "PUT",
+				body: { ...details },
 			}),
 		}),
 	}),
@@ -59,3 +66,6 @@ export const usePayOrderMutation = OrderSlice.endpoints.payOrder.useMutation;
 //
 export const useDeleteOrderMutation =
 	OrderSlice.endpoints.deleteOrder.useMutation;
+//
+export const useUpdateOrderMutation =
+	OrderSlice.endpoints.updateOrder.useMutation;

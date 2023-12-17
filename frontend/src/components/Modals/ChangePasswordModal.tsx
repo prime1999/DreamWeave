@@ -58,17 +58,18 @@ const ChangePasswordModal = ({ open, setOpen }: Props) => {
 				oldPassword,
 				newPassword,
 			};
-			console.log({ password });
+			// send the reuest to update the user's password to the backend and get the response
 			const res = await updateUser({ password }).unwrap();
-			console.log({ ...res });
+			// set the credentials in the redux and local storage to be the updated user's info
 			dispatch(setCredentials({ ...res }));
+			// show the success message once the update is completed successfully
 			toast.success("Password updated", {
 				className: "bg-green-200",
 				bodyClassName: "text-black font-poppins font-semibold",
 				progressClassName: "bg-transparent",
 			});
 		} catch (err: any) {
-			console.log(err);
+			// show the error message once there is an error when updating the password
 			toast.error(err?.data?.error, {
 				className: "bg-red-200",
 				bodyClassName: "text-black",

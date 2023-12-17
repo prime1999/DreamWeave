@@ -8,7 +8,6 @@ import {
 	getPaginationRowModel,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-
 import {
 	Table,
 	TableBody,

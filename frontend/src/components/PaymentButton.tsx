@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 //import { PayPalButtonsComponentProps } from "@paypal/paypal-js/types/components/buttons";
@@ -11,12 +11,10 @@ type Props = {
 };
 
 const PaymentButton = ({ setOpen, order, refetch }: Props) => {
+	const navigate = useNavigate();
 	const [payOrder] = usePayOrderMutation();
 
 	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-	// useEffect(() => {
-
-	// }, []);
 
 	const onApprove = (data: any, actions: any) => {
 		return actions.order.capture().then(async function (details: any) {
@@ -25,17 +23,17 @@ const PaymentButton = ({ setOpen, order, refetch }: Props) => {
 				refetch();
 				setOpen(false);
 				toast.success("Order is paid");
+				navigate("/account");
 			} catch (err: any) {
 				toast.error(err?.data?.message || err.error);
-				console.log(err);
 			}
 		});
 	};
 
 	const onError = (err: any) => {
 		toast.error(err.message);
-		console.log(err.message);
 	};
+
 	const createOrder = (data: any, actions: any) => {
 		return actions.order
 			.create({

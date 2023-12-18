@@ -21,8 +21,6 @@ const OrderDetailsModal = ({ orderId }: Props) => {
 	const [open, setOpen] = useState<boolean>(true);
 
 	const { data, isLoading, refetch } = useGetAnOrderQuery({ orderId });
-	console.log(orderId);
-	console.log(data);
 
 	return (
 		<div>

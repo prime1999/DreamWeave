@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
 import Rating from "@/components/ProductsComponent/Rating";
@@ -7,9 +8,11 @@ import {
 	useGetSinlgeProductQuery,
 	useGetProductsByCategoryQuery,
 } from "@/slices/ProductSlice";
+import { useAddToCartMutation } from "@/slices/CartApiSlice";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import { ProductType } from "@/DataTypes/ProductType";
 import SingleProductSkeleton from "@/components/miscelleneous/SingleProductSkeleton";
+import { addToCart } from "@/slices/CartSlice";
 
 const SingleProduct = () => {
 	const [count, setCount] = useState<number>(1);
@@ -17,6 +20,10 @@ const SingleProduct = () => {
 	const { data } = useGetSinlgeProductQuery({ productId });
 	const { data: products, isLoading: productLoading } =
 		useGetProductsByCategoryQuery({ productId });
+	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
+	const { userInfo } = useSelector((state: any) => state.auth);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleCountIncrease = () => {
 		if (count === data?.countInStock) {
@@ -32,6 +39,14 @@ const SingleProduct = () => {
 		} else {
 			setCount(1);
 		}
+	};
+
+	const handleCart = (product: ProductType) => {
+		dispatch(addToCart({ ...product, qty: count }));
+		if (userInfo) {
+			addItemToCart({ product: product._id, quantity: count });
+		}
+		navigate("/cart");
 	};
 
 	return (
@@ -50,8 +65,8 @@ const SingleProduct = () => {
 							</p>
 						</div>
 						<div className="flex flex-col w-11/12 mx-auto my-8 md:flex-row">
-							<div className="max-w-[500px]">
-								<img src={data?.image} alt="" />
+							<div className="w-1/2">
+								<img className="max-w-[500px]" src={data?.image} alt="" />
 							</div>
 							<div className="md:ml-28">
 								<h1 className="font-poppins font-bold text-3xl mb-4">
@@ -96,11 +111,11 @@ const SingleProduct = () => {
 										</p>
 									</div>
 								</div>
-								<div className="flex justify-between mt-4">
-									<button className="px-4 py-3 text-light bg-blue font-semibold rounded-full duration-500 hover:bg-light hover:text-blue md:px-8">
-										Buy Now
-									</button>
-									<button className="px-4 py-3 ml-4 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8">
+								<div className="mt-4">
+									<button
+										onClick={() => handleCart(data)}
+										className="w-full px-4 py-3 ml-4 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
+									>
 										Add to cart
 									</button>
 								</div>

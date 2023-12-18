@@ -177,11 +177,6 @@
     input[type="number"] {
     -moz-appearance: textfield;
     }
-
-    #pending{
-      background-color: rgba(0, 0, 255, 0.2);
-      color: blue;
-    }
       
     .custom-phone-input {
       width: 100% !important;
@@ -204,3 +199,13 @@
     background-color: #3894A3;
     color: white
   }
+
+  #pending {
+    color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  #processing {
+    color: blue;
+    background-color: rgba(0, 0, 255, 0.1);
+  }
+ 

@@ -27,11 +27,7 @@ const ProfilePage = () => {
 	// state to open change password modal
 	const [open, setOpen] = useState<boolean>(false);
 	// get the current user's orders
-	const {
-		data: orders,
-		isLoading: loadingOrder,
-		refetch,
-	} = useGetUserOrderQuery({});
+	const { data: orders, isLoading: loadingOrder } = useGetUserOrderQuery({});
 	const [updateUser, { isLoading: userLoading }] = useUpdateUserMutation({});
 
 	// function to handle the user update

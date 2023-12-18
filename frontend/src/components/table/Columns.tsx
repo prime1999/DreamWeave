@@ -14,6 +14,10 @@ import {
 	useDeleteOrderMutation,
 	useGetUserOrderQuery,
 } from "@/slices/OrderSlice";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import OrderDetailsModal from "../Modals/OrderDetailsModal";
+import { setDate } from "date-fns";
 
 export type Order = {
 	_id: string;
@@ -68,6 +72,7 @@ export const columns: ColumnDef<Order>[] = [
 		id: "actions",
 		cell: ({ row }) => {
 			const order = row.original;
+			const [id, setId] = useState<string>("");
 			// get the function to delete an order
 			const [deleteOrder] = useDeleteOrderMutation();
 			// get the refectch function
@@ -95,34 +100,46 @@ export const columns: ColumnDef<Order>[] = [
 					});
 				}
 			};
+
+			const handleClick = (currentId: string) => {
+				console.log(currentId);
+				setId(currentId);
+				console.log(currentId);
+			};
 			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<button className="h-8 w-8 p-0">
-							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className="h-4 w-4" />
-						</button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem
-							className="hover:cursor-pointer"
-							onClick={() => navigator.clipboard.writeText(order._id)}
-						>
-							Copy order ID
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className="hover:cursor-pointer">
-							View full order details
-						</DropdownMenuItem>
-						<DropdownMenuItem
-							onClick={() => handleRemoveOrder(order._id)}
-							className="text-red-500 hover:cursor-pointer"
-						>
-							Delete order
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<button className="h-8 w-8 p-0">
+								<span className="sr-only">Open menu</span>
+								<MoreHorizontal className="h-4 w-4" />
+							</button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end">
+							<DropdownMenuLabel>Actions</DropdownMenuLabel>
+							<DropdownMenuItem
+								className="hover:cursor-pointer"
+								onClick={() => navigator.clipboard.writeText(order._id)}
+							>
+								Copy order ID
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem
+								onClick={() => handleClick(order._id)}
+								className="hover:cursor-pointer"
+							>
+								View full order details
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() => handleRemoveOrder(order._id)}
+								className="text-red-500 hover:cursor-pointer"
+							>
+								Delete order
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+					{id === order._id && <OrderDetailsModal orderId={order._id} />}
+				</>
 			);
 		},
 	},

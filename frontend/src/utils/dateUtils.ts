@@ -6,3 +6,10 @@ export const changeDateFormat = (date: string) => {
 	const formattedDate = format(parsedDate, "MM/dd/yyyy");
 	return formattedDate;
 };
+
+// ---------------------------- funtion to format date to this format (mon, 11 july, 2023) ------------------- //
+export const getFullDate = (date: string) => {
+	const parsedDate = parseISO(date);
+	const formattedDate = format(parsedDate, "EEE. dd MMM, yyyy");
+	return formattedDate;
+};

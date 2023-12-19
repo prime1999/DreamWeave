@@ -1,8 +1,9 @@
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
+import { admin, protect } from "../middleware/authMiddleware.js";
 import {
 	deleteOrder,
 	getOneOrder,
+	getSalesRevenue,
 	getUserOrder,
 	payOrder,
 	placeOrder,
@@ -17,5 +18,6 @@ OrderRouter.get("/:orderId", protect, getOneOrder);
 OrderRouter.put("/payOrder/:orderId", protect, payOrder);
 OrderRouter.put("/updateOrder/:orderId", protect, updateShippingAddress);
 OrderRouter.delete("/deleteOrder/:orderId", protect, deleteOrder);
+OrderRouter.get("/sales/totalRevenue", protect, getSalesRevenue);
 
 export default OrderRouter;

@@ -4,6 +4,7 @@ import User from "../models/UserModel.js";
 import Cart from "../models/CartModel.js";
 import Order from "../models/OrderModel.js";
 import { calcPrice } from "../Utils/CalcPrice.js";
+import { formatDate } from "../Utils/FormatDate.js";
 
 // ------------------------------ function to place an order ------------------------------------- //
 const placeOrder = asyncHandler(async (req, res) => {
@@ -207,6 +208,93 @@ const updateShippingAddress = asyncHandler(async (req, res) => {
 	}
 });
 
+// ----------------------------------- function to get sales revenue ------------------------------ //
+
+const getSalesRevenue = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// get all orders that have been paid
+		const paidOrders = await Order.find({ isPaid: true }).select(
+			"totalAmount paymentResult.update_time"
+		);
+
+		// Get the current year and previous year
+		const currentYear = new Date().getFullYear();
+		const previousYear = currentYear - 1;
+
+		// Initialize an object to store revenue data
+		const revenueData = [];
+
+		// loop through each previous and current year
+		for (let year of [previousYear, currentYear]) {
+			// loop through each month in both years
+			for (let monthIndex = 1; monthIndex <= 12; monthIndex++) {
+				// Convert update_time to a JavaScript Date object
+				const checkDate = `${year}-${monthIndex}`;
+
+				// Filter and map orders based on the condition
+				const formattedOrders = paidOrders.map((order) => {
+					const orderDate = formatDate(order.paymentResult.update_time);
+
+					const check = orderDate === checkDate;
+
+					return check ? order : { ...order, totalAmount: 0 };
+				});
+
+				const mappedOrder = formattedOrders.map((order) => ({
+					year,
+					month: monthIndex,
+					sales: order.totalAmount,
+				}));
+
+				// Sum the totalAmount for each unique combination of year and monthIndex
+				const groupedOrders = mappedOrder.reduce((acc, order) => {
+					const key = `${order.year}-${order.month}`;
+
+					if (!acc[key]) {
+						acc[key] = {
+							year: order.year,
+							month: order.month,
+							sales: 0,
+						};
+					}
+
+					acc[key].sales += order.sales;
+
+					return acc;
+				}, {});
+
+				// Push the grouped orders to the revenueData array
+				revenueData.push(...Object.values(groupedOrders));
+			}
+		}
+
+		const previousRevenue = [];
+		const currentRevenue = [];
+
+		revenueData.map((data) => {
+			data.year === new Date().getFullYear()
+				? currentRevenue.push(data)
+				: previousRevenue.push(data);
+		});
+
+		// Do something with revenueData...
+
+		res.json({ previousRevenue, currentRevenue });
+	} catch (error) {
+		throw new Error(error.message);
+	}
+});
+
 export {
 	placeOrder,
 	getUserOrder,
@@ -214,4 +302,5 @@ export {
 	payOrder,
 	deleteOrder,
 	updateShippingAddress,
+	getSalesRevenue,
 };

@@ -3,6 +3,7 @@ import Product from "../models/ProductModel.js";
 import User from "../models/UserModel.js";
 import Cart from "../models/CartModel.js";
 import Order from "../models/OrderModel.js";
+import Revenue from "../models/RevenueModel.js";
 import { calcPrice } from "../Utils/CalcPrice.js";
 import { formatDate } from "../Utils/FormatDate.js";
 
@@ -287,6 +288,8 @@ const getSalesRevenue = asyncHandler(async (req, res) => {
 				: previousRevenue.push(data);
 		});
 
+		await Revenue.deleteMany();
+		await Revenue.insertMany(revenueData);
 		// Do something with revenueData...
 
 		res.json({ previousRevenue, currentRevenue });

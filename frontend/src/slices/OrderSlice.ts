@@ -48,6 +48,11 @@ export const OrderSlice = apiSlice.injectEndpoints({
 				body: { ...details },
 			}),
 		}),
+		getSalesRevenue: builder.query({
+			query: () => ({
+				url: `${ORDER_URL}/sales/totalRevenue`,
+			}),
+		}),
 	}),
 });
 
@@ -69,3 +74,6 @@ export const useDeleteOrderMutation =
 //
 export const useUpdateOrderMutation =
 	OrderSlice.endpoints.updateOrder.useMutation;
+//
+export const useGetSalesRevenueQuery =
+	OrderSlice.endpoints.getSalesRevenue.useQuery;

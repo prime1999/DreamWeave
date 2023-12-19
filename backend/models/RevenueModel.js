@@ -9,7 +9,7 @@ const RevenueSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	totalAmount: {
+	sales: {
 		type: Number,
 		required: true,
 	},

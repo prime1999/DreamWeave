@@ -294,6 +294,8 @@ const getSalesRevenue = asyncHandler(async (req, res) => {
 
 		res.json({ previousRevenue, currentRevenue });
 	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
 		throw new Error(error.message);
 	}
 });

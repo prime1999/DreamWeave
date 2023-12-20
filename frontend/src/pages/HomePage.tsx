@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
+import { useGetSalesRevenueQuery } from "@/slices/OrderSlice";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -23,7 +24,8 @@ const HomePage = () => {
 		pageNumber,
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
-
+	const { data: sales, isLoading } = useGetSalesRevenueQuery({});
+	console.log(sales);
 	return (
 		<div>
 			<Hero />

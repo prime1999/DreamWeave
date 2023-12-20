@@ -5,7 +5,13 @@ import { toast } from "react-toastify";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { MdPersonPin, MdLogout, MdLogin, MdCreate } from "react-icons/md";
+import {
+	MdPersonPin,
+	MdLogout,
+	MdLogin,
+	MdCreate,
+	MdDashboard,
+} from "react-icons/md";
 import logo from "../assets/images/logo.png";
 import laptop from "../assets/images/d1.jpg";
 import phone from "../assets/images/d2.jpg";
@@ -43,10 +49,13 @@ const Navbar = () => {
 	const [logOutApiCall, { isLoading: logOutLoading }] =
 		useLogUserOutMutation() as any;
 
+	// function to log a user out
 	const logOutUser = async () => {
+		//  ake a try-catch block
 		try {
+			// await on the function to log a user out
 			await logOutApiCall({ cartItems }).unwrap();
-
+			// dispatch thee log out funtion t clear the local storage
 			dispatch(logOut());
 			navigate("/");
 			toast.success("User logged out", {
@@ -160,6 +169,17 @@ const Navbar = () => {
 										Profile
 									</Link>
 								</DropdownMenuItem>
+								{userInfo && userInfo.isAdmin && (
+									<DropdownMenuItem>
+										<Link
+											to="/admin/dashboard/sales"
+											className="flex font-cour hover:cursor-pointer"
+										>
+											<MdDashboard className="mr-2" />
+											Dashboard
+										</Link>
+									</DropdownMenuItem>
+								)}
 								<DropdownMenuItem
 									onClick={logOutUser}
 									className="font-cour hover:cursor-pointer"

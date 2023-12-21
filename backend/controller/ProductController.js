@@ -2,7 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/UserModel.js";
 import Product from "../models/ProductModel.js";
 
-// ------------------------- function to get all the products in the DB ----------------------------- //
+// ------------------------- function to get all the products in the DB based on pagination ----------------------------- //
 const getProducts = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
@@ -27,6 +27,20 @@ const getProducts = asyncHandler(async (req, res) => {
 		res
 			.status(200)
 			.json({ products, page, pages: Math.ceil(count / pageSize) });
+	} catch (error) {
+		// if an error occured in te try block
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+// ---------------------------- function to get all the products in the DB ----------------------------------- //
+const getAllProducts = asyncHandler(async (req, res) => {
+	try {
+		// get all the products in the DB
+		const products = await Product.find({});
+		// send the products to the frontend
+		res.status(200).json(products);
 	} catch (error) {
 		// if an error occured in te try block
 		res.status(400);
@@ -86,6 +100,7 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 
 export {
 	getProducts,
+	getAllProducts,
 	getHighlyRatedProducts,
 	getSingleProduct,
 	getProductsByCategory,

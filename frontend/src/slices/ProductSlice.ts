@@ -15,6 +15,13 @@ export const productSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],
 		}),
+		getAllProducts: builder.query<DataType, any>({
+			query: () => ({
+				url: `${PRODUCTS_URL}/allProducts`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Product"],
+		}),
 		getHighlyRatedProducts: builder.query<ProductType[], any>({
 			query: () => ({
 				url: `${PRODUCTS_URL}/highlyRated`,
@@ -41,6 +48,9 @@ export const productSlice = apiSlice.injectEndpoints({
 
 // Import useGetProductsQuery directly from productSlice.endpoints
 export const useGetProductsQuery = productSlice.endpoints.getProducts.useQuery;
+// Import useGetProductsQuery directly from productSlice.endpoints
+export const useGetAllProductsQuery =
+	productSlice.endpoints.getAllProducts.useQuery;
 //
 export const useGetHighlyRatedProductsQuery =
 	productSlice.endpoints.getHighlyRatedProducts.useQuery;

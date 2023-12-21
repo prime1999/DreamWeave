@@ -11,10 +11,23 @@ import { IoIosChatbubbles } from "react-icons/io";
 import { MdMenuBook } from "react-icons/md";
 import SalesChart from "@/Charts/SalesChart";
 import OrderStatusChart from "@/Charts/OrderStatusChart";
-import { useGetHighlyRatedProductsQuery } from "@/slices/ProductSlice";
+import {
+	useGetHighlyRatedProductsQuery,
+	useGetAllProductsQuery,
+} from "@/slices/ProductSlice";
+import {
+	calcReview,
+	fiveStarRating,
+	fourStarRating,
+	oneStarRating,
+	threeStarRating,
+	twoStarRating,
+} from "@/utils/CalcRating";
 
 const RevenuePage = () => {
 	const { data: products, isLoading } = useGetHighlyRatedProductsQuery({});
+	const { data: allProducts, isLoading: productsLoading } =
+		useGetAllProductsQuery({});
 	return (
 		<>
 			<hr />
@@ -93,25 +106,25 @@ const RevenuePage = () => {
 						<OrderStatusChart />
 					</div>
 				</div>
-				<div className="flex w-[70%]">
-					<div className="w-full p-4 shadow-md">
-						<h4 className="font-poppins text-xl font-semibold mb-8 mt-4">
-							Highly Rated Products
-						</h4>
-						<table className="w-full">
-							<thead className="border-b">
-								<th>Product-Id</th>
-								<th>Product Name</th>
-								<th>Price</th>
-								<th>Rating</th>
-								<th>Brand</th>
-							</thead>
-							<tbody className="font-poppins text-black text-sm text-center">
-								{products?.map(
-									(product, index) =>
-										index <= 4 && (
-											<>
-												<tr>
+				<div className="flex items-center">
+					<div className="flex w-[70%]">
+						<div className="w-full p-4 shadow-md">
+							<h4 className="font-poppins text-xl font-semibold mb-8 mt-4">
+								Highly Rated Products
+							</h4>
+							<table className="w-full">
+								<thead className="border-b">
+									<th>Product-Id</th>
+									<th>Product Name</th>
+									<th>Price</th>
+									<th>Rating</th>
+									<th>Brand</th>
+								</thead>
+								<tbody className="font-poppins text-black text-sm text-center">
+									{products?.map(
+										(product, index) =>
+											index < 3 && (
+												<tr key={product._id}>
 													<td>{product._id}</td>
 													<td className="flex items-center">
 														<img
@@ -124,11 +137,91 @@ const RevenuePage = () => {
 													<td className="mx-8">{product.rating}</td>
 													<td>{product.brand}</td>
 												</tr>
-											</>
-										)
-								)}
-							</tbody>
-						</table>
+											)
+									)}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div className="w-[30%] p-4 shadow-md rounded-lg ml-4">
+						<h4 className="font-poppins text-lg font-semibold">
+							Customer Review
+						</h4>
+
+						<p className="text-sm text-gray-500 mb-4">
+							A total of {calcReview(allProducts)} reviews
+						</p>
+						<div>
+							{allProducts && (
+								<>
+									<div className="flex items-center justify-between text-sm text-gray-500">
+										<p className="font-semibold">5 stars</p>
+										<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
+											<span
+												className={`h-full rounded-lg bg-blue w-[${fiveStarRating(
+													allProducts
+												)}]`}
+											></span>
+										</span>
+										<p className="font-semibold">
+											{fiveStarRating(allProducts)}
+										</p>
+									</div>
+									<div className="flex items-center justify-between text-sm text-gray-500 my-2">
+										<p className="font-semibold">4 stars</p>
+										<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
+											<span
+												className={`h-full rounded-lg bg-blue w-[${fourStarRating(
+													allProducts
+												)}]`}
+											></span>
+										</span>
+										<p className="font-semibold">
+											{fourStarRating(allProducts)}
+										</p>
+									</div>
+									<div className="flex items-center justify-between text-sm text-gray-500">
+										<p className="font-semibold">3 stars</p>
+										<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
+											<span
+												className={`h-full rounded-lg bg-blue w-[${threeStarRating(
+													allProducts
+												)}]`}
+											></span>
+										</span>
+										<p className="font-semibold">
+											{threeStarRating(allProducts)}
+										</p>
+									</div>
+									<div className="flex items-center justify-between text-sm text-gray-500 my-2">
+										<p className="font-semibold">2 stars</p>
+										<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
+											<span
+												className={`h-full rounded-lg bg-blue w-[${twoStarRating(
+													allProducts
+												)}]`}
+											></span>
+										</span>
+										<p className="font-semibold">
+											{twoStarRating(allProducts)}
+										</p>
+									</div>
+									<div className="flex items-center justify-between text-sm text-gray-500">
+										<p className="font-semibold">1 star</p>
+										<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
+											<span
+												className={`h-full rounded-lg bg-blue w-[${oneStarRating(
+													allProducts
+												)}]`}
+											></span>
+										</span>
+										<p className="font-semibold">
+											{oneStarRating(allProducts)}
+										</p>
+									</div>
+								</>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

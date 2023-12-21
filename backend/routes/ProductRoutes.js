@@ -1,5 +1,6 @@
 import express from "express";
 import {
+	getAllProducts,
 	getHighlyRatedProducts,
 	getProducts,
 	getProductsByCategory,
@@ -15,6 +16,7 @@ GETSINGLEPRODUCT: GET public
 */
 
 ProductRouter.get("/", getProducts);
+ProductRouter.get("/allProducts", getAllProducts);
 ProductRouter.get("/highlyRated", getHighlyRatedProducts);
 ProductRouter.get("/:productId", getSingleProduct);
 ProductRouter.get("/category/:productId", getProductsByCategory);

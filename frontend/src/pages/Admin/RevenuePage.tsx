@@ -4,12 +4,17 @@ import {
 	FaShippingFast,
 	FaUsers,
 	FaQuestionCircle,
+	FaChartBar,
 } from "react-icons/fa";
 import { TbPigMoney } from "react-icons/tb";
 import { IoIosChatbubbles } from "react-icons/io";
+import { MdMenuBook } from "react-icons/md";
 import SalesChart from "@/Charts/SalesChart";
+import OrderStatusChart from "@/Charts/OrderStatusChart";
+import { useGetHighlyRatedProductsQuery } from "@/slices/ProductSlice";
 
 const RevenuePage = () => {
+	const { data: products, isLoading } = useGetHighlyRatedProductsQuery({});
 	return (
 		<>
 			<hr />
@@ -48,7 +53,7 @@ const RevenuePage = () => {
 							className="flex items-center h-8 w-24 justify-center rounded-md duration-500 hover:bg-blue hover:text-light"
 						>
 							<TbPigMoney className="mr-2" />
-							Finance
+							Statistics
 						</Link>
 					</li>
 					<li>
@@ -72,12 +77,59 @@ const RevenuePage = () => {
 				</ul>
 			</nav>
 			<div className="w-11/12 mx-auto">
-				<div className="p-4 shadow-md  flex items-center justify-between rounded-lg">
-					<div className="w-[70%]">
-						<h1 className="font-semibold text-lg">Revenue</h1>
+				<div className="flex items-center p-4">
+					<div className="w-[70%] p-4 shadow-md rounded-md">
+						<div className="flex items-center">
+							<h1 className="font-semibold text-lg">Sales Review</h1>
+							<FaChartBar className="ml-2 text-blue" />
+						</div>
 						<SalesChart />
 					</div>
-					<h1>sales revenue</h1>
+					<div className="w-[30%] p-4 shadow-md ml-4">
+						<div className="flex items-center font-poppins font-semibold">
+							<h4 className="mr-2">Order Status</h4>
+							<MdMenuBook className="text-blue" />
+						</div>
+						<OrderStatusChart />
+					</div>
+				</div>
+				<div className="flex w-[70%]">
+					<div className="w-full p-4 shadow-md">
+						<h4 className="font-poppins text-xl font-semibold mb-8 mt-4">
+							Highly Rated Products
+						</h4>
+						<table className="w-full">
+							<thead className="border-b">
+								<th>Product-Id</th>
+								<th>Product Name</th>
+								<th>Price</th>
+								<th>Rating</th>
+								<th>Brand</th>
+							</thead>
+							<tbody className="font-poppins text-black text-sm text-center">
+								{products?.map(
+									(product, index) =>
+										index <= 4 && (
+											<>
+												<tr>
+													<td>{product._id}</td>
+													<td className="flex items-center">
+														<img
+															src={product.image}
+															className="w-12 bg-white p-2"
+														/>
+														<p>{product.name}</p>
+													</td>
+													<td>{product.price}</td>
+													<td className="mx-8">{product.rating}</td>
+													<td>{product.brand}</td>
+												</tr>
+											</>
+										)
+								)}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</>

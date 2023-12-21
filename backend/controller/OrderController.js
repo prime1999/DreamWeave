@@ -86,6 +86,29 @@ const getUserOrder = asyncHandler(async (req, res) => {
 	}
 });
 
+// ------------------------------- function to get all orders placed by users ----------------------------------- //
+const getOrders = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// get all theh placed orders
+		const orders = await Order.find({});
+		// send the orders to the frontend
+		res.status(200).json(orders);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 // ------------------------- function to get a certain order of a user ---------------------------------- //
 const getOneOrder = asyncHandler(async (req, res) => {
 	// check if the user is authorized
@@ -303,6 +326,7 @@ const getSalesRevenue = asyncHandler(async (req, res) => {
 export {
 	placeOrder,
 	getUserOrder,
+	getOrders,
 	getOneOrder,
 	payOrder,
 	deleteOrder,

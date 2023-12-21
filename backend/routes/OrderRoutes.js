@@ -3,6 +3,7 @@ import { admin, protect } from "../middleware/authMiddleware.js";
 import {
 	deleteOrder,
 	getOneOrder,
+	getOrders,
 	getSalesRevenue,
 	getUserOrder,
 	payOrder,
@@ -14,6 +15,7 @@ const OrderRouter = express.Router();
 
 OrderRouter.post("/placeOrder", protect, placeOrder);
 OrderRouter.get("/", protect, getUserOrder);
+OrderRouter.get("/all", protect, getOrders);
 OrderRouter.get("/:orderId", protect, getOneOrder);
 OrderRouter.put("/payOrder/:orderId", protect, payOrder);
 OrderRouter.put("/updateOrder/:orderId", protect, updateShippingAddress);

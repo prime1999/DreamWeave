@@ -41,9 +41,12 @@ export const productSlice = apiSlice.injectEndpoints({
 
 // Import useGetProductsQuery directly from productSlice.endpoints
 export const useGetProductsQuery = productSlice.endpoints.getProducts.useQuery;
+//
 export const useGetHighlyRatedProductsQuery =
 	productSlice.endpoints.getHighlyRatedProducts.useQuery;
+//
 export const useGetSinlgeProductQuery =
 	productSlice.endpoints.getSingleProduct.useQuery;
+//
 export const useGetProductsByCategoryQuery =
 	productSlice.endpoints.getProductsByCategory.useQuery;

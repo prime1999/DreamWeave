@@ -17,6 +17,13 @@ export const OrderSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Order"],
 		}),
+		getAllOrders: builder.query({
+			query: () => ({
+				url: `${ORDER_URL}/all`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Order"],
+		}),
 		getAnOrder: builder.query<any, any>({
 			query: (orderId) => ({
 				url: `${ORDER_URL}`,
@@ -61,6 +68,8 @@ export const usePlaceOrderMutation =
 	OrderSlice.endpoints.placeOrder.useMutation;
 //
 export const useGetUserOrderQuery = OrderSlice.endpoints.getUserOrder.useQuery;
+//
+export const useGetAllOrdersQuery = OrderSlice.endpoints.getAllOrders.useQuery;
 //
 export const useGetAnOrderQuery = OrderSlice.endpoints.getAnOrder.useQuery;
 //

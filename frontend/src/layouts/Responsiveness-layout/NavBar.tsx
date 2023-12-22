@@ -33,7 +33,7 @@ import {
 import SearchModal from "./SearchModal";
 const NavBar = () => {
 	const { cartItems } = useSelector((state) => (state as any).cart);
-	//const [dropped, setDropped] = useState<boolean>(false);
+
 	return (
 		<div className="w-11/12 mx-auto flex items-center justify-between">
 			<Link to="/" className="flex items-center py-4 font-poppins">

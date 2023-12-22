@@ -9,6 +9,7 @@ import {
 import { TbPigMoney, TbBusinessplan } from "react-icons/tb";
 import { IoIosChatbubbles } from "react-icons/io";
 import { MdMenuBook, MdOutlineAttachMoney } from "react-icons/md";
+import { LuLayoutDashboard } from "react-icons/lu";
 import {
 	useGetHighlyRatedProductsQuery,
 	useGetAllProductsQuery,
@@ -26,6 +27,7 @@ import {
 import SalesChart from "@/Charts/SalesChart";
 import OrderStatusChart from "@/Charts/OrderStatusChart";
 import { calcSales } from "@/utils/CalcOrders";
+import AdminPageSheet from "@/layouts/Responsiveness-layout/AdminPageSheet";
 
 const RevenuePage = () => {
 	const { data: products, isLoading } = useGetHighlyRatedProductsQuery({});
@@ -36,7 +38,7 @@ const RevenuePage = () => {
 	return (
 		<>
 			<hr />
-			<nav className="w-8/12 mx-auto mt-4">
+			<nav className="hidden w-8/12 mx-auto mt-4 md:block">
 				<ul className="flex items-center justify-between text-gray-500 text-sm">
 					<li>
 						<Link
@@ -95,6 +97,9 @@ const RevenuePage = () => {
 				</ul>
 			</nav>
 			<div className="w-full mx-auto md:w-11/12">
+				<AdminPageSheet>
+					<LuLayoutDashboard className="mt-4 ml-4 text-blue hover:cursor-pointer md:hidden" />
+				</AdminPageSheet>
 				<div className="w-full flex flex-col items-center my-8 md:flex-row md:7/12 lg:w-7/12">
 					<div className="w-11/12 mx-auto flex items-center md:w-1/2">
 						<div className="p-4 bg-gray-100 rounded-md w-1/2 md:w-1/2">
@@ -153,8 +158,8 @@ const RevenuePage = () => {
 						<OrderStatusChart />
 					</div>
 				</div>
-				<div className="flex items-center mt-8">
-					<div className="hidden w-[70%] md:flex">
+				<div className="flex flex-col items-center mt-8 lg:flex-row">
+					<div className="hidden md:w-full md:flex lg:w-[70%]">
 						<div className="w-full p-4 shadow-md">
 							<h4 className="font-poppins text-xl font-semibold mb-8 mt-4">
 								Highly Rated Products
@@ -190,7 +195,7 @@ const RevenuePage = () => {
 							</table>
 						</div>
 					</div>
-					<div className="w-11/12 mx-auto p-4 shadow-md rounded-lg ml-4 md:w-[30%]">
+					<div className="w-11/12 mx-auto p-4 shadow-md rounded-lg ml-4 md:mt-4 lg:mt-0 lg:w-[30%]">
 						<h4 className="font-poppins text-lg font-semibold">
 							Customer Review
 						</h4>

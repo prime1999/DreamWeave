@@ -6,15 +6,15 @@ import {
 	FaQuestionCircle,
 	FaChartBar,
 } from "react-icons/fa";
-import { TbPigMoney } from "react-icons/tb";
+import { TbPigMoney, TbBusinessplan } from "react-icons/tb";
 import { IoIosChatbubbles } from "react-icons/io";
-import { MdMenuBook } from "react-icons/md";
-import SalesChart from "@/Charts/SalesChart";
-import OrderStatusChart from "@/Charts/OrderStatusChart";
+import { MdMenuBook, MdOutlineAttachMoney } from "react-icons/md";
 import {
 	useGetHighlyRatedProductsQuery,
 	useGetAllProductsQuery,
 } from "@/slices/ProductSlice";
+import { useGetAllOrdersQuery } from "@/slices/OrderSlice";
+import { useGetUsersQuery } from "@/slices/UserSlice";
 import {
 	calcReview,
 	fiveStarRating,
@@ -23,11 +23,16 @@ import {
 	threeStarRating,
 	twoStarRating,
 } from "@/utils/CalcRating";
+import SalesChart from "@/Charts/SalesChart";
+import OrderStatusChart from "@/Charts/OrderStatusChart";
+import { calcSales } from "@/utils/CalcOrders";
 
 const RevenuePage = () => {
 	const { data: products, isLoading } = useGetHighlyRatedProductsQuery({});
 	const { data: allProducts, isLoading: productsLoading } =
-		useGetAllProductsQuery({});
+		useGetAllProductsQuery({}) as any;
+	const { data } = useGetAllOrdersQuery({}) as any;
+	const { data: users } = useGetUsersQuery({});
 	return (
 		<>
 			<hr />
@@ -89,16 +94,58 @@ const RevenuePage = () => {
 					</li>
 				</ul>
 			</nav>
-			<div className="w-11/12 mx-auto">
-				<div className="flex items-center p-4">
-					<div className="w-[70%] p-4 shadow-md rounded-md">
+			<div className="w-full mx-auto md:w-11/12">
+				<div className="w-full flex flex-col items-center my-8 md:flex-row md:7/12 lg:w-7/12">
+					<div className="w-11/12 mx-auto flex items-center md:w-1/2">
+						<div className="p-4 bg-gray-100 rounded-md w-1/2 md:w-1/2">
+							<MdOutlineAttachMoney className="bg-other text-blue p-1 rounded-full w-6 h-6" />
+							<p className="mt-2 text-gray-400 text-sm">Total Sales</p>
+							{data && (
+								<h4 className="text-3xl font-semibold font-poppins mt-2">
+									${calcSales(data)}
+								</h4>
+							)}
+						</div>
+						<div className="p-4 bg-gray-100 rounded-md w-1/2 mx-4 md:w-1/2">
+							<MdOutlineAttachMoney className="bg-other text-blue p-1 rounded-full w-6 h-6" />
+							<p className="mt-2 text-gray-400 text-sm">Total Orders</p>
+							{data && (
+								<h4 className="text-3xl font-semibold font-poppins mt-2">
+									{data.length}
+								</h4>
+							)}
+						</div>
+					</div>
+					<div className="w-11/12 mx-auto flex items-center mt-4 md:w-1/2 md:mt-0">
+						<div className="p-4 bg-gray-100 rounded-md w-1/2 mr-4 md:w-1/2">
+							<FaUsers className="bg-other text-blue p-1 rounded-full w-6 h-6" />
+							<p className="mt-2 text-gray-400 text-sm">Total Customers</p>
+							{users && (
+								<h4 className="text-3xl font-semibold font-poppins mt-2">
+									{users.length}
+								</h4>
+							)}
+						</div>
+						<div className="p-4 bg-gray-100 rounded-md w-1/2 mr-4 md:w-1/2">
+							<TbBusinessplan className="bg-other text-blue p-1 rounded-full w-6 h-6" />
+							<p className="mt-2 text-gray-400 text-sm">Total Products</p>
+							{allProducts && (
+								<h4 className="text-3xl font-semibold font-poppins mt-2">
+									{allProducts.length}
+								</h4>
+							)}
+						</div>
+					</div>
+				</div>
+				<div className="flex flex-col items-center p-4 md:flex-row">
+					<div className="w-full p-1 shadow-md rounded-md md:w-[70%]">
 						<div className="flex items-center">
 							<h1 className="font-semibold text-lg">Sales Review</h1>
 							<FaChartBar className="ml-2 text-blue" />
 						</div>
 						<SalesChart />
 					</div>
-					<div className="w-[30%] p-4 shadow-md ml-4">
+					<div className="w-full mt-2 p-4 shadow-md ml-4 md:w-[30%] md:mt-0">
 						<div className="flex items-center font-poppins font-semibold">
 							<h4 className="mr-2">Order Status</h4>
 							<MdMenuBook className="text-blue" />
@@ -106,13 +153,13 @@ const RevenuePage = () => {
 						<OrderStatusChart />
 					</div>
 				</div>
-				<div className="flex items-center">
-					<div className="flex w-[70%]">
+				<div className="flex items-center mt-8">
+					<div className="hidden w-[70%] md:flex">
 						<div className="w-full p-4 shadow-md">
 							<h4 className="font-poppins text-xl font-semibold mb-8 mt-4">
 								Highly Rated Products
 							</h4>
-							<table className="w-full">
+							<table className="w-full h-[200px]">
 								<thead className="border-b">
 									<th>Product-Id</th>
 									<th>Product Name</th>
@@ -143,7 +190,7 @@ const RevenuePage = () => {
 							</table>
 						</div>
 					</div>
-					<div className="w-[30%] p-4 shadow-md rounded-lg ml-4">
+					<div className="w-11/12 mx-auto p-4 shadow-md rounded-lg ml-4 md:w-[30%]">
 						<h4 className="font-poppins text-lg font-semibold">
 							Customer Review
 						</h4>

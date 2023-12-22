@@ -20,6 +20,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				body: userData,
 			}),
 		}),
+		getUsers: builder.query<any, any>({
+			query: ({}) => ({
+				url: `${USERS_URL}/getUsers`,
+			}),
+		}),
 		updateUser: builder.mutation<any, any>({
 			query: (updateDetails) => ({
 				url: `${USERS_URL}/updateUser`,
@@ -43,6 +48,8 @@ export const useRegisterUserMutation =
 //
 export const useLogUserInMutation =
 	userApiSlice.endpoints.logUserIn.useMutation;
+//
+export const useGetUsersQuery = userApiSlice.endpoints.getUsers.useQuery;
 //
 export const useLogUserOutMutation =
 	userApiSlice.endpoints.logUserOut.useMutation;

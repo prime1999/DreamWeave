@@ -97,10 +97,9 @@ export const oneStarRating = (products: any) => {
 
 // function to calculate the number of reviews on the products
 export const calcReview = (products: any) => {
-	const productReviews = products.reduce((acc: any, product: any) => {
+	const productReviews = products?.reduce((acc: any, product: any) => {
 		acc += product.review.length;
 		return acc;
 	}, 0);
-	console.log(productReviews);
 	return productReviews;
 };

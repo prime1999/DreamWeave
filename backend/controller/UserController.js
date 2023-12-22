@@ -221,4 +221,25 @@ const updateUser = asyncHandler(async (req, res) => {
 	}
 });
 
-export { registerUser, authUser, logUserOut, updateUser };
+// -------------------------------- function to get all users -------------------------------- //
+const getUsers = asyncHandler(async (req, res) => {
+	// make a try-catch block
+	try {
+		// check if the user is authorized
+		let userExist = await User.findById(req.user._id);
+
+		// if the user does not exist, throw an error
+		if (!userExist) {
+			throw new Error("User not authorized");
+		}
+		// get all the users from the dashboard
+		const users = await User.find({});
+		// send the users to the frontend
+		res.status(200).json(users);
+	} catch (error) {
+		// if an error occurred, send a 400 response with the error message
+		res.status(400).json({ error: error.message });
+	}
+});
+
+export { registerUser, authUser, logUserOut, updateUser, getUsers };

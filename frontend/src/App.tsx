@@ -18,6 +18,8 @@ import OrderPage from "./pages/OrderPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RevenuePage from "./pages/Admin/RevenuePage";
+import AdminLayout from "./layouts/AdminLayout";
+import UsersPage from "./pages/Admin/UsersPage";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -32,7 +34,10 @@ function App() {
 					<Route path="/account" element={<ProfilePage />} />
 					<Route path="/order/:orderId" element={<OrderDetailsPage />} />
 					{/* Admin routes */}
-					<Route path="/admin/dashboard/sales" element={<RevenuePage />} />
+					<Route path="/admin/dashboard" element={<AdminLayout />}>
+						<Route path="/admin/dashboard/sales" element={<RevenuePage />} />
+						<Route path="/admin/dashboard/users" element={<UsersPage />} />
+					</Route>
 				</Route>
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/logIn" element={<AuthPage />} />

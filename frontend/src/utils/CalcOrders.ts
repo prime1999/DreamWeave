@@ -8,6 +8,16 @@ export const calcSales = (data: any) => {
 		acc += order.totalAmount;
 		return acc;
 	}, 0);
-	console.log(sales);
+
+	return sales;
+};
+
+// function to calculate total price of orders
+export const calcOrders = (data: any) => {
+	// calculate the sum of the amount for the orders
+	const sales = data.reduce((acc: any, order: any) => {
+		acc += order.totalAmount;
+		return acc;
+	}, 0);
 	return sales;
 };

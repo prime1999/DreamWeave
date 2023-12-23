@@ -1,6 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { getDateDistance } from "@/utils/dateUtils";
-import { toast } from "react-toastify";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -61,6 +60,11 @@ export const columns: ColumnDef<User>[] = [
 		cell: ({ row }) => {
 			const user = row.original;
 
+			const handleUserDetails = (id: string) => {
+				const cookie = (document.cookie = `userId=${id}`);
+				console.log(cookie);
+			};
+
 			return (
 				<>
 					<DropdownMenu>
@@ -80,7 +84,7 @@ export const columns: ColumnDef<User>[] = [
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
-								//onClick={() => handleClick(order._id)}
+								onClick={() => handleUserDetails(user._id)}
 								className="hover:cursor-pointer"
 							>
 								View full user details

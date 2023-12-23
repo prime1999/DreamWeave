@@ -38,3 +38,12 @@ export const updateCart = (state: cartStateType) => {
 export const setLocalCart = (items: any) => {
 	localStorage.setItem("Cart", JSON.stringify(items));
 };
+
+export const cartPrice = (cart: any) => {
+	const cartItems = cart[0].items;
+	const cartTotal = cartItems.reduce((acc: any, item: any) => {
+		acc += item.product.price;
+		return acc;
+	}, 0);
+	return cartTotal;
+};

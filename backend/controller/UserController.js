@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/UserModel.js";
 import Cart from "../models/CartModel.js";
+import Order from "../models/OrderModel.js";
 import { isEqual } from "../Utils/CheckCartEquality.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import generateToken from "../Utils/GenerateToken.js";
@@ -242,4 +243,46 @@ const getUsers = asyncHandler(async (req, res) => {
 	}
 });
 
-export { registerUser, authUser, logUserOut, updateUser, getUsers };
+// --------------------------------- function to get all the details of a user ---------------------------- //
+const getUserDetails = asyncHandler(async (req, res) => {
+	// make a try-catch block
+	try {
+		// check if the user is authorized
+		let userExist = await User.findById(req.user._id);
+
+		// if the user does not exist, throw an error
+		if (!userExist) {
+			throw new Error("User not authorized");
+		}
+		// get the user's id from the params
+		const { id } = req.params;
+		// get the user personal info
+		const userInfo = await User.findOne({ _id: id });
+		// get the orders placed by the user
+		const userOrders = await Order.find({ user: id });
+		// get the user's cart
+		const userCart = await Cart.find({ user: id }).populate("items.product");
+
+		// if the user to be found does not exist in the DB, then
+		if (!userInfo) {
+			throw new Error("User not a customer");
+		}
+		// if the user was found, then
+		// send the user's details to the frontend
+		res
+			.status(200)
+			.json({ user: userInfo, cart: userCart, orders: userOrders });
+	} catch (error) {
+		// if an error occurred, send a 400 response with the error message
+		res.status(400).json({ error: error.message });
+	}
+});
+
+export {
+	registerUser,
+	authUser,
+	logUserOut,
+	updateUser,
+	getUsers,
+	getUserDetails,
+};

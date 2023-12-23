@@ -100,9 +100,7 @@ export const columns: ColumnDef<Order>[] = [
 			};
 
 			const handleClick = (currentId: string) => {
-				console.log(currentId);
 				setId(currentId);
-				console.log(currentId);
 			};
 			return (
 				<>

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {
 	ColumnDef,
+	SortingState,
 	ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
+	getSortedRowModel,
 	getPaginationRowModel,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
@@ -27,6 +29,7 @@ export function DataTable<TData, TValue>({
 	columns,
 	data,
 }: DataTableProps<TData, TValue>) {
+	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const table = useReactTable({
 		data,
@@ -35,8 +38,11 @@ export function DataTable<TData, TValue>({
 		getPaginationRowModel: getPaginationRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
+		onSortingChange: setSorting,
+		getSortedRowModel: getSortedRowModel(),
 		state: {
 			columnFilters,
+			sorting,
 		},
 	});
 
@@ -44,7 +50,7 @@ export function DataTable<TData, TValue>({
 		<>
 			<div className="flex items-center py-4">
 				<input
-					placeholder="Filter status..."
+					placeholder="Filter name..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)
@@ -53,13 +59,13 @@ export function DataTable<TData, TValue>({
 				/>
 			</div>
 			<div className="rounded-md border">
-				<Table>
-					<TableHeader>
+				<Table className="text-black">
+					<TableHeader className="bg-other">
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
 								{headerGroup.headers.map((header) => {
 									return (
-										<TableHead key={header.id}>
+										<TableHead className="text-black" key={header.id}>
 											{header.isPlaceholder
 												? null
 												: flexRender(

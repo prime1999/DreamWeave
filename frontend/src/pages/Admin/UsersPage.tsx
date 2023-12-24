@@ -7,6 +7,7 @@ import { DataTable } from "@/components/table/UsersTable/TableData";
 import { useGetUsersQuery, useGetUserDetailsQuery } from "@/slices/UserSlice";
 import { calcOrders, calcSales } from "@/utils/CalcOrders";
 import { cartPrice } from "@/utils/CartUtils";
+import UserPageCardsSkeleton from "@/components/miscelleneous/UserPageCardsSkeleton";
 
 const UsersPage = () => {
 	const { data, isLoading } = useGetUsersQuery({});
@@ -28,8 +29,6 @@ const UsersPage = () => {
 				refetch();
 			}
 		}, 3000);
-		console.log(userId);
-		console.log(userDetails);
 		// Clean up the interval when the component unmounts
 		return () => clearInterval(intervalId);
 	});
@@ -39,9 +38,14 @@ const UsersPage = () => {
 			<h4 className="font-bold text-3xl text-blue">Active Users</h4>
 			{isLoading ? <Loader /> : <DataTable columns={columns} data={data} />}
 			<div>
+				{detailsLoading && (
+					<>
+						<UserPageCardsSkeleton />
+					</>
+				)}
 				{userDetails && (
-					<div className="w-11/12 mx-auto flex items-center p-2 mt-8 text-black">
-						<div className="flex flex-col items-center justify-center p-4 rounded-md w-1/3 bg-other">
+					<div className="w-11/12 mx-auto flex flex-col items-center p-2 mt-8 text-black md:flex-row md:w-full lg:w-11/12">
+						<div className="flex flex-col items-center justify-center p-4 rounded-md w-full bg-other md:w-1/2 lg:w-1/3">
 							<img
 								src={userDetails.user.pic}
 								alt={userDetails.user.name}
@@ -64,9 +68,9 @@ const UsersPage = () => {
 								</button>
 							</div>
 						</div>
-						<div className="w-2/3 ml-4">
-							<div className="flex items-center">
-								<div className="w-1/2 bg-other rounded-md p-8">
+						<div className="w-full mt-4 md:mt-0 md:ml-4">
+							<div className="flex flex-col items-center md:flex-row">
+								<div className="w-full bg-other rounded-md p-8 md:p-4 md:w-1/2 lg:p-8">
 									<h4 className="text-3xl font-semibold">Orders</h4>
 									<hr className="border-[1.5px] mt-2" />
 									<div className="flex items-center justify-between mt-4">
@@ -82,11 +86,11 @@ const UsersPage = () => {
 											<MdArrowRightAlt />
 										</div>
 									</div>
-									<h6 className="flex justify-end mt-4 font-semibold text-red-600">
+									<h6 className="flex justify-end mt-4 font-semibold text-red-600 md:text-sm lg:text-md">
 										No Impression change
 									</h6>
 								</div>
-								<div className="w-1/2 bg-other rounded-md p-8 ml-4">
+								<div className="w-full bg-other rounded-md mt-4 p-8 md:ml-4 md:p-4 md:w-1/2 md:mt-0 lg:p-8">
 									<h4 className="text-3xl font-semibold">Order Cost</h4>
 									<hr className="border-[1.5px] mt-2" />
 									<div className="flex items-center justify-between mt-4">
@@ -102,13 +106,13 @@ const UsersPage = () => {
 											<MdArrowRightAlt />
 										</div>
 									</div>
-									<h6 className="flex justify-end mt-4 font-semibold text-red-600">
+									<h6 className="flex justify-end mt-4 font-semibold text-red-600 md:text-sm lg:text-md">
 										No Impression change
 									</h6>
 								</div>
 							</div>
-							<div className="mt-4 w-full flex justify-between">
-								<div className="bg-other p-8 rounded-md w-1/2">
+							<div className="mt-4 w-full flex flex-col justify-between md:flex-row">
+								<div className="bg-other p-8 rounded-md w-full md:w-1/2 md:p-4 lg:p-8">
 									<h4 className="text-3xl font-semibold">Cart</h4>
 									<hr className="border-[1.5px] mt-2" />
 									<div className="flex items-center justify-between mt-4">
@@ -127,7 +131,7 @@ const UsersPage = () => {
 										</div>
 									</div>
 								</div>
-								<div className="ml-4 bg-other p-8 rounded-md w-1/2">
+								<div className="mt-4 bg-other p-8 rounded-md md:ml-4 md:mt-0 w-full md:w-1/2 md:p-4 lg:p-8">
 									<h4 className="text-3xl font-semibold">Cart Cost</h4>
 									<hr className="border-[1.5px] mt-2" />
 									<div className="flex items-center justify-between mt-4">

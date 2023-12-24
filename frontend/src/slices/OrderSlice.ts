@@ -30,6 +30,11 @@ export const OrderSlice = apiSlice.injectEndpoints({
 				params: orderId,
 			}),
 		}),
+		getStatusOrder: builder.query<any, any>({
+			query: (status) => ({
+				url: `${ORDER_URL}/statusOrder/${status}`,
+			}),
+		}),
 		payOrder: builder.mutation<any, any>({
 			query: ({ orderId, details }) => ({
 				url: `${ORDER_URL}/payOrder/${orderId}`,
@@ -37,7 +42,7 @@ export const OrderSlice = apiSlice.injectEndpoints({
 				body: { ...details },
 			}),
 		}),
-		deleteOrder: builder.mutation<string, any>({
+		deleteOrder: builder.mutation<any, any>({
 			query: (orderId) => ({
 				url: `${ORDER_URL}/deleteOrder/${orderId}`,
 				method: "DELETE",
@@ -72,6 +77,9 @@ export const useGetUserOrderQuery = OrderSlice.endpoints.getUserOrder.useQuery;
 export const useGetAllOrdersQuery = OrderSlice.endpoints.getAllOrders.useQuery;
 //
 export const useGetAnOrderQuery = OrderSlice.endpoints.getAnOrder.useQuery;
+//
+export const useGetStatusOrderQuery =
+	OrderSlice.endpoints.getStatusOrder.useQuery;
 //
 export const useGetPayPalClientIdQuery =
 	OrderSlice.endpoints.getPayPalClientId.useQuery;

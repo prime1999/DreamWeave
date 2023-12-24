@@ -1,5 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { getDateDistance } from "@/utils/dateUtils";
+import { ArrowUpDown } from "lucide-react";
+import { IoMdPricetags } from "react-icons/io";
+import { GiNetworkBars } from "react-icons/gi";
+import { MdDateRange, MdPayments, MdOutlinePaid } from "react-icons/md";
+import { changeDateFormat } from "@/utils/dateUtils";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -9,7 +14,6 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { ArrowUpDown } from "lucide-react";
 
 export type User = {
 	_id: string;
@@ -22,38 +26,89 @@ export type User = {
 
 export const columns: ColumnDef<User>[] = [
 	{
-		accessorKey: "name",
-		header: "Name",
-	},
-	{
-		accessorKey: "email",
-		header: "Email",
-	},
-	{
-		accessorKey: "isAdmin",
-		header: () => <div>Status</div>,
+		id: "select",
+		header: ({ table }) => (
+			<Checkbox
+				checked={
+					table.getIsAllPageRowsSelected() ||
+					(table.getIsSomePageRowsSelected() && "indeterminate")
+				}
+				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+				aria-label="Select all"
+			/>
+		),
 		cell: ({ row }) => {
-			const admin = row.getValue("isAdmin");
-			return admin ? "Admin" : "User";
+			return (
+				<Checkbox
+					checked={row.getIsSelected()}
+					onCheckedChange={(value) => {
+						row.toggleSelected(!!value);
+						console.log(!row.getIsSelected() && row.original);
+					}}
+					aria-label="Select row"
+				/>
+			);
 		},
 	},
 	{
 		accessorKey: "createdAt",
-		header: ({ column }) => {
-			return (
-				<button
-					className="flex"
+		header: ({ column }) => (
+			<div className="flex items-center hover:cursor-pointer">
+				<MdDateRange className="text-blue" />
+				<p className="ml-2">Date</p>
+				<ArrowUpDown
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-				>
-					Signed up
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</button>
-			);
-		},
+					className="ml-2 h-4 w-4 hover:cursor-pointer"
+				/>
+			</div>
+		),
 		cell: ({ row }) => {
-			// format the date the order was created
-			const date = row.getValue("createdAt");
-			return getDateDistance(date as any);
+			const date: string = row.getValue("createdAt");
+			return changeDateFormat(date);
+		},
+	},
+	{
+		accessorKey: "status",
+		header: () => (
+			<div className="flex items-center">
+				<GiNetworkBars className="text-blue" />
+				<p className="ml-2">Status</p>
+			</div>
+		),
+	},
+	{
+		accessorKey: "itemsPrice",
+		header: () => (
+			<div className="flex items-center">
+				<IoMdPricetags className="text-blue" />
+				<h6 className="ml-2">Price</h6>
+			</div>
+		),
+		cell: ({ row }) => {
+			const price = row.getValue("itemsPrice");
+			return `$${price}`;
+		},
+	},
+	{
+		accessorKey: "paymentMethod",
+		header: () => (
+			<div className="flex items-center">
+				<MdPayments className="text-blue" />
+				<p className="ml-2">Payment Method</p>
+			</div>
+		),
+	},
+	{
+		accessorKey: "isPaid",
+		header: () => (
+			<div className="flex items-center">
+				<MdOutlinePaid className="text-blue" />
+				<p>Payment</p>
+			</div>
+		),
+		cell: ({ row }) => {
+			const isPaid = row.getValue("isPaid");
+			return `${isPaid ? "Paid" : "Not-Paid"}`;
 		},
 	},
 	{
@@ -83,7 +138,7 @@ export const columns: ColumnDef<User>[] = [
 								//onClick={() => handleUserDetails(user._id)}
 								className="hover:cursor-pointer"
 							>
-								View full user details
+								View full Order's details
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								//onClick={() => handleRemoveOrder(order._id)}

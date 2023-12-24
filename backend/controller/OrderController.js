@@ -152,7 +152,7 @@ const getStatusOrder = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// get the order from the request params
-		const orders = await Order.find({ status: req.body.status });
+		const orders = await Order.find({ status: req.params.status });
 		// if there is no order of that status
 		if (orders.length === 0) {
 			res.status(200).json({ orders: [] });

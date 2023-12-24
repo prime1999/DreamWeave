@@ -5,6 +5,7 @@ import {
 	getOneOrder,
 	getOrders,
 	getSalesRevenue,
+	getStatusOrder,
 	getUserOrder,
 	payOrder,
 	placeOrder,
@@ -16,6 +17,7 @@ const OrderRouter = express.Router();
 OrderRouter.post("/placeOrder", protect, placeOrder);
 OrderRouter.get("/", protect, getUserOrder);
 OrderRouter.get("/all", protect, getOrders);
+OrderRouter.get("/statusOrder", protect, admin, getStatusOrder);
 OrderRouter.get("/:orderId", protect, getOneOrder);
 OrderRouter.put("/payOrder/:orderId", protect, payOrder);
 OrderRouter.put("/updateOrder/:orderId", protect, updateShippingAddress);

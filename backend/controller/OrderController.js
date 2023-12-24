@@ -139,6 +139,33 @@ const getOneOrder = asyncHandler(async (req, res) => {
 	}
 });
 
+// ------------------------- function to get orders based on there status ------------------------- //
+const getStatusOrder = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+	// if yes
+	// make a try-catch block
+	try {
+		// get the order from the request params
+		const orders = await Order.find({ status: req.body.status });
+		// if there is no order of that status
+		if (orders.length === 0) {
+			res.status(200).json({ orders: [] });
+		}
+		// if there is an order of that status
+		res.status(200).json({ orders: orders });
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 // ------------------------------ function to update order to paid ----------------------------------- //
 const payOrder = asyncHandler(async (req, res) => {
 	// check if the user is authorized
@@ -157,6 +184,10 @@ const payOrder = asyncHandler(async (req, res) => {
 		// if the order was not found then
 		if (!order) {
 			throw new Error("order not placed");
+		}
+		// check if the order was cancelled
+		if (order.status === "cancelled") {
+			throw new Error("This Order was cancelled");
 		}
 		// if the order was found then
 		order.isPaid = true;
@@ -327,6 +358,7 @@ export {
 	placeOrder,
 	getUserOrder,
 	getOrders,
+	getStatusOrder,
 	getOneOrder,
 	payOrder,
 	deleteOrder,

@@ -20,6 +20,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RevenuePage from "./pages/Admin/RevenuePage";
 import AdminLayout from "./layouts/AdminLayout";
 import UsersPage from "./pages/Admin/UsersPage";
+import AdminOrderPage from "./pages/Admin/AdminOrderPage";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -37,6 +38,10 @@ function App() {
 					<Route path="/admin/dashboard" element={<AdminLayout />}>
 						<Route path="/admin/dashboard/sales" element={<RevenuePage />} />
 						<Route path="/admin/dashboard/users" element={<UsersPage />} />
+						<Route
+							path="/admin/dashboard/orders"
+							element={<AdminOrderPage />}
+						/>
 					</Route>
 				</Route>
 				<Route path="/register" element={<RegisterPage />} />

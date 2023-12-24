@@ -13,9 +13,10 @@ import { ArrowUpDown } from "lucide-react";
 
 export type User = {
 	_id: string;
-	name: string;
-	isAdmin: string;
-	email: string;
+	itemsPrice: number;
+	isPaid: boolean;
+	status: string;
+	paymentMethod: string;
 	createdAt: string;
 };
 
@@ -58,11 +59,7 @@ export const columns: ColumnDef<User>[] = [
 	{
 		id: "actions",
 		cell: ({ row }) => {
-			const user = row.original;
-
-			const handleUserDetails = (id: string) => {
-				document.cookie = `userId=${id}`;
-			};
+			const order = row.original;
 
 			return (
 				<>
@@ -77,13 +74,13 @@ export const columns: ColumnDef<User>[] = [
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
 							<DropdownMenuItem
 								className="hover:cursor-pointer"
-								onClick={() => navigator.clipboard.writeText(user._id)}
+								onClick={() => navigator.clipboard.writeText(order._id)}
 							>
-								Copy User's ID
+								Copy Order's ID
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
-								onClick={() => handleUserDetails(user._id)}
+								//onClick={() => handleUserDetails(user._id)}
 								className="hover:cursor-pointer"
 							>
 								View full user details
@@ -92,7 +89,7 @@ export const columns: ColumnDef<User>[] = [
 								//onClick={() => handleRemoveOrder(order._id)}
 								className="text-red-500 hover:cursor-pointer"
 							>
-								Delete user
+								Delete order
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

@@ -60,6 +60,13 @@ export const OrderSlice = apiSlice.injectEndpoints({
 				body: { ...details },
 			}),
 		}),
+		updateOrderStatus: builder.mutation<any, any>({
+			query: ({ id, status }) => ({
+				url: `${ORDER_URL}/update/status/${id}`,
+				method: "PUT",
+				body: { status },
+			}),
+		}),
 		getSalesRevenue: builder.query({
 			query: () => ({
 				url: `${ORDER_URL}/sales/totalRevenue`,
@@ -91,6 +98,9 @@ export const useDeleteOrderMutation =
 //
 export const useUpdateOrderMutation =
 	OrderSlice.endpoints.updateOrder.useMutation;
+//
+export const useUpdateOrderStatusMutation =
+	OrderSlice.endpoints.updateOrderStatus.useMutation;
 //
 export const useGetSalesRevenueQuery =
 	OrderSlice.endpoints.getSalesRevenue.useQuery;

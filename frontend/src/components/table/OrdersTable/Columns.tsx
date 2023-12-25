@@ -3,6 +3,7 @@ import { ArrowUpDown } from "lucide-react";
 import { IoMdPricetags } from "react-icons/io";
 import { GiNetworkBars } from "react-icons/gi";
 import { MdDateRange, MdPayments, MdOutlinePaid } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
 import { changeDateFormat } from "@/utils/dateUtils";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -15,8 +16,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 
-export type User = {
+export type Order = {
 	_id: string;
+	user: string;
 	itemsPrice: number;
 	isPaid: boolean;
 	status: string;
@@ -24,7 +26,7 @@ export type User = {
 	createdAt: string;
 };
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Order>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -48,6 +50,19 @@ export const columns: ColumnDef<User>[] = [
 					aria-label="Select row"
 				/>
 			);
+		},
+	},
+	{
+		accessorKey: "user",
+		header: () => (
+			<div className="flex items-center">
+				<FaRegUserCircle className="text-blue" />
+				<p className="ml-2">Customer</p>
+			</div>
+		),
+		cell: ({ row }) => {
+			const user: string = row.getValue("user");
+			return `${user.slice(-6)}`;
 		},
 	},
 	{
@@ -103,7 +118,7 @@ export const columns: ColumnDef<User>[] = [
 		header: () => (
 			<div className="flex items-center">
 				<MdOutlinePaid className="text-blue" />
-				<p>Payment</p>
+				<p className="ml-2">Payment</p>
 			</div>
 		),
 		cell: ({ row }) => {
@@ -135,16 +150,10 @@ export const columns: ColumnDef<User>[] = [
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
-								//onClick={() => handleUserDetails(user._id)}
+								onClick={() => navigator.clipboard.writeText(order.user)}
 								className="hover:cursor-pointer"
 							>
-								View full Order's details
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								//onClick={() => handleRemoveOrder(order._id)}
-								className="text-red-500 hover:cursor-pointer"
-							>
-								Delete order
+								Copy customer's Id
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

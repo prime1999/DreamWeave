@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdFolderDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
-import { useDeleteOrderMutation } from "@/slices/OrderSlice";
+import {
+	useDeleteOrderMutation,
+	useUpdateOrderStatusMutation,
+} from "@/slices/OrderSlice";
 import {
 	ColumnDef,
 	SortingState,
@@ -43,6 +46,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [rowSelection, setRowSelection] = useState<any>({});
+	const [status, setStatus] = useState<string>("");
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const table = useReactTable({
 		data,
@@ -62,6 +66,8 @@ export function DataTable<TData, TValue>({
 	});
 
 	const [deleteOrder, { isLoading }] = useDeleteOrderMutation();
+	const [updateOrderStatus, { isLoading: updateLoading }] =
+		useUpdateOrderStatusMutation();
 	// function to delete selected orders
 	const handleGroupDelete = () => {
 		// show a confirmation alert message before proceeding
@@ -94,45 +100,94 @@ export function DataTable<TData, TValue>({
 		}
 	};
 
+	// function to change the order status
+	const handleChangeStatus = () => {
+		// show a confirmation alert message before proceeding
+		if (window.confirm("Are you sure")) {
+			// check if the rowSelection state is truthy
+			if (rowSelection) {
+				// if yes, filter the order that is of the same index as the key in the rowselection
+				const filtered = data.filter((order, index) => {
+					return rowSelection.hasOwnProperty(index) && order;
+				});
+				// check if any order was filtered
+				if (filtered.length !== 0) {
+					// create a function to update the orders
+					const updateOrders = async () => {
+						// make a promise to resolve the asyncronise function, so for the update Order to work for all the orders
+						await Promise.all(
+							// mp through the filtered orders
+							filtered.map(async (order: any) => {
+								// await on the update order function
+								console.log({
+									id: order._id,
+									status,
+								});
+								await updateOrderStatus({
+									id: order._id,
+									status,
+								}).unwrap();
+							})
+						);
+					};
+					// call the update order function
+					updateOrders();
+				}
+				// refetch the orders for real time update
+				refetch();
+			}
+		}
+	};
+
+	const handleChange = (value: string) => {
+		setStatus(value);
+		console.log(status);
+	};
+
 	return (
 		<>
 			<div className="flex items-center justify-between py-4">
 				<input
-					placeholder="Filter name..."
-					value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+					placeholder="Find customer's order by ID"
+					value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
-						table.getColumn("status")?.setFilterValue(event.target.value)
+						table.getColumn("user")?.setFilterValue(event.target.value)
 					}
-					className="max-w-md border rounded-md p-2 focus:outline-none"
+					className="w-96 border rounded-md p-2 focus:outline-none"
 				/>
-				<div className="flex items-center">
+				{Object.keys(rowSelection).length !== 0 && (
 					<div className="flex items-center">
-						<Select>
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Update Status" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="pending">Pending</SelectItem>
-								<SelectItem value="processing">Processing</SelectItem>
-								<SelectItem value="shipped">Shipped</SelectItem>
-								<SelectItem value="delivered">Delivered</SelectItem>
-								<SelectItem value="cancelled">Cancelled</SelectItem>
-							</SelectContent>
-						</Select>
-						<button className="flex items-center bg-blue p-2 rounded-md text-light ml-2 font-semibold duration-500 hover:bg-cyan-700">
-							<GrDocumentUpdate />
-							<p className="ml-2">Update</p>
+						<div className="flex items-center">
+							<Select onValueChange={(e) => handleChange(e)}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Update Status" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="pending">Pending</SelectItem>
+									<SelectItem value="processing">Processing</SelectItem>
+									<SelectItem value="shipped">Shipped</SelectItem>
+									<SelectItem value="delivered">Delivered</SelectItem>
+									<SelectItem value="cancelled">Cancelled</SelectItem>
+								</SelectContent>
+							</Select>
+							<button
+								onClick={handleChangeStatus}
+								className="flex items-center bg-blue p-2 rounded-md text-light ml-2 font-semibold duration-500 hover:bg-cyan-700"
+							>
+								<GrDocumentUpdate />
+								<p className="ml-2">Update</p>
+							</button>
+						</div>
+						<button
+							onClick={handleGroupDelete}
+							disabled={!rowSelection ? true : false}
+							className="flex items-center ml-4 text-md bg-red-500 font-semibold rounded-md p-2 text-light duration-500 hover:bg-red-600"
+						>
+							<MdFolderDelete className="text-lg" />
+							<span className="ml-2">Delete selected</span>
 						</button>
 					</div>
-					<button
-						onClick={handleGroupDelete}
-						disabled={!rowSelection ? true : false}
-						className="flex items-center ml-4 text-md border border-light rounded-md p-2 text-red-500 hover:bg-gray-50"
-					>
-						<MdFolderDelete className="text-lg" />
-						<span className="ml-2">Delete selected</span>
-					</button>
-				</div>
+				)}
 			</div>
 			<div className="rounded-md border">
 				<Table className="text-black">

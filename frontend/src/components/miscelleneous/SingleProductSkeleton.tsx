@@ -4,11 +4,11 @@ const SingleProductSkeleton = () => {
 	return (
 		<div className="container mx-auto">
 			<Skeleton className="w-[900px] h-[50px] mb-8" />
-			<div className="flex flex-col justify-between items-center container mx-auto md:flex-row">
-				<div className="w-[200px] md:w-[300px] lg:w-[500px]">
+			<div className="flex flex-col justify-between items-center container mx-auto lg:flex-row">
+				<div className="w-[200px] md:w-[500px] lg:w-[500px]">
 					<Skeleton className="w-full h-[200px]" />
 				</div>
-				<div className="w-[500px] h-[380px] mt-4 md:ml-4 md:mt-0">
+				<div className="w-full h-[380px] mt-4 md:mt-16 md:ml-4 lg:mt-0 lg:w-[500px]">
 					<Skeleton className="max-w-full h-[60px] mx-auto" />
 					<Skeleton className="w-full h-[120px] mt-4 rounded-md" />
 					<Skeleton className="w-1/3 h-[30px] mt-4" />

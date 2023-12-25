@@ -3,6 +3,7 @@ import { useGetAllOrdersQuery } from "@/slices/OrderSlice";
 import { columns } from "@/components/table/OrdersTable/Columns";
 import { DataTable } from "@/components/table/OrdersTable/TableData";
 import Loader from "@/components/Loader";
+import { calcOrdersLength } from "@/utils/CalcOrders";
 
 const AdminOrderPage = () => {
 	const { data, isLoading, refetch } = useGetAllOrdersQuery({});
@@ -10,6 +11,40 @@ const AdminOrderPage = () => {
 	return (
 		<>
 			<div className="w-10/12 mx-auto mt-8">
+				{data && (
+					<div className="flex items-center mb-8 flex-wrap w-11/12 mx-auto">
+						<div className="w-48 p-4 rounded-md bg-orange-50">
+							<h6 className="font-bold text-lg">Pending Orders</h6>
+							<h3 className="text-orange-600 font-bold text-3xl">
+								{calcOrdersLength(data, "pending")}
+							</h3>
+						</div>
+						<div className="w-48 p-4 rounded-md bg-yellow-50 mt-2 md:mt-0 md:ml-4">
+							<h6 className="font-bold text-lg">Processing Orders</h6>
+							<h3 className="text-yellow-600 font-bold text-3xl">
+								{calcOrdersLength(data, "processing")}
+							</h3>
+						</div>
+						<div className="w-48 p-4 rounded-md bg-green-50 mt-2 md:mt-0 md:ml-4">
+							<h6 className="font-bold text-lg">Shipped Orders</h6>
+							<h3 className="text-green-600 font-bold text-3xl">
+								{calcOrdersLength(data, "shipped")}
+							</h3>
+						</div>
+						<div className="w-48 p-4 rounded-md bg-cyan-50 mt-2 md:mt-0 md:ml-4">
+							<h6 className="font-bold text-lg">Delivered Orders</h6>
+							<h3 className="text-cyan-600 font-bold text-3xl">
+								{calcOrdersLength(data, "delivered")}
+							</h3>
+						</div>
+						<div className="w-48 p-4 rounded-md bg-red-50 mt-2 md:mt-0 md:ml-4">
+							<h6 className="font-bold text-lg">Cancelled Orders</h6>
+							<h3 className="text-red-600 font-bold text-3xl">
+								{calcOrdersLength(data, "cancelled")}
+							</h3>
+						</div>
+					</div>
+				)}
 				<h1 className="text-2xl font-poppins font-semibold text-blue">
 					Orders
 				</h1>

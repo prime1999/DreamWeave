@@ -1,4 +1,3 @@
-import { MdKeyboardArrowDown } from "react-icons/md";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -7,15 +6,6 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Sorting = () => {
 	return (
@@ -63,22 +53,6 @@ const Sorting = () => {
 						</NavigationMenuItem>
 					</NavigationMenuList>
 				</NavigationMenu>
-			</div>
-			<div>
-				<DropdownMenu>
-					<DropdownMenuTrigger className="flex items-center border px-4 py-1 font-poppins text-sm rounded-2xl">
-						<p>sort by</p>
-						<MdKeyboardArrowDown className="ml-1" />
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<DropdownMenuLabel>My Account</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Profile</DropdownMenuItem>
-						<DropdownMenuItem>Billing</DropdownMenuItem>
-						<DropdownMenuItem>Team</DropdownMenuItem>
-						<DropdownMenuItem>Subscription</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
 			</div>
 		</div>
 	);

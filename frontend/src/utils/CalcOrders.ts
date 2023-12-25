@@ -21,3 +21,13 @@ export const calcOrders = (data: any) => {
 	}, 0);
 	return sales;
 };
+
+// functio to get the orders length based on there status
+export const calcOrdersLength = (orders: any, status: string) => {
+	// filter the orders
+	const filteredOrders = orders?.filter(
+		(order: any) => order.status === status
+	);
+	// return te length of the filtered orders
+	return filteredOrders.length;
+};

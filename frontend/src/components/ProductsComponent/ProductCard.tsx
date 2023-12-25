@@ -35,7 +35,7 @@ const ProductCard = ({ product }: Props) => {
 	};
 
 	return (
-		<Card className="w-[300px] mt-4 hover:cursor-pointer hover:shadow-md">
+		<Card className="w-[250px] mt-4 hover:cursor-pointer hover:shadow-md md:w-[300px]">
 			<Link to={`/product/${product._id}`}>
 				<CardHeader className="w-full">
 					<div className="w-full h-[200px]">

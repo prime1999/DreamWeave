@@ -9,6 +9,8 @@ import {
 import { TbPigMoney } from "react-icons/tb";
 import { IoIosChatbubbles } from "react-icons/io";
 import { useEffect, useState } from "react";
+import AdminPageSheet from "./Responsiveness-layout/AdminPageSheet";
+import { LuLayoutDashboard } from "react-icons/lu";
 
 const AdminLayout = () => {
 	const [path, setPath] = useState("");
@@ -23,9 +25,12 @@ const AdminLayout = () => {
 	return (
 		<div>
 			<hr />
-			<h1 className="mt-4 ml-16 text-3xl font-bold text-blue">
+			<h1 className="mt-4 ml-4 text-lg font-bold text-blue md:ml-16 md:text-3xl">
 				Welcome back, <span className="capitalize">{userInfo.name}</span>
 			</h1>
+			<AdminPageSheet>
+				<LuLayoutDashboard className="mt-4 ml-4 text-blue hover:cursor-pointer md:hidden" />
+			</AdminPageSheet>
 			<nav className="hidden w-8/12 mx-auto mt-4 md:block">
 				<ul className="flex items-center justify-between text-gray-500 text-sm">
 					<li>

@@ -64,15 +64,19 @@ const SingleProduct = () => {
 								<span className="mx-2 text-black">{data?.name}</span>
 							</p>
 						</div>
-						<div className="flex flex-col w-11/12 mx-auto my-8 md:flex-row">
+						<div className="flex flex-col w-11/12 mx-auto my-8 lg:flex-row">
 							<div className="w-1/2">
-								<img className="max-w-[500px]" src={data?.image} alt="" />
+								<img
+									className="max-w-[300px] md:max-w-[500px]"
+									src={data?.image}
+									alt=""
+								/>
 							</div>
-							<div className="md:ml-28">
+							<div className="w-full mx-auto md:mt-16 lg:mt-0 lg:ml-28">
 								<h1 className="font-poppins font-bold text-3xl mb-4">
 									{data?.name}
 								</h1>
-								<p className="text-black text-sm font-semibold w-96">
+								<p className="text-black text-sm font-semibold md:w-96">
 									{data?.description}
 								</p>
 								<div className="mt-4">
@@ -114,12 +118,12 @@ const SingleProduct = () => {
 								<div className="mt-4">
 									<button
 										onClick={() => handleCart(data)}
-										className="w-full px-4 py-3 ml-4 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
+										className="w-full px-4 py-3 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
 									>
 										Add to cart
 									</button>
 								</div>
-								<div className="border mt-4 max-w-[450px]">
+								<div className="border mt-4 w-full">
 									<div className="flex items-start w-11/12 mx-auto py-4">
 										<FaTruck className="text-xl text-orange-500" />
 										<div className="font-poppins text-sm ml-4">

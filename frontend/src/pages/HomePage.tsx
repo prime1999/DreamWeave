@@ -29,7 +29,7 @@ const HomePage = () => {
 	return (
 		<div>
 			<Hero />
-			<div className="relative container mx-auto my-8 w-full">
+			<div className="relative container mx-auto my-8 w-11/12 md:w-full">
 				{loadingProducts && <Loader />}
 				<Sorting />
 				{data && (
@@ -38,7 +38,7 @@ const HomePage = () => {
 							<h6 className="font-bold text-black text-2xl">New Products</h6>
 							<div className="flex justify-center items-center">
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-									{data.products.map((product) => (
+									{data.products.map((product: any) => (
 										<Suspense key={product._id} fallback={<CardSkeleton />}>
 											<ProductCard product={product} />
 										</Suspense>

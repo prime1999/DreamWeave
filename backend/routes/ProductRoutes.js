@@ -1,18 +1,21 @@
 import express from "express";
 import {
+	addProduct,
 	getAllProducts,
 	getHighlyRatedProducts,
 	getProducts,
 	getProductsByCategory,
 	getSingleProduct,
 } from "../controller/ProductController.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 const ProductRouter = express.Router();
 
 /*
 GETPRODUCTS: GET public;
 GETHIGHLYRATEDPRODUCTS: GET public;
-GETSINGLEPRODUCT: GET public
+GETSINGLEPRODUCT: GET public;
+ADDPRODUCT: POST private admin
 */
 
 ProductRouter.get("/", getProducts);
@@ -20,5 +23,6 @@ ProductRouter.get("/allProducts", getAllProducts);
 ProductRouter.get("/highlyRated", getHighlyRatedProducts);
 ProductRouter.get("/:productId", getSingleProduct);
 ProductRouter.get("/category/:productId", getProductsByCategory);
+ProductRouter.post("/product/add", protect, admin, addProduct);
 
 export default ProductRouter;

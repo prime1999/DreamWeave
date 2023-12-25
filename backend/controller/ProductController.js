@@ -98,10 +98,50 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 	}
 });
 
+// --------------------------- function to add a product -------------------------------- //
+const addProduct = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// get the data object sent with the request
+		const { productDetails } = req.body;
+		// create the data to send to the DB
+		const productData = {
+			user: req.user._id,
+			name: productDetails.name,
+			brand: productDetails.brand,
+			image: productDetails.image,
+			category: productDetails.category,
+			description: productDetails.desc,
+			rating: productDetails.rating,
+			price: productDetails.price,
+			countInStock: productDetails.countInStock,
+			reviews: [],
+		};
+		// create the product
+		const newProduct = await Product.create(productData);
+		// send the new product to the frontend
+		res.status(201).json(newProduct);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 export {
 	getProducts,
 	getAllProducts,
 	getHighlyRatedProducts,
 	getSingleProduct,
 	getProductsByCategory,
+	addProduct,
 };

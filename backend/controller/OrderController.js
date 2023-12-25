@@ -263,6 +263,39 @@ const updateShippingAddress = asyncHandler(async (req, res) => {
 	}
 });
 
+// --------------------------- function to update order status ------------------------------ //
+const updateOrderStatus = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// get the order to update from the DB
+		const order = await Order.findOne({ _id: req.params.id });
+		// check if the order exist
+		if (!order) {
+			throw new Error("Order not found");
+		}
+
+		// update the other status
+		order.status = req.body.status;
+		// save the order to the database
+		await order.save();
+		// send the updated order to the frontend
+		res.status(200).json(order);
+	} catch (error) {
+		// if an error occured in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 // ----------------------------------- function to get sales revenue ------------------------------ //
 
 const getSalesRevenue = asyncHandler(async (req, res) => {
@@ -363,5 +396,6 @@ export {
 	payOrder,
 	deleteOrder,
 	updateShippingAddress,
+	updateOrderStatus,
 	getSalesRevenue,
 };

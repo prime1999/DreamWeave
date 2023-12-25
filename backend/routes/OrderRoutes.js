@@ -9,6 +9,7 @@ import {
 	getUserOrder,
 	payOrder,
 	placeOrder,
+	updateOrderStatus,
 	updateShippingAddress,
 } from "../controller/OrderController.js";
 
@@ -21,6 +22,7 @@ OrderRouter.get("/statusOrder/:status", protect, admin, getStatusOrder);
 OrderRouter.get("/:orderId", protect, getOneOrder);
 OrderRouter.put("/payOrder/:orderId", protect, payOrder);
 OrderRouter.put("/updateOrder/:orderId", protect, updateShippingAddress);
+OrderRouter.put("/update/status/:id", protect, admin, updateOrderStatus);
 OrderRouter.delete("/deleteOrder/:orderId", protect, deleteOrder);
 OrderRouter.get("/sales/totalRevenue", protect, getSalesRevenue);
 

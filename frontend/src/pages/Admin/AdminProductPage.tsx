@@ -6,13 +6,13 @@ import { useGetAllProductsQuery } from "@/slices/ProductSlice";
 import Loader from "@/components/Loader";
 
 const AdminProductPage = () => {
-	const { data, isLoading } = useGetAllProductsQuery({});
+	const { data, isLoading, refetch } = useGetAllProductsQuery({});
 	return (
 		<>
 			<div className="w-10/12 mx-auto mt-8">
 				<h4 className="text-3xl font-bold text-black">Products</h4>
-				<div>
-					<Tabs defaultValue="account" className="w-[400px]">
+				<div className="mt-4">
+					<Tabs defaultValue="viewProduct" className="w-[400px]">
 						<TabsList className="bg-transparent">
 							<TabsTrigger className="mr-8" value="viewProduct">
 								<BsFillEyeFill /> <span className="ml-2">View Product</span>
@@ -26,7 +26,7 @@ const AdminProductPage = () => {
 							{isLoading ? (
 								<Loader />
 							) : (
-								<DataTable columns={columns} data={data} />
+								<DataTable refetch={refetch} columns={columns} data={data} />
 							)}
 						</TabsContent>
 						<TabsContent value="addProduct">

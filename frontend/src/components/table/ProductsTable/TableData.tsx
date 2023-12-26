@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { MdFolderDelete } from "react-icons/md";
-import { GrDocumentUpdate } from "react-icons/gr";
-import {
-	useDeleteOrderMutation,
-	useUpdateOrderStatusMutation,
-} from "@/slices/OrderSlice";
+import { useDeleteProductMutation } from "@/slices/ProductSlice";
 import {
 	ColumnDef,
 	SortingState,
@@ -28,11 +24,13 @@ import {
 import { DataTablePagination } from "./DataTablePagination";
 
 interface DataTableProps<TData, TValue> {
+	refetch: any;
 	columns: ColumnDef<TData, TValue>[];
 	data: any;
 }
 
 export function DataTable<TData, TValue>({
+	refetch,
 	columns,
 	data,
 }: DataTableProps<TData, TValue>) {
@@ -57,7 +55,7 @@ export function DataTable<TData, TValue>({
 		},
 	});
 
-	const [deleteOrder, { isLoading }] = useDeleteOrderMutation();
+	const [deleteProduct, { isLoading }] = useDeleteProductMutation();
 
 	// function to delete selected orders
 	const handleGroupDelete = () => {
@@ -65,28 +63,30 @@ export function DataTable<TData, TValue>({
 		if (window.confirm("Are you sure")) {
 			// check if the rowSelection state is truthy
 			if (rowSelection) {
-				// if yes, filter the order that is of the same index as the key in the rowselection
-				const filtered = data.filter((order, index) => {
-					return rowSelection.hasOwnProperty(index) && order;
+				// if yes, filter the product that is of the same index as the key in the rowselection
+				const filtered = data.filter((product: any, index: any) => {
+					return rowSelection.hasOwnProperty(index) && product;
 				});
-				// check if any order was filtered
+				// check if any product was filtered
 				if (filtered.length !== 0) {
-					// create a function to delete the orders
-					const deleteOrders = async () => {
-						// make a promise to resolvev the asyncronise function, so fot the delete Order to work for all the orders
+					// create a function to delete the products
+					const deleteProducts = async () => {
+						// make a promise to resolvev the asyncronise function, so fot the delete product to work for all the orders
 						await Promise.all(
 							// mp through the filtered orders
-							filtered.map(async (order: any) => {
-								// await on the delete order function
-								await deleteOrder(order._id).unwrap();
+							filtered.map(async (product: any) => {
+								console.log(product._id);
+								// await on the delete product function
+								await deleteProduct(product._id).unwrap();
 							})
 						);
 					};
-					// call the delete order function
-					deleteOrders();
+					// call the delete product function
+					deleteProducts();
+					// refetch the orders for real time update
+					refetch();
 				}
-				// refetch the orders for real time update
-				refetch();
+				console.log(data);
 			}
 		}
 	};

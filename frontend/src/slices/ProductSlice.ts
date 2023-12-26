@@ -43,6 +43,12 @@ export const productSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],
 		}),
+		deleteProduct: builder.mutation<any, any>({
+			query: (id) => ({
+				url: `${PRODUCTS_URL}/delete/${id}`,
+				method: "DELETE",
+			}),
+		}),
 	}),
 });
 
@@ -60,3 +66,6 @@ export const useGetSinlgeProductQuery =
 //
 export const useGetProductsByCategoryQuery =
 	productSlice.endpoints.getProductsByCategory.useQuery;
+//
+export const useDeleteProductMutation =
+	productSlice.endpoints.deleteProduct.useMutation;

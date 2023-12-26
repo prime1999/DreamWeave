@@ -6,7 +6,7 @@ import path from "path";
 export default defineConfig({
 	server: {
 		proxy: {
-			"/api": "http://localhost:6000", // Example proxy configuration
+			"/api": "http://localhost:6000",
 			"/uploads": "http://localhost:6000",
 		},
 	},

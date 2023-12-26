@@ -14,6 +14,7 @@ const getProducts = asyncHandler(async (req, res) => {
 		const count = await Product.countDocuments({});
 		// get the products from the frontend
 		const products = await Product.find({})
+			.populate("user", "-password")
 			// linit the number of products to get to the page size you want
 			.limit(pageSize)
 			// leave out the once that are not to be on the page
@@ -38,7 +39,7 @@ const getProducts = asyncHandler(async (req, res) => {
 const getAllProducts = asyncHandler(async (req, res) => {
 	try {
 		// get all the products in the DB
-		const products = await Product.find({});
+		const products = await Product.find({}).populate("user", "-password");
 		// send the products to the frontend
 		res.status(200).json(products);
 	} catch (error) {
@@ -137,6 +138,32 @@ const addProduct = asyncHandler(async (req, res) => {
 	}
 });
 
+// ---------------------------- function to delete a product -------------------------------- //
+const deleteProduct = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// find the product by it's id and delete
+		const deletedProduct = await Product.findOneAndDelete({
+			_id: req.params.id,
+		});
+		// send the deleted roduct to the frontend
+		res.status(200).json(deletedProduct);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 export {
 	getProducts,
 	getAllProducts,
@@ -144,4 +171,5 @@ export {
 	getSingleProduct,
 	getProductsByCategory,
 	addProduct,
+	deleteProduct,
 };

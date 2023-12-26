@@ -49,10 +49,14 @@ const AdminProductPage = () => {
 										<img src={logo} alt="" className="h-full mx-auto" />
 									</div>
 									<div className="w-11/12 mx-auto">
-										<button className="flex items-center p-2 border mt-4 rounded-lg bg-white font-semibold duration-500 hover:bg-light">
+										<label
+											htmlFor="image"
+											className="flex items-center justify-center w-36 p-2 border mt-4 rounded-lg bg-white font-semibold duration-500 hover:bg-light hover:cursor-pointer"
+										>
 											<MdOutlineFileUpload />{" "}
 											<span className="ml-2">Add Image</span>
-										</button>
+										</label>
+										<input type="file" id="image" className="hidden" />
 									</div>
 								</div>
 								<div className="py-4 w-2/3 ml-8 bg-gray-50 rounded-lg shadow-md">
@@ -131,7 +135,7 @@ const AdminProductPage = () => {
 												className="bg-transparent px-4 border rounded-lg h-24 focus:outline-none focus:shadow-sm"
 											/>
 										</div>
-										<button className="w-full rounded-2xl text-light font-semibold bg-blue mt-4 py-2 duration-500 hover:bg-cyan-700">
+										<button className="w-full rounded-lg text-light font-semibold bg-blue mt-4 py-2 duration-500 hover:bg-cyan-700">
 											ADD PRODUCT
 										</button>
 									</form>

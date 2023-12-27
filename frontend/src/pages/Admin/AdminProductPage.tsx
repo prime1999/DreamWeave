@@ -87,7 +87,7 @@ const AdminProductPage = () => {
 				}
 			}
 		}
-		if (emptyProperties.length === 0 || category !== "" || pic !== "") {
+		if (emptyProperties.length === 0 || category !== "" || pic !== logo) {
 			try {
 				// create the product details to send to the backend
 				const productDetails = {

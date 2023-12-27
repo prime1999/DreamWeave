@@ -7,6 +7,7 @@ import {
 	getProducts,
 	getProductsByCategory,
 	getSingleProduct,
+	updateProduct,
 } from "../controller/ProductController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -26,5 +27,6 @@ ProductRouter.get("/:productId", getSingleProduct);
 ProductRouter.get("/category/:productId", getProductsByCategory);
 ProductRouter.post("/product/add", protect, admin, addProduct);
 ProductRouter.delete("/delete/:id", protect, admin, deleteProduct);
+ProductRouter.put("/update/product/:id", protect, admin, updateProduct);
 
 export default ProductRouter;

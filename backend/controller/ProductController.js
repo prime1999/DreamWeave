@@ -162,6 +162,47 @@ const deleteProduct = asyncHandler(async (req, res) => {
 	}
 });
 
+// ------------------------------ function to update the products ------------------------------- //
+const updateProduct = asyncHandler(async (req, res) => {
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// get the product details sent from the frontend
+		const productDetails = req.body;
+		// get the product to be updated from the DB
+		const product = await Product.findOne({ _id: req.params.id });
+		// iterate over the productDetails
+		for (const key in productDetails) {
+			// check if the key exist in the product object
+			if (Object.hasOwnProperty.call(productDetails, key)) {
+				// get the value of the current key
+				const value = productDetails[key];
+				// if key exist in the product
+				product[key] = value;
+			} else {
+				// if key does not exist
+				throw new Error(`${key} is not valid`);
+			}
+		}
+		// save the updated product to the DB
+		await product.save();
+		// send the product to the frontend
+		res.status(200).json(product);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 export {
 	getProducts,
 	getAllProducts,
@@ -170,4 +211,5 @@ export {
 	getProductsByCategory,
 	addProduct,
 	deleteProduct,
+	updateProduct,
 };

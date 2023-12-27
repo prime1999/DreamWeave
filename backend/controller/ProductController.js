@@ -112,19 +112,17 @@ const addProduct = asyncHandler(async (req, res) => {
 	// if yes
 	// make a try-catch block
 	try {
-		// get the data object sent with the request
-		const { productDetails } = req.body;
 		// create the data to send to the DB
 		const productData = {
 			user: req.user._id,
-			name: productDetails.name,
-			brand: productDetails.brand,
-			image: productDetails.image,
-			category: productDetails.category,
-			description: productDetails.desc,
-			rating: productDetails.rating,
-			price: productDetails.price,
-			countInStock: productDetails.countInStock,
+			name: req.body.name,
+			brand: req.body.brand,
+			image: req.body.image,
+			category: req.body.category,
+			description: req.body.desc,
+			rating: req.body.rating,
+			price: req.body.price,
+			countInStock: req.body.countInStock,
 			reviews: [],
 		};
 		// create the product

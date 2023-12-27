@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { BsFillEyeFill, BsPlus } from "react-icons/bs";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { toast } from "react-toastify";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Select,
@@ -10,12 +12,121 @@ import {
 } from "@/components/ui/select";
 import { DataTable } from "@/components/table/ProductsTable/TableData";
 import { columns } from "../../components/table/ProductsTable/Columns";
-import { useGetAllProductsQuery } from "@/slices/ProductSlice";
+import {
+	useGetAllProductsQuery,
+	useAddProductMutation,
+	useUploadProductImageMutation,
+} from "@/slices/ProductSlice";
 import Loader from "@/components/Loader";
 import logo from "@/assets/images/logo.png";
 
 const AdminProductPage = () => {
+	type FormDataType = {
+		[key: string]: string | number;
+		name: string;
+		brand: string;
+		price: number;
+		rating: number;
+		countInStock: number;
+		description: string;
+	};
+	const [pic, setPic] = useState<string>(logo);
+	const [category, setCategory] = useState<string>("");
+	const [formData, setFormData] = useState<FormDataType>({
+		name: "",
+		brand: "",
+		price: 0,
+		rating: 0,
+		countInStock: 0,
+		description: "",
+	});
+
+	let { name, brand, price, rating, countInStock, description } = formData;
 	const { data, isLoading, refetch } = useGetAllProductsQuery({});
+	const [uploadImage, { isLoading: uploadLoading }] =
+		useUploadProductImageMutation();
+	const [addProduct, { isLoading: productLoading }] = useAddProductMutation();
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.id]: e.target.value,
+		}));
+	};
+
+	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			const formData = new FormData();
+			formData.append("image", e.target.files[0]);
+			try {
+				const res = await uploadImage(formData).unwrap();
+				setPic(res.image);
+				//show a success message
+				toast.success(`${res.message}`, {
+					className: "bg-green-200",
+					bodyClassName: "text-black font-poppins font-semibold",
+					progressClassName: "bg-transparent",
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
+
+	const handleAddProduct = async (e: React.FormEvent) => {
+		e.preventDefault();
+		const emptyProperties = [];
+
+		for (const key in formData) {
+			if (formData.hasOwnProperty(key)) {
+				const value = formData[key];
+
+				// Check for empty string or 0
+				if (value === "" || value === 0) {
+					emptyProperties.push(key);
+				}
+			}
+		}
+		if (emptyProperties.length === 0 || category !== "" || pic !== "") {
+			try {
+				// create the product details to send to the backend
+				const productDetails = {
+					name,
+					brand,
+					category,
+					image: pic,
+					desc: description,
+					price,
+					countInStock,
+					rating,
+				};
+				console.log(productDetails);
+				await addProduct({ productDetails }).unwrap();
+				//show a success message
+				toast.success("Product Added", {
+					className: "bg-green-200",
+					bodyClassName: "text-black font-poppins font-semibold",
+					progressClassName: "bg-transparent",
+				});
+				// clear the form fields
+				setFormData({
+					name: "",
+					brand: "",
+					price: 0,
+					rating: 0,
+					countInStock: 0,
+					description: "",
+				});
+				setCategory("");
+				setPic(logo);
+			} catch (error) {
+				// TODO // show error message
+				console.log(error);
+			}
+		} else {
+			// TODO // show error message
+		}
+	};
 	return (
 		<>
 			<div className="w-10/12 mx-auto mt-8">
@@ -46,7 +157,7 @@ const AdminProductPage = () => {
 									</h6>
 									<hr />
 									<div className="w-11/12 mx-auto bg-blue h-72 mt-4 rounded-lg">
-										<img src={logo} alt="" className="h-full mx-auto" />
+										<img src={pic} alt="" className="h-full mx-auto" />
 									</div>
 									<div className="w-11/12 mx-auto">
 										<label
@@ -56,7 +167,12 @@ const AdminProductPage = () => {
 											<MdOutlineFileUpload />{" "}
 											<span className="ml-2">Add Image</span>
 										</label>
-										<input type="file" id="image" className="hidden" />
+										<input
+											type="file"
+											id="image"
+											onChange={handleImageUpload}
+											className="hidden"
+										/>
 									</div>
 								</div>
 								<div className="py-4 w-2/3 ml-8 bg-gray-50 rounded-lg shadow-md">
@@ -64,11 +180,17 @@ const AdminProductPage = () => {
 										Product Information
 									</h6>
 									<hr />
-									<form className="w-full px-4 mt-4">
+									<form
+										onSubmit={handleAddProduct}
+										className="w-full px-4 mt-4"
+									>
 										<div className="w-full flex flex-col">
 											<label className="font-semibold">Product Name</label>
 											<input
 												type="text"
+												value={name}
+												onChange={(e) => handleChange(e)}
+												id="name"
 												className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 											/>
 										</div>
@@ -77,12 +199,15 @@ const AdminProductPage = () => {
 												<label className="font-semibold">Brand</label>
 												<input
 													type="text"
+													value={brand}
+													onChange={(e) => handleChange(e)}
+													id="brand"
 													className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 												/>
 											</div>
 											<div className="w-1/2 ml-4">
 												<label className="font-semibold">Category</label>
-												<Select>
+												<Select onValueChange={(e: any) => setCategory(e)}>
 													<SelectTrigger className="w-full border outline-none bg-transparent mt-2 focus:outline-none focus:border-none">
 														<SelectValue placeholder="Categories" />
 													</SelectTrigger>
@@ -106,6 +231,9 @@ const AdminProductPage = () => {
 													<label className="font-semibold">Price</label>
 													<input
 														type="number"
+														value={price}
+														onChange={(e) => handleChange(e)}
+														id="price"
 														placeholder="$ ..."
 														className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 													/>
@@ -114,6 +242,9 @@ const AdminProductPage = () => {
 													<label className="font-semibold">Rating</label>
 													<input
 														type="number"
+														value={rating}
+														onChange={(e) => handleChange(e)}
+														id="rating"
 														className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 													/>
 												</div>
@@ -123,6 +254,9 @@ const AdminProductPage = () => {
 													</label>
 													<input
 														type="number"
+														value={countInStock}
+														onChange={(e) => handleChange(e)}
+														id="countInStock"
 														className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 													/>
 												</div>
@@ -132,6 +266,14 @@ const AdminProductPage = () => {
 											<label className="font-semibold mb-2">Description</label>
 											<textarea
 												placeholder="Description"
+												value={description}
+												onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+													setFormData((prevState) => ({
+														...prevState,
+														description: e.target.value,
+													}))
+												}
+												id="description"
 												className="bg-transparent px-4 border rounded-lg h-24 focus:outline-none focus:shadow-sm"
 											/>
 										</div>

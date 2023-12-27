@@ -1,4 +1,4 @@
-import { PRODUCTS_URL } from "@/Contants";
+import { PRODUCTS_URL, UPLOAD_URL } from "@/Contants";
 import { apiSlice } from "./ApiSlice";
 import { DataType } from "@/DataTypes/DataType";
 import { ProductType } from "@/DataTypes/ProductType";
@@ -43,10 +43,24 @@ export const productSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],
 		}),
+		addProduct: builder.mutation<any, any>({
+			query: ({ productDetails }) => ({
+				url: `${PRODUCTS_URL}/product/add`,
+				method: "POST",
+				body: { ...productDetails },
+			}),
+		}),
 		deleteProduct: builder.mutation<any, any>({
 			query: (id) => ({
 				url: `${PRODUCTS_URL}/delete/${id}`,
 				method: "DELETE",
+			}),
+		}),
+		uploadProductImage: builder.mutation<any, any>({
+			query: (data) => ({
+				url: `${UPLOAD_URL}`,
+				method: "POST",
+				body: data,
 			}),
 		}),
 	}),
@@ -67,5 +81,11 @@ export const useGetSinlgeProductQuery =
 export const useGetProductsByCategoryQuery =
 	productSlice.endpoints.getProductsByCategory.useQuery;
 //
+export const useAddProductMutation =
+	productSlice.endpoints.addProduct.useMutation;
+//
 export const useDeleteProductMutation =
 	productSlice.endpoints.deleteProduct.useMutation;
+//
+export const useUploadProductImageMutation =
+	productSlice.endpoints.uploadProductImage.useMutation;

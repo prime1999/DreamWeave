@@ -45,10 +45,10 @@ UploadRoute.post("/", (req, res) => {
 		if (err) {
 			return res.status(400).send({ message: err.message });
 		} else {
-			res.json(201);
+			res.status(201);
 			res.send({
-				message: "image sent",
-				path: `/${req.file.path}`,
+				message: "image uploaded succesfully",
+				image: `/${req.file.path}`,
 			});
 		}
 	});

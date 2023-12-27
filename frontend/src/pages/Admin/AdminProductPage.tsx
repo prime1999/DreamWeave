@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BsFillEyeFill, BsPlus } from "react-icons/bs";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { GrDocumentUpdate } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -19,6 +20,7 @@ import {
 } from "@/slices/ProductSlice";
 import Loader from "@/components/Loader";
 import logo from "@/assets/images/logo.png";
+import UpdateProduct from "@/components/UpdateProduct";
 
 const AdminProductPage = () => {
 	type FormDataType = {
@@ -30,6 +32,9 @@ const AdminProductPage = () => {
 		countInStock: number;
 		description: string;
 	};
+	// state for the update search id
+	const [productId, setProductId] = useState<string>("");
+	// state fot the form and image
 	const [pic, setPic] = useState<string>(logo);
 	const [category, setCategory] = useState<string>("");
 	const [formData, setFormData] = useState<FormDataType>({
@@ -42,11 +47,15 @@ const AdminProductPage = () => {
 	});
 
 	let { name, brand, price, rating, countInStock, description } = formData;
+	// get the function to get all products from the slice
 	const { data, isLoading, refetch } = useGetAllProductsQuery({});
+	// get the function to upload the image from the slice
 	const [uploadImage, { isLoading: uploadLoading }] =
 		useUploadProductImageMutation();
+	// get the function to add a product from the slice
 	const [addProduct, { isLoading: productLoading }] = useAddProductMutation();
 
+	// function to set the value of the form data
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevState) => ({
 			...prevState,
@@ -54,12 +63,15 @@ const AdminProductPage = () => {
 		}));
 	};
 
+	// function to upload image to the backend
 	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
 			const formData = new FormData();
 			formData.append("image", e.target.files[0]);
 			try {
+				// call the uplaod image functionality to send to the backend and get the response
 				const res = await uploadImage(formData).unwrap();
+				// set the pic to the res imge file path
 				setPic(res.image);
 				//show a success message
 				toast.success(`${res.message}`, {
@@ -73,6 +85,7 @@ const AdminProductPage = () => {
 		}
 	};
 
+	// function to submit file for adding a product
 	const handleAddProduct = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const emptyProperties = [];
@@ -100,7 +113,7 @@ const AdminProductPage = () => {
 					countInStock,
 					rating,
 				};
-				console.log(productDetails);
+				// awaut on the function to add the product to the DB
 				await addProduct({ productDetails }).unwrap();
 				//show a success message
 				toast.success("Product Added", {
@@ -134,12 +147,16 @@ const AdminProductPage = () => {
 				<div className="mt-4">
 					<Tabs defaultValue="viewProduct" className="w-[400px]">
 						<TabsList className="bg-transparent">
-							<TabsTrigger className="mr-8" value="viewProduct">
+							<TabsTrigger value="viewProduct">
 								<BsFillEyeFill /> <span className="ml-2">View Product</span>
 							</TabsTrigger>
-							<TabsTrigger value="addProduct">
+							<TabsTrigger className="mx-8" value="addProduct">
 								<BsPlus className="text-lg" />
 								<span className="ml-2">Add Product</span>
+							</TabsTrigger>
+							<TabsTrigger value="updateProduct">
+								<GrDocumentUpdate className="text-md" />
+								<span className="ml-2">Update Product</span>
 							</TabsTrigger>
 						</TabsList>
 						<TabsContent className="w-[1000px]" value="viewProduct">
@@ -282,6 +299,20 @@ const AdminProductPage = () => {
 										</button>
 									</form>
 								</div>
+							</div>
+						</TabsContent>
+						<TabsContent className="w-[1000px]" value="updateProduct">
+							<div>
+								<input
+									type="text"
+									value={productId}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										setProductId(e.target.value)
+									}
+									placeholder="Find the Product to update by ID..."
+									className="w-[500px] border rounded-lg p-2 focus:outline-none focus:shadow-sm"
+								/>
+								<UpdateProduct productId={productId} />
 							</div>
 						</TabsContent>
 					</Tabs>

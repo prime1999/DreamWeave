@@ -50,6 +50,13 @@ export const productSlice = apiSlice.injectEndpoints({
 				body: { ...productDetails },
 			}),
 		}),
+		updateProduct: builder.mutation<any, any>({
+			query: ({ productDetails, id }) => ({
+				url: `${PRODUCTS_URL}/update/product/${id}`,
+				method: "PUT",
+				body: { ...productDetails },
+			}),
+		}),
 		deleteProduct: builder.mutation<any, any>({
 			query: (id) => ({
 				url: `${PRODUCTS_URL}/delete/${id}`,
@@ -83,6 +90,9 @@ export const useGetProductsByCategoryQuery =
 //
 export const useAddProductMutation =
 	productSlice.endpoints.addProduct.useMutation;
+//
+export const useUpdateProductMutation =
+	productSlice.endpoints.updateProduct.useMutation;
 //
 export const useDeleteProductMutation =
 	productSlice.endpoints.deleteProduct.useMutation;

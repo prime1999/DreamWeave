@@ -76,7 +76,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    overflow-x: hidden;
+  
   }
   .loader {
     width: 48px;

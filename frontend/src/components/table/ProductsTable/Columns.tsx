@@ -154,14 +154,7 @@ export const columns: ColumnDef<Product>[] = [
 								className="hover:cursor-pointer"
 								onClick={() => navigator.clipboard.writeText(product._id)}
 							>
-								Copy Order's ID
-							</DropdownMenuItem>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem
-								//onClick={() => navigator.clipboard.writeText(order.user)}
-								className="hover:cursor-pointer"
-							>
-								Copy customer's Id
+								Copy Product's ID
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

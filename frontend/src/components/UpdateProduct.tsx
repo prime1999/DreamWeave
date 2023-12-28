@@ -95,6 +95,7 @@ const UpdateProduct = ({ productId }: Props) => {
 					progressClassName: "bg-transparent",
 				});
 			} catch (error) {
+				// TODO // show error message
 				console.log(error);
 			}
 		}

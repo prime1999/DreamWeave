@@ -91,15 +91,11 @@ export function DataTable<TData, TValue>({
 		}
 	};
 
-	const handleChange = (value: string) => {
-		setStatus(value);
-	};
-
 	return (
 		<>
 			<div className="flex items-center justify-between py-4">
 				<input
-					placeholder="Find by Admin..."
+					placeholder="Find by Name..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)

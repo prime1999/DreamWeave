@@ -16,9 +16,10 @@ import { useAddToCartMutation } from "@/slices/CartApiSlice";
 
 type Props = {
 	product: ProductType;
+	cart: any;
 };
 
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({ product, cart }: Props) => {
 	const [qty, setQty] = useState<number>(1);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -60,12 +61,21 @@ const ProductCard = ({ product }: Props) => {
 				</CardContent>
 			</Link>
 			<CardFooter>
-				<button
-					onClick={() => handleCart(product)}
-					className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white"
-				>
-					Add to cart
-				</button>
+				{cart && cart.find((item: any) => item._id === product._id) ? (
+					<Link
+						to="/cart"
+						className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white"
+					>
+						In Cart
+					</Link>
+				) : (
+					<button
+						onClick={() => handleCart(product)}
+						className="px-4 py-1 border border-blue rounded-full font-semibold duration-500 hover:bg-blue hover:text-white"
+					>
+						Add to cart
+					</button>
+				)}
 			</CardFooter>
 		</Card>
 	);

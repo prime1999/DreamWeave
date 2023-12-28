@@ -12,6 +12,7 @@ type Props = {
 const CartItems = ({ item }: Props) => {
 	const dispatch = useDispatch();
 	const [qty, setQty] = useState<number>(item.qty ? item.qty : 1);
+
 	const handleCountIncrease = (item: any) => {
 		if (qty === item?.countInStock) {
 			setQty(item.countInStock as number);
@@ -30,7 +31,7 @@ const CartItems = ({ item }: Props) => {
 		dispatch(
 			addToCart({
 				...item,
-				qty: (item.qty as any) > 1 ? (item.qty as any) - 1 : 1,
+				qty: typeof item.qty === "number" && item.qty > 1 ? item.qty - 1 : 1,
 			})
 		);
 	};

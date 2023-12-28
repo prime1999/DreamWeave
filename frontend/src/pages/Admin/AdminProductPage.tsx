@@ -167,7 +167,7 @@ const AdminProductPage = () => {
 							)}
 						</TabsContent>
 						<TabsContent
-							className="w-[400px] md:w-[600px] lg:w-[1200px]"
+							className="ml-[2%] w-[320px] md:w-[600px] lg:w-[1200px]"
 							value="addProduct"
 						>
 							<div className="flex flex-col items-start justify-between mt-8 lg:flex-row">
@@ -304,7 +304,10 @@ const AdminProductPage = () => {
 								</div>
 							</div>
 						</TabsContent>
-						<TabsContent className="w-[1000px]" value="updateProduct">
+						<TabsContent
+							className="ml-[2%] w-[320px] md:w-[600px] lg:w-[1200px]"
+							value="updateProduct"
+						>
 							<div>
 								<input
 									type="text"
@@ -313,7 +316,7 @@ const AdminProductPage = () => {
 										setProductId(e.target.value)
 									}
 									placeholder="Find the Product to update by ID..."
-									className="w-[500px] border rounded-lg p-2 focus:outline-none focus:shadow-sm"
+									className="w-[300px] border rounded-lg p-2 focus:outline-none focus:shadow-sm md:w-[500px]"
 								/>
 								<UpdateProduct productId={productId} />
 							</div>

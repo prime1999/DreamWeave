@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { useSelector } from "react-redux";
 import Sorting from "../components/layouts/Sorting";
 import Hero from "../components/layouts/Hero";
 import {
@@ -24,6 +25,8 @@ const HomePage = () => {
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
 
+	const { cartItems } = useSelector((state: any) => state.cart);
+
 	return (
 		<div>
 			<Hero />
@@ -38,7 +41,7 @@ const HomePage = () => {
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 									{data.products.map((product: any) => (
 										<Suspense key={product._id} fallback={<CardSkeleton />}>
-											<ProductCard product={product} />
+											<ProductCard cart={cartItems} product={product} />
 										</Suspense>
 									))}
 								</div>

@@ -148,7 +148,7 @@ const UpdateProduct = ({ productId }: Props) => {
 		<>
 			{isLoading && <Loader />}
 			{error ? (
-				<div className="flex items-center justify-center h-[300px] w-[1200px]">
+				<div className="flex items-center justify-center h-[300px] w-[320px] md:w-[600px] lg:w-[1200px]">
 					<h1 className="font-semibold text-3xl text-blue ">
 						Please input a valid ID
 					</h1>
@@ -156,8 +156,8 @@ const UpdateProduct = ({ productId }: Props) => {
 			) : (
 				<>
 					{data && productId !== "" ? (
-						<div className="flex items-start justify-between mt-8">
-							<div className="w-1/3 rounded-lg bg-gray-50 shadow-md py-4">
+						<div className="flex flex-col items-start justify-between mt-8 lg:flex-row">
+							<div className="w-full rounded-lg bg-gray-50 shadow-lg py-4 lg:w-1/3">
 								<h6 className="px-4 pb-4 font-semibold text-xl">
 									Upload Product Image
 								</h6>
@@ -181,7 +181,7 @@ const UpdateProduct = ({ productId }: Props) => {
 									/>
 								</div>
 							</div>
-							<div className="py-4 w-2/3 ml-8 bg-gray-50 rounded-lg shadow-md">
+							<div className="py-4 w-full bg-gray-50 rounded-lg shadow-md mt-4 lg:mt-0 lg:ml-8 lg:w-2/3">
 								<h6 className="px-4 pb-4 font-semibold text-xl">
 									Product Information
 								</h6>
@@ -200,8 +200,8 @@ const UpdateProduct = ({ productId }: Props) => {
 											className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 										/>
 									</div>
-									<div className="flex items-center justify-between mt-4">
-										<div className="flex flex-col w-1/2">
+									<div className="flex flex-col mt-4 lg:flex-row lg:items-center lg:justify-between">
+										<div className="flex flex-col w-full lg:w-1/3">
 											<label className="font-semibold">Brand</label>
 											<input
 												type="text"
@@ -211,7 +211,7 @@ const UpdateProduct = ({ productId }: Props) => {
 												className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 											/>
 										</div>
-										<div className="w-1/2 ml-4">
+										<div className="mt-4 w-full lg:w-1/3 lg:mt-0 lg:ml-4">
 											<label className="font-semibold">Category</label>
 											<Select onValueChange={(e: any) => setCategory(e)}>
 												<SelectTrigger className="w-full border outline-none bg-transparent mt-2 focus:outline-none focus:border-none">
@@ -232,7 +232,7 @@ const UpdateProduct = ({ productId }: Props) => {
 										</div>
 									</div>
 									<div className="mt-4">
-										<div className="flex items-center justify-between">
+										<div className="w-full flex flex-col lg:items-center lg:justify-between lg:flex-row">
 											<div className="flex flex-col">
 												<label className="font-semibold">Price</label>
 												<input
@@ -244,7 +244,7 @@ const UpdateProduct = ({ productId }: Props) => {
 													className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 												/>
 											</div>
-											<div className="flex flex-col">
+											<div className="flex flex-col mt-4 lg:mt-0">
 												<label className="font-semibold">Rating</label>
 												<input
 													type="number"
@@ -254,7 +254,7 @@ const UpdateProduct = ({ productId }: Props) => {
 													className="h-8 bg-transparent border mt-2 rounded-md px-2 focus:outline-none focus:shadow-sm"
 												/>
 											</div>
-											<div className="flex flex-col">
+											<div className="flex flex-col mt-4 lg:mt-0">
 												<label className="font-semibold">Count-In-Stock</label>
 												<input
 													type="number"
@@ -288,7 +288,7 @@ const UpdateProduct = ({ productId }: Props) => {
 							</div>
 						</div>
 					) : (
-						<div className="flex items-center justify-center h-[300px] w-[1200px]">
+						<div className="flex items-center justify-center h-[300px] w-[320px] md:w-[600px] lg:w-[1200px]">
 							<h1 className="font-semibold text-3xl text-blue ">
 								Find a Product By ID
 							</h1>

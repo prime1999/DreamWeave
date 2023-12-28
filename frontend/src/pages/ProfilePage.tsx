@@ -12,14 +12,16 @@ import Loader from "@/components/Loader";
 import { setCredentials } from "@/slices/AuthSlice";
 import { toast } from "react-toastify";
 import ChangePasswordModal from "@/components/Modals/ChangePasswordModal";
+import { useUploadProductImageMutation } from "@/slices/ProductSlice";
 
 const ProfilePage = () => {
 	const dispatch = useDispatch();
 	const { userInfo } = useSelector((state: any) => state.auth);
-	// state for name, email and password
+	// state for name, email, pic and password
 	const [name, setName] = useState<string>(userInfo.name);
 	const [email, setEmail] = useState<string>(userInfo.email);
 	const [password, setPassowrd] = useState<string>("13456778");
+	const [pic, setPic] = useState<string>(userInfo.pic);
 	// state for the phone number value
 	const [value, setValue] = useState<string>(userInfo.phoneNumber);
 	// state to on and off edit mode
@@ -38,6 +40,7 @@ const ProfilePage = () => {
 				name,
 				email,
 				phoneNumber: value,
+				pic,
 			};
 			const res = await updateUser(updateDetails).unwrap();
 			dispatch(setCredentials({ ...res }));
@@ -57,6 +60,32 @@ const ProfilePage = () => {
 		}
 	};
 
+	// get the function to upload the image from the slice
+	const [uploadImage, { isLoading: uploadLoading }] =
+		useUploadProductImageMutation();
+
+	// function to upload image to the backend
+	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			const formData = new FormData();
+			formData.append("image", e.target.files[0]);
+			try {
+				// call the uplaod image functionality to send to the backend and get the response
+				const res = await uploadImage(formData).unwrap();
+				// set the pic to the res imge file path
+				setPic(res.image);
+				//show a success message
+				toast.success(`${res.message}`, {
+					className: "bg-green-200",
+					bodyClassName: "text-black font-poppins font-semibold",
+					progressClassName: "bg-transparent",
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
+
 	return (
 		<>
 			{userLoading ? (
@@ -65,9 +94,23 @@ const ProfilePage = () => {
 				<>
 					<div className="w-11/12 mx-auto md:w-9/12">
 						<div className="flex items-start">
-							<div className="relative w-24">
-								<img src={userInfo.pic} alt="" className="rounded-full" />
-								<MdEdit className="absolute bottom-3 right-0 text-xl bg-light text-blue p-1 w-6 h-6 rounded-full hover:cursor-pointer" />
+							<div className="relative w-[150px]">
+								<img
+									src={pic}
+									alt=""
+									className="h-[120px] w-[120px] flex rounded-[100%]"
+								/>
+								{edit && (
+									<label htmlFor="pic">
+										<MdEdit className="absolute bottom-3 right-7 text-xl bg-light text-blue p-1 w-6 h-6 rounded-full hover:cursor-pointer" />
+									</label>
+								)}
+								<input
+									type="file"
+									onChange={handleImageUpload}
+									id="pic"
+									className="hidden"
+								/>
 							</div>
 							<div className="w-2/3 ml-4 font-poppins md:ml-12">
 								<div className="flex items-end justify-end hover:cursor-pointer">

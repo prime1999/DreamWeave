@@ -1,11 +1,11 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import Product from "../models/ProductModel.js";
 import User from "../models/UserModel.js";
 import Cart from "../models/CartModel.js";
 import Order from "../models/OrderModel.js";
 import Revenue from "../models/RevenueModel.js";
 import { calcPrice } from "../Utils/CalcPrice.js";
 import { formatDate } from "../Utils/FormatDate.js";
+import { verifyPayPalPayment, checkIfNewTransaction } from "../Utils/paypal.js";
 
 // ------------------------------ function to place an order ------------------------------------- //
 const placeOrder = asyncHandler(async (req, res) => {
@@ -178,9 +178,20 @@ const payOrder = asyncHandler(async (req, res) => {
 	// if yes
 	// make a try-catch block
 	try {
+		// check if the transaction is a new transaction
+		const newTransaction = await checkIfNewTransaction(Order, req.body.id);
+		// if the order is not a new transaction, then:
+		if (!newTransaction) {
+			throw new Order("Transaction has been used");
+		}
+		// verify the payment on paypal
+		const { verified, value } = await verifyPayPalPayment(req.body.id);
+		// if the paymant is not verified
+		if (!verified) {
+			throw new Error("Payment not verified");
+		}
 		// get the order from the request params
 		const order = await Order.findById(req.params.orderId);
-
 		// if the order was not found then
 		if (!order) {
 			throw new Error("order not placed");
@@ -189,7 +200,13 @@ const payOrder = asyncHandler(async (req, res) => {
 		if (order.status === "cancelled") {
 			throw new Error("This Order was cancelled");
 		}
-		// if the order was found then
+		// get the amount to pay for the order
+		const paidCorrectAmount = order.totalAmount.toString() === value;
+		// if the correct amount is not what is been paid, then
+		if (!paidCorrectAmount) {
+			throw new Error("Incorrect Amoun paid");
+		}
+		// if all the checks is passed then we proceed
 		order.isPaid = true;
 		order.status = "processing";
 		order.paidAt = Date.now();

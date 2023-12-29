@@ -32,9 +32,9 @@ const HomePage = () => {
 			<Hero />
 			<div className="relative container mx-auto my-8 w-11/12 md:w-full">
 				{loadingProducts && <Loader />}
-				<Sorting />
 				{data && (
 					<>
+						<Sorting data={data.products} />
 						<div className="mt-8">
 							<h6 className="font-bold text-black text-2xl">New Products</h6>
 							<div className="flex justify-center items-center">

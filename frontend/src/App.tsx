@@ -22,6 +22,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import UsersPage from "./pages/Admin/UsersPage";
 import AdminOrderPage from "./pages/Admin/AdminOrderPage";
 import AdminProductPage from "./pages/Admin/AdminProductPage";
+import CategoryPage from "./pages/CategoryPage";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -35,6 +36,7 @@ function App() {
 					<Route path="/orderDetails" element={<OrderDetailsPage />} />
 					<Route path="/account" element={<ProfilePage />} />
 					<Route path="/order/:orderId" element={<OrderDetailsPage />} />
+					<Route path="/category/:category" element={<CategoryPage />} />
 					{/* Admin routes */}
 					<Route path="/admin/dashboard" element={<AdminLayout />}>
 						<Route path="/admin/dashboard/sales" element={<RevenuePage />} />

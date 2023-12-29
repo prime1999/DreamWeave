@@ -37,8 +37,8 @@ export const productSlice = apiSlice.injectEndpoints({
 			providesTags: ["Product"],
 		}),
 		getProductsByCategory: builder.query<ProductType[], any>({
-			query: ({ productId }) => ({
-				url: `${PRODUCTS_URL}/category/${productId}`,
+			query: ({ category }) => ({
+				url: `${PRODUCTS_URL}/category/${category}`,
 			}),
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],

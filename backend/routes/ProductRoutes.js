@@ -24,7 +24,7 @@ ProductRouter.get("/", getProducts);
 ProductRouter.get("/allProducts", getAllProducts);
 ProductRouter.get("/highlyRated", getHighlyRatedProducts);
 ProductRouter.get("/:productId", getSingleProduct);
-ProductRouter.get("/category/:productId", getProductsByCategory);
+ProductRouter.get("/category/:category", getProductsByCategory);
 ProductRouter.post("/product/add", protect, admin, addProduct);
 ProductRouter.delete("/delete/:id", protect, admin, deleteProduct);
 ProductRouter.put("/update/product/:id", protect, admin, updateProduct);

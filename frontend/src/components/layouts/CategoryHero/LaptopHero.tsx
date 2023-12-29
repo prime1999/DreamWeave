@@ -13,9 +13,9 @@ const LaptopHero = () => {
 				<div className="w-full h-full flex items-center justify-center">
 					<div className="w-[400px] mx-auto flex flex-col justify-center items-center md:w-7/12">
 						<h1 className="text-md leading-loose text-center text-light font-bold md:text-xl">
-							Explore brilliance with our smartphones – where innovation meets
-							elegance.Elevate your experience, express your style, and embrace
-							the extraordinary in the palm of your hand.
+							Powerful performance, stylish design – our laptops redefine
+							productivity. Experience efficiency and elegance in every click.
+							Elevate your digital workspace effortlessly.
 						</h1>
 						<button className="py-2 mt-4 px-4 font-poppins text-center text-lg font-bold duration-500 bg-gradient-to-r from-blue to-other rounded-md hover:bg-gradient-to-r hover:from-other hover:to-blue">
 							Start Shopping

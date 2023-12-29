@@ -95,6 +95,27 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 	}
 });
 
+// --------------------------------- function to get productswith similar category ------------------------ //
+const getProductsWithSimilarCategory = asyncHandler(async (req, res) => {
+	// make a try-catch block
+	try {
+		// get the product that as has the same id as the d sent from the frontend from the DB
+		const product = await Product.find({ _id: req.params.productId });
+		// show error message if the product does noot exist in the DB
+		if (!product) {
+			throw new Error("Product not in stock");
+		}
+		// find the products that have the same brand as the brand in the found product
+		const products = await Product.find({ category: product[0].category });
+		// send the found products to the frontend
+		res.status(200).json(products);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 // --------------------------- function to add a product -------------------------------- //
 const addProduct = asyncHandler(async (req, res) => {
 	// check if the user is authorized
@@ -205,6 +226,7 @@ export {
 	getHighlyRatedProducts,
 	getSingleProduct,
 	getProductsByCategory,
+	getProductsWithSimilarCategory,
 	addProduct,
 	deleteProduct,
 	updateProduct,

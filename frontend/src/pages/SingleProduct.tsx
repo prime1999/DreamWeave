@@ -6,7 +6,7 @@ import { GiReturnArrow } from "react-icons/gi";
 import Rating from "@/components/ProductsComponent/Rating";
 import {
 	useGetSinlgeProductQuery,
-	useGetProductsByCategoryQuery,
+	useGetProductsWithSimilarCategoryQuery,
 } from "@/slices/ProductSlice";
 import { useAddToCartMutation } from "@/slices/CartApiSlice";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
@@ -19,7 +19,7 @@ const SingleProduct = () => {
 	const { productId } = useParams();
 	const { data } = useGetSinlgeProductQuery({ productId });
 	const { data: products, isLoading: productLoading } =
-		useGetProductsByCategoryQuery({ productId });
+		useGetProductsWithSimilarCategoryQuery({ productId });
 	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
 	const { userInfo } = useSelector((state: any) => state.auth);
 	const navigate = useNavigate();

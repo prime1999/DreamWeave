@@ -43,6 +43,13 @@ export const productSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5,
 			providesTags: ["Product"],
 		}),
+		getProductsWithSimilarCategory: builder.query<ProductType[], any>({
+			query: ({ productId }) => ({
+				url: `${PRODUCTS_URL}/category/similar/${productId}`,
+			}),
+			keepUnusedDataFor: 5,
+			providesTags: ["Product"],
+		}),
 		addProduct: builder.mutation<any, any>({
 			query: ({ productDetails }) => ({
 				url: `${PRODUCTS_URL}/product/add`,
@@ -87,6 +94,9 @@ export const useGetSinlgeProductQuery =
 //
 export const useGetProductsByCategoryQuery =
 	productSlice.endpoints.getProductsByCategory.useQuery;
+//
+export const useGetProductsWithSimilarCategoryQuery =
+	productSlice.endpoints.getProductsWithSimilarCategory.useQuery;
 //
 export const useAddProductMutation =
 	productSlice.endpoints.addProduct.useMutation;

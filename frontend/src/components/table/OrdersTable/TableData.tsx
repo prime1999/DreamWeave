@@ -65,9 +65,8 @@ export function DataTable<TData, TValue>({
 		},
 	});
 
-	const [deleteOrder, { isLoading }] = useDeleteOrderMutation();
-	const [updateOrderStatus, { isLoading: updateLoading }] =
-		useUpdateOrderStatusMutation();
+	const [deleteOrder] = useDeleteOrderMutation();
+	const [updateOrderStatus] = useUpdateOrderStatusMutation();
 	// function to delete selected orders
 	const handleGroupDelete = () => {
 		// show a confirmation alert message before proceeding
@@ -141,7 +140,6 @@ export function DataTable<TData, TValue>({
 
 	const handleChange = (value: string) => {
 		setStatus(value);
-		console.log(status);
 	};
 
 	return (

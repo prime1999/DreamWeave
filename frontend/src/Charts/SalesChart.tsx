@@ -2,7 +2,7 @@ import ReactApexChart from "react-apexcharts";
 import { useGetSalesRevenueQuery } from "@/slices/OrderSlice";
 
 const SalesChart = () => {
-	const { data, isLoading } = useGetSalesRevenueQuery({});
+	const { data } = useGetSalesRevenueQuery({});
 	const months = [
 		"Jan",
 		"Feb",

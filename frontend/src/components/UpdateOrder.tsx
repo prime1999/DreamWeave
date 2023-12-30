@@ -22,7 +22,7 @@ const UpdateOrder = ({ order }: Props) => {
 	// state for the phone number value
 	const [value, setValue] = useState<string>(order.contactInfo);
 
-	const [updateOrder, refetch] = useUpdateOrderMutation();
+	const [updateOrder] = useUpdateOrderMutation();
 
 	// function to handle update
 	const handleUpdate = async (e: React.FormEvent) => {
@@ -40,7 +40,7 @@ const UpdateOrder = ({ order }: Props) => {
 				contactInfo: value,
 			};
 			// await on the function to update the order in the DB
-			const res = await updateOrder({
+			await updateOrder({
 				orderId: order._id,
 				details: updateDetails,
 			});

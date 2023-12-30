@@ -26,7 +26,7 @@ import AdminPageSheet from "@/layouts/Responsiveness-layout/AdminPageSheet";
 import Loader from "@/components/Loader";
 
 const RevenuePage = () => {
-	const { data: products, isLoading } = useGetHighlyRatedProductsQuery({});
+	const { data: products } = useGetHighlyRatedProductsQuery({});
 	const { data: allProducts, isLoading: productsLoading } =
 		useGetAllProductsQuery({}) as any;
 	const { data } = useGetAllOrdersQuery({}) as any;

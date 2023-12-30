@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -20,17 +19,16 @@ type Props = {
 };
 
 const ProductCard = ({ product, cart }: Props) => {
-	const [qty, setQty] = useState<number>(1);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const { userInfo } = useSelector((state: any) => state.auth);
-	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
+	const [addItemToCart] = useAddToCartMutation();
 
 	const handleCart = (product: ProductType) => {
-		dispatch(addToCart({ ...product, qty }));
+		dispatch(addToCart({ ...product, qty: 1 }));
 		if (userInfo) {
-			addItemToCart({ product: product._id, quantity: qty });
+			addItemToCart({ product: product._id, quantity: 1 });
 		}
 		navigate("/cart");
 	};

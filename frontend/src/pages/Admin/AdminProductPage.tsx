@@ -62,10 +62,9 @@ const AdminProductPage = () => {
 	// get the function to get all products from the slice
 	const { data, isLoading, refetch } = useGetAllProductsQuery({});
 	// get the function to upload the image from the slice
-	const [uploadImage, { isLoading: uploadLoading }] =
-		useUploadProductImageMutation();
+	const [uploadImage] = useUploadProductImageMutation();
 	// get the function to add a product from the slice
-	const [addProduct, { isLoading: productLoading }] = useAddProductMutation();
+	const [addProduct] = useAddProductMutation();
 
 	// function to set the value of the form data
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

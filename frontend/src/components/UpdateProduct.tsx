@@ -62,11 +62,9 @@ const UpdateProduct = ({ productId }: Props) => {
 	let { name, brand, price, rating, countInStock, description } = formData;
 
 	// get the function to upload the image from the slice
-	const [uploadImage, { isLoading: uploadLoading }] =
-		useUploadProductImageMutation();
+	const [uploadImage] = useUploadProductImageMutation();
 	// get the function to update the product from the slice
-	const [productUpdate, { isLoading: updateLoading }] =
-		useUpdateProductMutation();
+	const [productUpdate] = useUpdateProductMutation();
 
 	// function to set the value of the form data
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

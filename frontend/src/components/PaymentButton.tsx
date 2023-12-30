@@ -14,15 +14,16 @@ const PaymentButton = ({ setOpen, order, refetch }: Props) => {
 	const navigate = useNavigate();
 	const [payOrder] = usePayOrderMutation();
 
-	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+	const [{ isPending }] = usePayPalScriptReducer();
 
 	const onApprove = (data: any, actions: any) => {
 		return actions.order.capture().then(async function (details: any) {
 			try {
+				console.log(data);
 				await payOrder({ orderId: order._id, details });
 				refetch();
 				setOpen(false);
-				toast.success("Order is paid");
+				toast.success(`Order paid, thanks for using ${data.paymentSource}`);
 				navigate("/account");
 			} catch (err: any) {
 				toast.error(err?.data?.message || err.error);
@@ -35,6 +36,7 @@ const PaymentButton = ({ setOpen, order, refetch }: Props) => {
 	};
 
 	const createOrder = (data: any, actions: any) => {
+		console.log(data);
 		return actions.order
 			.create({
 				purchase_units: [

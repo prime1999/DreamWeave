@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { useGetPayPalClientIdQuery } from "@/slices/OrderSlice";
 import PaymentButton from "./PaymentButton";
 
 type Props = {

@@ -36,7 +36,6 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [rowSelection, setRowSelection] = useState<any>({});
-	const [status, setStatus] = useState<string>("");
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const table = useReactTable({
 		data,
@@ -55,7 +54,7 @@ export function DataTable<TData, TValue>({
 		},
 	});
 
-	const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+	const [deleteProduct] = useDeleteProductMutation();
 
 	// function to delete selected orders
 	const handleGroupDelete = () => {
@@ -75,7 +74,6 @@ export function DataTable<TData, TValue>({
 						await Promise.all(
 							// mp through the filtered orders
 							filtered.map(async (product: any) => {
-								console.log(product._id);
 								// await on the delete product function
 								await deleteProduct(product._id).unwrap();
 							})
@@ -86,7 +84,6 @@ export function DataTable<TData, TValue>({
 					// refetch the orders for real time update
 					refetch();
 				}
-				console.log(data);
 			}
 		}
 	};

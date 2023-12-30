@@ -18,7 +18,7 @@ type Props = {
 };
 
 const PaymentModal = ({ orderId, open, setOpen }: Props) => {
-	const { data, isLoading, refetch } = useGetAnOrderQuery({ orderId });
+	const { data, refetch } = useGetAnOrderQuery({ orderId });
 
 	return (
 		<div>

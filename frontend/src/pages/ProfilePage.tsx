@@ -20,7 +20,6 @@ const ProfilePage = () => {
 	// state for name, email, pic and password
 	const [name, setName] = useState<string>(userInfo.name);
 	const [email, setEmail] = useState<string>(userInfo.email);
-	const [password, setPassowrd] = useState<string>("13456778");
 	const [pic, setPic] = useState<string>(userInfo.pic);
 	// state for the phone number value
 	const [value, setValue] = useState<string>(userInfo.phoneNumber);
@@ -61,8 +60,7 @@ const ProfilePage = () => {
 	};
 
 	// get the function to upload the image from the slice
-	const [uploadImage, { isLoading: uploadLoading }] =
-		useUploadProductImageMutation();
+	const [uploadImage] = useUploadProductImageMutation();
 
 	// function to upload image to the backend
 	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,8 +78,13 @@ const ProfilePage = () => {
 					bodyClassName: "text-black font-poppins font-semibold",
 					progressClassName: "bg-transparent",
 				});
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				// show error message
+				toast.error(error.message, {
+					className: "bg-red-200",
+					bodyClassName: "text-black",
+					progressClassName: "bg-transparent",
+				});
 			}
 		}
 	};
@@ -136,7 +139,7 @@ const ProfilePage = () => {
 										<input
 											type="email"
 											value={email}
-											onChange={(e) => setName(e.target.value)}
+											onChange={(e) => setEmail(e.target.value)}
 											className={`border h-10 px-4 rounded-md focus:outline-none ${
 												!edit ? "bg-light" : "bg-transparent"
 											}`}
@@ -163,10 +166,10 @@ const ProfilePage = () => {
 
 										<input
 											type="password"
-											value={password}
-											className="border h-10 px-4 rounded-md focus:outline-none bg-light"
+											value="13456778"
 											disabled={true}
 											id="password"
+											className="border h-10 px-4 rounded-md focus:outline-none bg-light"
 										/>
 
 										{edit && (

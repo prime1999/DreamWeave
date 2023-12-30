@@ -7,7 +7,7 @@ import Loader from "@/components/Loader";
 import { columns } from "@/components/table/UsersTable/Columns";
 import { DataTable } from "@/components/table/UsersTable/TableData";
 import { useGetUsersQuery, useGetUserDetailsQuery } from "@/slices/UserSlice";
-import { calcOrders, calcSales } from "@/utils/CalcOrders";
+import { calcOrders } from "@/utils/CalcOrders";
 import { cartPrice } from "@/utils/CartUtils";
 import UserPageCardsSkeleton from "@/components/miscelleneous/UserPageCardsSkeleton";
 

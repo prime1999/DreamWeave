@@ -39,23 +39,22 @@ app.get("/api/config/paypal", (req, res) => {
 });
 app.use("/api/upload", UploadRoute);
 
+// get the current directory name of the app
+const __dirName = path.resolve();
+// get the uploads in the production folder and serve them as static file to '/uploads'
+app.use("/uploads", express.static(path.join(__dirName, "uploads")));
 // check if the app is in production,
 if (process.env.NODE_ENV === "production") {
 	// if yes, then:
-	// get the current directory name of the app
-	const __dirName = path.resolve();
-	// get the uploads in the production folder and serve them as static file to '/uploads'
-	app.use("/uploads", express.static("/var/data/uploads"));
 	// serve the statis files in the '/frontend/build' path to the page
-	app.use(express.static(path.join(__dirName, "/frontend/build")));
+	app.use(express.static(path.join(__dirName, "/frontend/dist")));
 	// get the files under the route "*" and send it to the route below
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirName, "frontend", "build", "index.html"));
+		res.sendFile(path.resolve(__dirName, "frontend", "dist", "index.html"));
 	});
 } else {
-	const __dirname = path.resolve();
 	// serve the static file from the upload path in the current directory to the upload folder
-	app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+	app.use("/uploads", express.static(path.join(__dirName, "/uploads")));
 	app.get("/", (req, res) => {
 		res.send("API is running....");
 	});

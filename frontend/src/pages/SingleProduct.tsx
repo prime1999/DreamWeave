@@ -21,7 +21,7 @@ const SingleProduct = () => {
 	const { data } = useGetSinlgeProductQuery({ productId });
 	const { data: products, isLoading: productLoading } =
 		useGetProductsWithSimilarCategoryQuery({ productId });
-	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
+	const [addItemToCart] = useAddToCartMutation();
 	const { userInfo } = useSelector((state: any) => state.auth);
 	const { cartItems } = useSelector((state: any) => state.cart);
 	const navigate = useNavigate();
@@ -56,7 +56,6 @@ const SingleProduct = () => {
 		});
 		navigate("/cart");
 	};
-	console.log(!cartItems.includes(data));
 
 	return (
 		<>

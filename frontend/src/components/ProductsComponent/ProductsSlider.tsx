@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -39,6 +40,7 @@ const ProductsSlider: React.FC<ProductSliderProps> = ({ products }) => {
 			},
 		],
 	};
+	const { cartItems } = useSelector((state: any) => state.cart);
 	return (
 		<>
 			<div>
@@ -46,7 +48,7 @@ const ProductsSlider: React.FC<ProductSliderProps> = ({ products }) => {
 					{products?.map((product) => (
 						<Suspense key={product._id} fallback={<CardSkeleton />}>
 							<Suspense key={product._id} fallback={<CardSkeleton />}>
-								<ProductCard product={product} />
+								<ProductCard cart={cartItems} product={product} />
 							</Suspense>
 						</Suspense>
 					))}

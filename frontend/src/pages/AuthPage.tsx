@@ -31,9 +31,7 @@ const AuthPage: React.FC = () => {
 	const { userInfo } = useSelector((state: any) => state.auth);
 	const { cartItems } = useSelector((state: any) => state.cart);
 	const [logIn, { isLoading }] = useLogUserInMutation();
-	const [addProductToCart, { isLoading: addingToCart }] = useAddToCartMutation(
-		{}
-	);
+	const [addProductToCart] = useAddToCartMutation({});
 
 	useEffect(() => {
 		// check if there is a userInfo in te redux state

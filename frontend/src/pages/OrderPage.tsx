@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { usePlaceOrderMutation, useGetAnOrderQuery } from "@/slices/OrderSlice";
+import { usePlaceOrderMutation } from "@/slices/OrderSlice";
 import { useClearCartMutation } from "@/slices/CartApiSlice";
 import Loader from "@/components/Loader";
 import { clearCartItems } from "@/slices/CartSlice";
@@ -35,7 +35,6 @@ const OrderPage = () => {
 	});
 	// state for the phone number value
 	const [value, setValue] = useState<string>("");
-	const [paymentMethod, setPaymentMethod] = useState<string>("PayPal");
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const [resId, setResId] = useState<string>("");
 
@@ -50,16 +49,17 @@ const OrderPage = () => {
 
 	const handlePlaceOrder = async () => {
 		try {
-			console.log(value);
 			const shippingDetails = {
 				shippingAddress: formData,
 				phoneNumber: value,
 			};
+			console.log(shippingDetails);
 			const res = await placeOrder({
 				shippingDetails,
-				paymentMethod,
+				paymentMethod: "PayPal",
 			});
 			const { data } = res as any;
+			console.log(data);
 			setResId(data._id);
 			setOpenModal(true);
 			await clearCart({});
@@ -70,6 +70,7 @@ const OrderPage = () => {
 			postalCode = "";
 			zipCode = "";
 		} catch (error) {
+			console.log(error);
 			// throw an error if they don't
 			toast.error("Something went wrong, please try again", {
 				className: "bg-red-200",

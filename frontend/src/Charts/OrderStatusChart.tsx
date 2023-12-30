@@ -2,7 +2,7 @@ import ReactApexChart from "react-apexcharts";
 import { useGetAllOrdersQuery } from "@/slices/OrderSlice";
 
 const OrderStatusChart = () => {
-	const { data, isLoading } = useGetAllOrdersQuery({});
+	const { data } = useGetAllOrdersQuery({});
 
 	const chartOptions: any = {
 		chart: {

@@ -22,5 +22,5 @@ const baseQuery: BaseQueryFn<
 export const apiSlice = createApi({
 	baseQuery,
 	tagTypes: ["Product", "Cart", "Order", "User"],
-	endpoints: (builder) => ({}), // You can define your endpoints here
+	endpoints: () => ({}), // You can define your endpoints here
 });

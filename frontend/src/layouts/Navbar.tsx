@@ -46,8 +46,7 @@ const Navbar = () => {
 		}
 	}, [navigate, userInfo]);
 
-	const [logOutApiCall, { isLoading: logOutLoading }] =
-		useLogUserOutMutation() as any;
+	const [logOutApiCall] = useLogUserOutMutation() as any;
 
 	// function to log a user out
 	const logOutUser = async () => {

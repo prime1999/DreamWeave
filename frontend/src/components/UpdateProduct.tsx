@@ -94,9 +94,13 @@ const UpdateProduct = ({ productId }: Props) => {
 					bodyClassName: "text-black font-poppins font-semibold",
 					progressClassName: "bg-transparent",
 				});
-			} catch (error) {
-				// TODO // show error message
-				console.log(error);
+			} catch (error: any) {
+				// show error message
+				toast.error(error.message, {
+					className: "bg-red-200",
+					bodyClassName: "text-black",
+					progressClassName: "bg-transparent",
+				});
 			}
 		}
 	};

@@ -161,9 +161,8 @@ const RevenuePage = () => {
 											<p className="font-semibold">5 stars</p>
 											<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
 												<span
-													className={`h-full rounded-lg bg-blue w-[${fiveStarRating(
-														allProducts
-													)}]`}
+													style={{ width: fiveStarRating(allProducts) }}
+													className="h-full rounded-lg bg-blue"
 												></span>
 											</span>
 											<p className="font-semibold">
@@ -171,12 +170,11 @@ const RevenuePage = () => {
 											</p>
 										</div>
 										<div className="flex items-center justify-between text-sm text-gray-500 my-2">
-											<p className="font-semibold">4 stars</p>
+											<p className="font-semibold">4stars</p>
 											<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
 												<span
-													className={`h-full rounded-lg bg-blue w-[${fourStarRating(
-														allProducts
-													)}]`}
+													style={{ width: fourStarRating(allProducts) }}
+													className="h-full rounded-lg bg-blue"
 												></span>
 											</span>
 											<p className="font-semibold">
@@ -187,9 +185,8 @@ const RevenuePage = () => {
 											<p className="font-semibold">3 stars</p>
 											<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
 												<span
-													className={`h-full rounded-lg bg-blue w-[${threeStarRating(
-														allProducts
-													)}]`}
+													style={{ width: threeStarRating(allProducts) }}
+													className="h-full rounded-lg bg-blue"
 												></span>
 											</span>
 											<p className="font-semibold">
@@ -200,9 +197,8 @@ const RevenuePage = () => {
 											<p className="font-semibold">2 stars</p>
 											<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
 												<span
-													className={`h-full rounded-lg bg-blue w-[${twoStarRating(
-														allProducts
-													)}]`}
+													style={{ width: twoStarRating(allProducts) }}
+													className="h-full rounded-lg bg-blue"
 												></span>
 											</span>
 											<p className="font-semibold">
@@ -213,9 +209,8 @@ const RevenuePage = () => {
 											<p className="font-semibold">1 star</p>
 											<span className="flex w-[250px] h-2 bg-other rounded-lg mx-2">
 												<span
-													className={`h-full rounded-lg bg-blue w-[${oneStarRating(
-														allProducts
-													)}]`}
+													style={{ width: oneStarRating(allProducts) }}
+													className="h-full rounded-lg bg-blue"
 												></span>
 											</span>
 											<p className="font-semibold">

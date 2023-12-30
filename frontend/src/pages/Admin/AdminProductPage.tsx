@@ -91,8 +91,13 @@ const AdminProductPage = () => {
 					bodyClassName: "text-black font-poppins font-semibold",
 					progressClassName: "bg-transparent",
 				});
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				// show error message
+				toast.error(error.message, {
+					className: "bg-red-200",
+					bodyClassName: "text-black",
+					progressClassName: "bg-transparent",
+				});
 			}
 		}
 	};
@@ -145,11 +150,20 @@ const AdminProductPage = () => {
 				setCategory("");
 				setPic(logo);
 			} catch (error) {
-				// TODO // show error message
-				console.log(error);
+				// show error message
+				toast.error("Product not added, try again", {
+					className: "bg-red-200",
+					bodyClassName: "text-black",
+					progressClassName: "bg-transparent",
+				});
 			}
 		} else {
-			// TODO // show error message
+			// show error message
+			toast.error("Please fill in all fields", {
+				className: "bg-red-200",
+				bodyClassName: "text-black",
+				progressClassName: "bg-transparent",
+			});
 		}
 	};
 	return (

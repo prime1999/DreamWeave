@@ -62,7 +62,7 @@ const UsersPage = () => {
 							<img
 								src={userDetails.user.pic}
 								alt={userDetails.user.name}
-								className="w-48 rounded-full p-2 border border-light"
+								className="w-48 h-48 rounded-[100%] p-2 border border-light"
 							/>
 							<div className="text-center mt-8 flex flex-col items-center justify-center">
 								<h4 className="text-4xl font-bold">{userDetails.user.name}</h4>

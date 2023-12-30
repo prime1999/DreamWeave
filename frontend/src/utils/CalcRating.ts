@@ -25,7 +25,7 @@ export const fourStarRating = (products: any) => {
 		return acc;
 	}, 0);
 	const mappedProducts = products.filter(
-		(product: any) => product.rating < 4.4 && product.rating >= 3.5
+		(product: any) => product.rating <= 4.4 && product.rating >= 3.5
 	);
 
 	const sumProducts = mappedProducts.reduce((acc: any, product: any) => {

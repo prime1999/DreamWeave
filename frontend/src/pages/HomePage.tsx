@@ -59,7 +59,7 @@ const HomePage = () => {
 						<Sorting setValue={setValue} data={data.products} />
 						<div className="mt-8">
 							<h6 className="font-bold text-black text-2xl">New Products</h6>
-							<div className="flex justify-center items-center">
+							<div className="flex justify-center items-center mx-auto">
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 									{productsData.map((product: any) => (
 										<Suspense key={product._id} fallback={<CardSkeleton />}>

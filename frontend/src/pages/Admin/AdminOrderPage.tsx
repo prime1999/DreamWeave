@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetAllOrdersQuery } from "@/slices/OrderSlice";
 import { columns } from "@/components/table/OrdersTable/Columns";
@@ -7,6 +10,16 @@ import { calcOrdersLength } from "@/utils/CalcOrders";
 
 const AdminOrderPage = () => {
 	const { data, isLoading, refetch } = useGetAllOrdersQuery({});
+
+	const navigate = useNavigate();
+
+	const { userInfo } = useSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (userInfo && !userInfo.isAdmin) {
+			navigate("/");
+		}
+	}, []);
 
 	return (
 		<>

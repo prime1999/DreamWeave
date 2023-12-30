@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FaUsers, FaChartBar } from "react-icons/fa";
 import { TbBusinessplan } from "react-icons/tb";
 import { MdMenuBook, MdOutlineAttachMoney } from "react-icons/md";
@@ -28,6 +31,16 @@ const RevenuePage = () => {
 		useGetAllProductsQuery({}) as any;
 	const { data } = useGetAllOrdersQuery({}) as any;
 	const { data: users } = useGetUsersQuery({});
+
+	const navigate = useNavigate();
+
+	const { userInfo } = useSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (userInfo && !userInfo.isAdmin) {
+			navigate("/");
+		}
+	}, []);
 
 	return (
 		<>

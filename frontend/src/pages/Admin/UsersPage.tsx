@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BsFillSendFill, BsTelephoneFill } from "react-icons/bs";
 import { MdArrowRightAlt } from "react-icons/md";
 import Loader from "@/components/Loader";
@@ -17,6 +19,11 @@ const UsersPage = () => {
 		isLoading: detailsLoading,
 		refetch,
 	} = useGetUserDetailsQuery(userId);
+
+	const navigate = useNavigate();
+
+	const { userInfo } = useSelector((state: any) => state.auth);
+
 	useEffect(() => {
 		// Set up an interval to periodically check the cookie
 		const intervalId = setInterval(() => {
@@ -32,6 +39,12 @@ const UsersPage = () => {
 		// Clean up the interval when the component unmounts
 		return () => clearInterval(intervalId);
 	});
+
+	useEffect(() => {
+		if (userInfo && !userInfo.isAdmin) {
+			navigate("/");
+		}
+	}, []);
 
 	return (
 		<div className="w-10/12 mx-auto mt-8">

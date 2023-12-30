@@ -62,7 +62,7 @@ const CategoryPage = () => {
 				<div className="my-4">
 					<Sorting setValue={setValue} data={data} />
 				</div>
-				<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+				<div className="w-1/2 mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:w-full">
 					{products?.map((product: any) => (
 						<Suspense key={product._id} fallback={<CardSkeleton />}>
 							<ProductCard cart={cartItems} product={product} />

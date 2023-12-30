@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { MdEdit } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import "react-phone-number-input/style.css";
@@ -10,7 +11,6 @@ import { columns } from "@/components/table/Columns";
 import { DataTable } from "@/components/table/TableData";
 import Loader from "@/components/Loader";
 import { setCredentials } from "@/slices/AuthSlice";
-import { toast } from "react-toastify";
 import ChangePasswordModal from "@/components/Modals/ChangePasswordModal";
 import { useUploadProductImageMutation } from "@/slices/ProductSlice";
 

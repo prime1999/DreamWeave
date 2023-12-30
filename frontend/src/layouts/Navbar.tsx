@@ -94,7 +94,7 @@ const Navbar = () => {
 														<img className="w-24" src={laptop} alt="" />
 														<Link
 															className="bg-gray-200 p-2 ml-2 w-full"
-															to="/"
+															to="/category/laptops and computer components"
 														>
 															Laptops and computer components
 														</Link>
@@ -103,16 +103,16 @@ const Navbar = () => {
 														<img className="w-24" src={phone} alt="" />
 														<Link
 															className="bg-gray-200 p-2 ml-2 w-full"
-															to="/"
+															to="/category/smartphones and accessories"
 														>
-															Smartpones and accesories
+															Smartphones and accesories
 														</Link>
 													</li>
 													<li className="flex mt-2">
 														<img className="w-24" src={watch} alt="" />
 														<Link
 															className="bg-gray-200 p-2 ml-2 w-full"
-															to="/"
+															to="/category/wearable tech"
 														>
 															Wearable tech
 														</Link>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { FaTruck } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
 import Rating from "@/components/ProductsComponent/Rating";
@@ -22,6 +23,7 @@ const SingleProduct = () => {
 		useGetProductsWithSimilarCategoryQuery({ productId });
 	const [addItemToCart, { isLoading: cartLoading }] = useAddToCartMutation();
 	const { userInfo } = useSelector((state: any) => state.auth);
+	const { cartItems } = useSelector((state: any) => state.cart);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -46,8 +48,15 @@ const SingleProduct = () => {
 		if (userInfo) {
 			addItemToCart({ product: product._id, quantity: count });
 		}
+		// show a success message
+		toast.success("Item added to cart", {
+			className: "bg-green-200",
+			bodyClassName: "text-black font-poppins font-semibold",
+			progressClassName: "bg-transparent",
+		});
 		navigate("/cart");
 	};
+	console.log(!cartItems.includes(data));
 
 	return (
 		<>
@@ -115,13 +124,22 @@ const SingleProduct = () => {
 										</p>
 									</div>
 								</div>
-								<div className="mt-4">
-									<button
-										onClick={() => handleCart(data)}
-										className="w-full px-4 py-3 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
-									>
-										Add to cart
-									</button>
+								<div className="mt-4 w-full">
+									{cartItems.some((item: any) => item._id === data._id) ? (
+										<button
+											onClick={() => navigate("/cart")}
+											className="w-full px-4 py-3 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
+										>
+											In Cart
+										</button>
+									) : (
+										<button
+											onClick={() => handleCart(data)}
+											className="w-full px-4 py-3 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
+										>
+											Add to cart
+										</button>
+									)}
 								</div>
 								<div className="border mt-4 w-full">
 									<div className="flex items-start w-11/12 mx-auto py-4">

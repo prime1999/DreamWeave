@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BsFillEyeFill, BsPlus } from "react-icons/bs";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
@@ -45,6 +47,16 @@ const AdminProductPage = () => {
 		countInStock: 0,
 		description: "",
 	});
+
+	const navigate = useNavigate();
+
+	const { userInfo } = useSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (userInfo && !userInfo.isAdmin) {
+			navigate("/");
+		}
+	}, []);
 
 	let { name, brand, price, rating, countInStock, description } = formData;
 	// get the function to get all products from the slice

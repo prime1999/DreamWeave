@@ -23,7 +23,6 @@ const LaptopHero = () => {
 					</div>
 				</div>
 			</div>
-			dv
 		</div>
 	);
 };

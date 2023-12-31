@@ -127,13 +127,13 @@ const Navbar = () => {
 					<div className="font-poppins text-sm font-semibold text-blue ">
 						<ul className="flex items-center justify-between">
 							<li>
-								<Link to="/">Deals</Link>
+								<Link to="/deals">Deals</Link>
 							</li>
 							<li className="mx-6">
-								<Link to="/">What's new</Link>
+								<Link to="/new">What's new</Link>
 							</li>
 							<li>
-								<Link to="/">Delivery</Link>
+								<Link to="/delivery">Delivery</Link>
 							</li>
 						</ul>
 					</div>

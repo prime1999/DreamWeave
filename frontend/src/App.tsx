@@ -23,6 +23,7 @@ import UsersPage from "./pages/Admin/UsersPage";
 import AdminOrderPage from "./pages/Admin/AdminOrderPage";
 import AdminProductPage from "./pages/Admin/AdminProductPage";
 import CategoryPage from "./pages/CategoryPage";
+import NotFound from "./pages/NotFound";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -51,6 +52,7 @@ function App() {
 						/>
 					</Route>
 				</Route>
+				<Route path="*" element={<NotFound />} />
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/logIn" element={<AuthPage />} />
 			</>

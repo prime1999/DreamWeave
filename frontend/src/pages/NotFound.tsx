@@ -14,7 +14,7 @@ const NotFound = () => {
 						UH OH! You're lost.
 					</h4>
 					<p className="text-gray-500 my-4">
-						The site is still under development, So this page is yet to be built{" "}
+						The site is still under development, So this page is yet to be built
 						<br /> Our engineers are on it.
 					</p>
 					<Link

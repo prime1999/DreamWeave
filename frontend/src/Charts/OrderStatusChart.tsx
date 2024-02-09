@@ -3,6 +3,7 @@ import { useGetAllOrdersQuery } from "@/slices/OrderSlice";
 
 const OrderStatusChart = () => {
 	const { data } = useGetAllOrdersQuery({});
+	console.log(data);
 
 	const chartOptions: any = {
 		chart: {

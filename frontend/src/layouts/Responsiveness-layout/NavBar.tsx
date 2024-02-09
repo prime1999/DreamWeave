@@ -1,15 +1,20 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IoIosMenu, IoIosArrowDown } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
 import {
 	MdPersonPin,
 	MdOutlineDiscount,
+	MdLogout,
 	MdLogin,
 	MdCreate,
+	MdDashboard,
 } from "react-icons/md";
 import { FaQuestion, FaTruckFast } from "react-icons/fa6";
 import { TbShoppingCartPlus } from "react-icons/tb";
+import { BsFillPersonLinesFill } from "react-icons/bs";
 import logo from "../../assets/images/logo.png";
 import laptop from "../../assets/images/d1.jpg";
 import phone from "../../assets/images/d2.jpg";
@@ -31,8 +36,41 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SearchModal from "./SearchModal";
+import { useLogUserOutMutation } from "@/slices/UserSlice";
+import { logOut } from "@/slices/AuthSlice";
 const NavBar = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { userInfo } = useSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (!userInfo) {
+			navigate("/");
+		}
+	}, [navigate, userInfo]);
+	console.log(userInfo);
+
+	const [logOutApiCall] = useLogUserOutMutation() as any;
 	const { cartItems } = useSelector((state) => (state as any).cart);
+
+	// function to log a user out
+	const logOutUser = async () => {
+		//  ake a try-catch block
+		try {
+			// await on the function to log a user out
+			await logOutApiCall({ cartItems }).unwrap();
+			// dispatch thee log out funtion t clear the local storage
+			dispatch(logOut());
+			navigate("/");
+			toast.success("User logged out", {
+				className: "bg-white",
+				bodyClassName: "text-black font-poppins font-semibold",
+				progressClassName: "bg-transparent",
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className="w-11/12 mx-auto flex items-center justify-between">
@@ -129,35 +167,75 @@ const NavBar = () => {
 									<FaTruckFast className="mr-4" />
 									Delivery
 								</Link>
-								<div className="mt-16">
-									<DropdownMenu>
-										<DropdownMenuTrigger className="flex items-center">
-											<MdPersonPin className="w-18 text-3xl text-blue" />
-											<p className="font-poppins text-black text-sm font-semibold">
-												Account
-											</p>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent>
-											<DropdownMenuItem className="font-cour">
-												<Link to="/register" className="flex items-center">
-													<MdCreate className="mr-2" />
-													Sign-Up
-												</Link>
-											</DropdownMenuItem>
-											<DropdownMenuItem className="font-cour">
-												<Link to="/logIn" className="flex items-center">
-													<MdLogin className="mr-2" />
-													Sign-In
-												</Link>
-											</DropdownMenuItem>
-										</DropdownMenuContent>
-									</DropdownMenu>
-								</div>
-								<div className="my-8">
-									<Link to="/cart" className="flex items-end">
+								<div className="flex flex-col mt-4">
+									{/* show user profile link if user is logged in */}
+									{userInfo ? (
+										<DropdownMenu>
+											<DropdownMenuTrigger className="flex items-center">
+												<MdPersonPin className="w-18 text-3xl text-blue" />
+												<p className="font-poppins text-black text-sm font-semibold">
+													Account
+												</p>
+											</DropdownMenuTrigger>
+											<DropdownMenuContent>
+												<DropdownMenuItem>
+													<Link
+														to="/account"
+														className="flex font-cour hover:cursor-pointer"
+													>
+														<BsFillPersonLinesFill className="mr-2" />
+														Profile
+													</Link>
+												</DropdownMenuItem>
+												{userInfo && userInfo.isAdmin && (
+													<DropdownMenuItem>
+														<Link
+															to="/admin/dashboard/sales"
+															className="flex font-cour hover:cursor-pointer"
+														>
+															<MdDashboard className="mr-2" />
+															Dashboard
+														</Link>
+													</DropdownMenuItem>
+												)}
+												<DropdownMenuItem
+													onClick={logOutUser}
+													className="font-cour hover:cursor-pointer"
+												>
+													<MdLogout className="mr-2" />
+													Log Out
+												</DropdownMenuItem>
+											</DropdownMenuContent>
+										</DropdownMenu>
+									) : (
+										<DropdownMenu>
+											<DropdownMenuTrigger className="flex items-center">
+												<MdPersonPin className="w-18 text-3xl text-blue" />
+												<p className="font-poppins text-black text-sm font-semibold">
+													Account
+												</p>
+											</DropdownMenuTrigger>
+											<DropdownMenuContent>
+												<DropdownMenuItem className="font-cour">
+													<Link to="/register" className="flex items-center">
+														<MdCreate className="mr-2" />
+														Sign-Up
+													</Link>
+												</DropdownMenuItem>
+												<DropdownMenuItem className="font-cour">
+													<Link to="/logIn" className="flex items-center">
+														<MdLogin className="mr-2" />
+														Sign-In
+													</Link>
+												</DropdownMenuItem>
+											</DropdownMenuContent>
+										</DropdownMenu>
+									)}
+									{/* ends here */}
+									<Link to="/cart" className="flex items-end mt-8">
 										<div className="relative">
 											<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
-											{cartItems && (
+											{cartItems.length > 0 && (
 												<p className="absolute -top-4 -right-3 w-2 h-2 text-sm text-light font-semibold flex justify-center items-center p-3 rounded-[100%] bg-blue border-2 border-white">
 													{cartItems.length}
 												</p>

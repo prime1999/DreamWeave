@@ -86,15 +86,15 @@ const OrderPage = () => {
 
 	return (
 		<>
-			<div className="container w-9/12 text-black">
+			<div className="container w-full text-black lg:w-9/12">
 				<h1 className="text-center font-poppins text-2xl font-semibold">
 					Place your Order
 				</h1>
 				<p className="text-center font-cour text-gray-300">
 					Cancel anytime . worldwide shipping
 				</p>
-				<div className="flex items-start mt-8 w-full">
-					<div className="w-2/3">
+				<div className="flex flex-col items-start mt-8 w-full md:flex-row">
+					<div className="md:w-2/3">
 						<div className="border p-4 mb-4">
 							<form>
 								<h6 className="font-semibold uppercase text-lg mb-4">
@@ -131,7 +131,7 @@ const OrderPage = () => {
 										className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
 									/>
 								</div>
-								<div className="flex justify-between mb-4">
+								<div className="flex justify-between mb-4 gap-2">
 									<div>
 										<label>City</label>
 										<input
@@ -154,7 +154,7 @@ const OrderPage = () => {
 									</div>
 								</div>
 
-								<div className="flex justify-between mb-4">
+								<div className="flex justify-between mb-4 gap-2">
 									<div>
 										<label>Country</label>
 										<input
@@ -203,7 +203,7 @@ const OrderPage = () => {
 							Place Your Order
 						</button>
 					</div>
-					<div className="w-1/3 ml-4">
+					<div className="w-full mt-4 lg:w-1/3 md:ml-4">
 						<div className="w-full border p-4">
 							<div>
 								<h5 className="font-semibold text-lg text-center">

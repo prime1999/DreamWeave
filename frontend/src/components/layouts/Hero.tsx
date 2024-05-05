@@ -1,15 +1,10 @@
-import hero from "../../assets/images/hero2.jpg";
+import Navbar from "../../layouts/Navbar";
 
 const Hero = () => {
 	return (
-		<div
-			className="w-full relative h-[500px]"
-			style={{ backgroundImage: `url(${hero})`, backgroundSize: "cover" }}
-		>
-			<div
-				className="w-full absolute top-0 left-0 h-full"
-				style={{ backgroundColor: `rgba(0, 0, 0, 0.5)` }}
-			>
+		<div className="w-full h-[600px] bg-black">
+			<Navbar />
+			<div className="">
 				<div className="w-full h-full flex items-center justify-center">
 					<div className="flex flex-col justify-center items-center">
 						<h1 className="text-2xl uppercase text-center text-white font-poppins font-bold md:text-4xl">

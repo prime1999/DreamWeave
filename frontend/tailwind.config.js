@@ -22,11 +22,12 @@ module.exports = {
 				cour: ["Courgette", "cursive"],
 			},
 			colors: {
-				black: "#2F414F",
+				black: "#000",
 				blue: "#3894A3",
 				light: "#F1F1EF",
 				other: "#C7DAD4",
 				border: "hsl(var(--border))",
+				darkBorder: "#27272A",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",

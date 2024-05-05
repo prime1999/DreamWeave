@@ -118,7 +118,7 @@ const NavBar = () => {
 															<img className="w-12" src={laptop} alt="" />
 															<Link
 																className="bg-gray-200 p-2 ml-2 w-full"
-																to="/"
+																to="/category/laptops and computer components"
 															>
 																Laptops and computers
 															</Link>
@@ -127,7 +127,7 @@ const NavBar = () => {
 															<img className="w-12" src={phone} alt="" />
 															<Link
 																className="bg-gray-200 p-2 ml-2 w-full"
-																to="/"
+																to="/category/smartphones and accessories"
 															>
 																Smartpones and accesories
 															</Link>
@@ -136,7 +136,7 @@ const NavBar = () => {
 															<img className="w-12" src={watch} alt="" />
 															<Link
 																className="bg-gray-200 p-2 ml-2 w-full"
-																to="/"
+																to="/category/wearable tech"
 															>
 																Wearable tech
 															</Link>

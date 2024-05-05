@@ -16,11 +16,11 @@ const baseQuery: BaseQueryFn<
 	{},
 	FetchBaseQueryMeta
 > = fetchBaseQuery({
-	baseUrl: BASE_URL as string, // Explicitly cast PRODUCTS_URL to primitive string
+	baseUrl: BASE_URL as string
 });
 
 export const apiSlice = createApi({
 	baseQuery,
 	tagTypes: ["Product", "Cart", "Order", "User"],
-	endpoints: () => ({}), // You can define your endpoints here
+	endpoints: () => ({}),
 });

@@ -67,28 +67,28 @@ const Navbar = () => {
 		}
 	};
 	return (
-		<>
+		<div className="border-b border-darkBorder">
 			<div className="w-11/12 mx-auto hidden items-center justify-between px-8 lg:flex lg:w-full xl:w-11/12">
 				<Link to="/" className="flex items-center py-4 font-poppins">
 					<img className="w-12" src={logo} alt="logo" />
-					<h1 className="font-kenia text-xl ml-1 text-black">DREAMWEAVE</h1>
+					<h1 className="font-kenia text-xl ml-1 text-white">DREAMWEAVE</h1>
 				</Link>
 				<div className="flex items-center justify-between">
 					<div className="relative mx-2">
 						<NavigationMenu>
 							<NavigationMenuList className="">
 								<NavigationMenuItem>
-									<NavigationMenuTrigger className="font-poppins text-sm font-semibold text-blue hover:bg-transparent hover:text-blue">
+									<NavigationMenuTrigger className="font-poppins text-xs font-semibold text-white hover:bg-transparent hover:text-blue">
 										Categories
 									</NavigationMenuTrigger>
-									<NavigationMenuContent>
+									<NavigationMenuContent className="border-darkBorder bg-black">
 										<NavigationMenuLink>
 											<div className="p-4 border-none bg-transparent w-96">
-												<h6 className="font-poppins text-sm font-bold mb-2">
+												<h6 className="font-poppins text-sm font-semibold text-white mb-2">
 													Popular Categories
 												</h6>
 												<ul className="w-full font-semibold">
-													<hr className="mb-4" />
+													<hr className="mb-4 border-darkBorder" />
 													<li className="flex">
 														<img className="w-24" src={laptop} alt="" />
 														<Link
@@ -124,7 +124,7 @@ const Navbar = () => {
 							</NavigationMenuList>
 						</NavigationMenu>
 					</div>
-					<div className="font-poppins text-sm font-semibold text-blue ">
+					<div className="font-poppins text-xs text-white font-medium ">
 						<ul className="flex items-center justify-between">
 							<li>
 								<Link to="/deals">Deals</Link>
@@ -143,9 +143,9 @@ const Navbar = () => {
 						<input
 							type="text"
 							placeholder="search.."
-							className="bg-gray-100 px-4 py-1 rounded-3xl pr-8 w-72 focus:outline-none"
+							className="bg-transparent px-4 py-2 rounded-3xl pr-8 w-72 text-white text-xs border border-darkBorder focus:outline-none"
 						/>
-						<HiMagnifyingGlass className="absolute top-2 right-3" />
+						<HiMagnifyingGlass className="absolute top-2 right-3 text-darkBorder hover:cursor-pointer" />
 					</form>
 				</div>
 				<div className="flex items-center justify-between">
@@ -154,25 +154,25 @@ const Navbar = () => {
 						<DropdownMenu>
 							<DropdownMenuTrigger className="flex items-center">
 								<MdPersonPin className="w-18 text-3xl text-blue" />
-								<p className="font-poppins text-black text-sm font-semibold">
+								<p className="font-poppins text-white text-xs font-medium">
 									Account
 								</p>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								<DropdownMenuItem>
+							<DropdownMenuContent className="bg-dark border-darkBorder bg-black">
+								<DropdownMenuItem className="group">
 									<Link
 										to="/account"
-										className="flex font-cour hover:cursor-pointer"
+										className="flex font-cour text-xs text-white group-hover:cursor-pointer group-hover:text-black"
 									>
 										<BsFillPersonLinesFill className="mr-2" />
 										Profile
 									</Link>
 								</DropdownMenuItem>
 								{userInfo && userInfo.isAdmin && (
-									<DropdownMenuItem>
+									<DropdownMenuItem className="group">
 										<Link
 											to="/admin/dashboard/sales"
-											className="flex font-cour hover:cursor-pointer"
+											className="flex font-cour text-xs text-white hover:cursor-pointer group-hover:text-black"
 										>
 											<MdDashboard className="mr-2" />
 											Dashboard
@@ -181,7 +181,7 @@ const Navbar = () => {
 								)}
 								<DropdownMenuItem
 									onClick={logOutUser}
-									className="font-cour hover:cursor-pointer"
+									className="font-cour text-xs text-white hover:cursor-pointer group-hover:text-black"
 								>
 									<MdLogout className="mr-2" />
 									Log Out
@@ -192,19 +192,25 @@ const Navbar = () => {
 						<DropdownMenu>
 							<DropdownMenuTrigger className="flex items-center">
 								<MdPersonPin className="w-18 text-3xl text-blue" />
-								<p className="font-poppins text-black text-sm font-semibold">
+								<p className="font-poppins text-white text-xs font-medium">
 									Account
 								</p>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
 								<DropdownMenuItem className="font-cour">
-									<Link to="/register" className="flex items-center">
+									<Link
+										to="/register"
+										className="flex items-center text-xs text-white"
+									>
 										<MdCreate className="mr-2" />
 										Sign-Up
 									</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem className="font-cour">
-									<Link to="/logIn" className="flex items-center">
+									<Link
+										to="/logIn"
+										className="flex items-center text-xs text-white"
+									>
 										<MdLogin className="mr-2" />
 										Sign-In
 									</Link>
@@ -213,7 +219,7 @@ const Navbar = () => {
 						</DropdownMenu>
 					)}
 					{/* ends here */}
-					<Link to="/cart" className="flex items-end ml-4">
+					<Link to="/cart" className="flex items-center ml-4">
 						<div className="relative">
 							<TbShoppingCartPlus className="w-18 text-2xl text-blue" />
 							{cartItems.length > 0 && (
@@ -222,7 +228,7 @@ const Navbar = () => {
 								</p>
 							)}
 						</div>
-						<p className="font-poppins text-black text-sm font-semibold z-50">
+						<p className="font-poppins text-white text-xs font-medium z-50">
 							Cart
 						</p>
 					</Link>
@@ -231,7 +237,7 @@ const Navbar = () => {
 			<div className="block lg:hidden">
 				<NavBar />
 			</div>
-		</>
+		</div>
 	);
 };
 

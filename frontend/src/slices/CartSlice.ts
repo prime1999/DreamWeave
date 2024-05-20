@@ -19,7 +19,7 @@ const cartSlice = createSlice({
 		addToCart: (state, action) => {
 			// get the product to add to the cart
 			const item = action.payload;
-			// check if the item alreadwy exist in the cart
+			// check if the item already exist in the cart
 			const itemExist =
 				state.cartItems && state.cartItems.find((x) => x._id === item._id);
 			if (!itemExist) {

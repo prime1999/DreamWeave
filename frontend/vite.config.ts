@@ -10,6 +10,7 @@ export default defineConfig({
 			"/uploads": "http://localhost:6000",
 		},
 	},
+
 	plugins: [react()],
 	resolve: {
 		alias: [

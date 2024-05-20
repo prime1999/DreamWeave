@@ -50,11 +50,11 @@ const Navbar = () => {
 
 	// function to log a user out
 	const logOutUser = async () => {
-		//  ake a try-catch block
+		//  make a try-catch block
 		try {
 			// await on the function to log a user out
 			await logOutApiCall({ cartItems }).unwrap();
-			// dispatch thee log out funtion t clear the local storage
+			// dispatch thee log out funtion to clear the local storage
 			dispatch(logOut());
 			navigate("/");
 			toast.success("User logged out", {
@@ -67,8 +67,8 @@ const Navbar = () => {
 		}
 	};
 	return (
-		<div className="border-b border-darkBorder">
-			<div className="w-11/12 mx-auto hidden items-center justify-between px-8 lg:flex lg:w-full xl:w-11/12">
+		<div className="border border-darkBorder bg-navDark mx-auto w-11/12 rounded-full">
+			<div className="w-full mx-auto hidden items-center justify-between px-2 lg:flex lg:w-full xl:w-11/12">
 				<Link to="/" className="flex items-center py-4 font-poppins">
 					<img className="w-12" src={logo} alt="logo" />
 					<h1 className="font-kenia text-xl ml-1 text-white">DREAMWEAVE</h1>
@@ -158,7 +158,7 @@ const Navbar = () => {
 									Account
 								</p>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="bg-dark border-darkBorder bg-black">
+							<DropdownMenuContent className="border-darkBorder bg-black">
 								<DropdownMenuItem className="group">
 									<Link
 										to="/account"
@@ -196,20 +196,20 @@ const Navbar = () => {
 									Account
 								</p>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								<DropdownMenuItem className="font-cour">
+							<DropdownMenuContent className=" border-darkBorder bg-black">
+								<DropdownMenuItem className="group">
 									<Link
 										to="/register"
-										className="flex items-center text-xs text-white"
+										className="flex font-cour text-xs text-white group-hover:cursor-pointer group-hover:text-black"
 									>
 										<MdCreate className="mr-2" />
 										Sign-Up
 									</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem className="font-cour">
+								<DropdownMenuItem className="group">
 									<Link
 										to="/logIn"
-										className="flex items-center text-xs text-white"
+										className="flex font-cour text-xs text-white group-hover:cursor-pointer group-hover:text-black"
 									>
 										<MdLogin className="mr-2" />
 										Sign-In

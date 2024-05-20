@@ -1,19 +1,55 @@
-import Navbar from "../../layouts/Navbar";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Navbar from "@/layouts/Navbar";
+import IPhone from "/static-images/IPhone.png";
 
 const Hero = () => {
+	useGSAP(() => {
+		gsap.to("#hero-head", { x: 0, duration: 1, ease: "power2.inOut" });
+		gsap.to("#hero-top-para", {
+			y: 0,
+			duration: 1,
+			ease: "power2.inOut",
+			opacity: 1,
+		});
+		gsap.to("#hero-btn", {
+			duration: 1,
+			ease: "power2.inOut",
+			opacity: 1,
+		});
+		gsap.to("#phone", { y: 0, duration: 1, ease: "power2.inOut" });
+	}, []);
 	return (
-		<div className="w-full h-[600px] bg-black">
+		<div className="w-full h-[600px] bg-black pt-4">
 			<Navbar />
-			<div className="">
-				<div className="w-full h-full flex items-center justify-center">
-					<div className="flex flex-col justify-center items-center">
-						<h1 className="text-2xl uppercase text-center text-white font-poppins font-bold md:text-4xl">
-							Epic Tech Journeys Begin Here.
-						</h1>
-						<button className="py-2 mt-8 px-4 font-poppins text-center text-black text-lg font-bold duration-500 bg-gradient-to-r from-blue to-other rounded-md hover:bg-gradient-to-r hover:from-other hover:to-blue">
-							Start Shopping
-						</button>
-					</div>
+			<div className="w-11/12 h-[86%] px-8 mx-auto flex items-center justify-between overflow-hidden">
+				<div className="w-[400px] flex flex-col justify-center items-start overflow-hidden">
+					<p
+						id="hero-top-para"
+						className="translate-y-[-50px] opacity-0 text-sm border border-darkBorder rounded-full px-4 py-1 text-white"
+					>
+						Welcome to the Future of Tech
+					</p>
+					<h1
+						id="hero-head"
+						className="translate-x-[-100px] mt-8 mb-4 text-lg uppercase text-left text-white font-poppins font-normal tracking-wider  md:text-2xl"
+					>
+						{" "}
+						Your Ultimate Destination for Innovation and Inspiration.
+					</h1>
+					<p className="text-gray-400 text-sm">
+						Explore Limitless Possibilities with Our Cutting-Edge Products and
+						Unrivaled Expertise.{" "}
+					</p>
+					<button
+						id="hero-btn"
+						className="opacity-0 py-2 mt-8 px-4 font-poppins text-center text-sm text-slate-300 text-md font-medium bg-navDark duration-500 rounded-full border border-darkBorder hover:bg-black"
+					>
+						Start Shopping
+					</button>
+				</div>
+				<div className="w-1/2 h-full flex items-center justify-center">
+					<img id="phone" className="translate-y-[400px]" src={IPhone} alt="" />
 				</div>
 			</div>
 		</div>

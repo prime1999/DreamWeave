@@ -6,7 +6,7 @@ import User from "../models/UserModel.js";
 const protect = asyncHandler(async (req, res, next) => {
 	// init a token variable
 	let token;
-	// get the token from te cookies and store it in the token variable
+	// get the token from the cookies and store it in the token variable
 	token = req.cookies.jwt;
 	// check if the token is in the cookies
 	if (token) {

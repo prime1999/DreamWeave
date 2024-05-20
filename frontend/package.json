@@ -21,10 +21,10 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-tabs": "^1.0.4",
     "@react-three/drei": "^9.105.6",
-    "@react-three/fiber": "^8.16.3",
+    "@react-three/fiber": "^8.15.11",
     "@reduxjs/toolkit": "^1.9.7",
     "@tanstack/react-table": "^8.10.7",
-    "@types/three": "^0.164.0",
+    "@types/three": "^0.158.3",
     "apexcharts": "^3.45.0",
     "axios": "^1.6.1",
     "class-variance-authority": "^0.7.0",
@@ -47,7 +47,8 @@
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.164.1"
+    "three": "^0.158.0",
+    "three-stdlib": "^2.29.12"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -63,6 +64,6 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^5.2.0"
   }
 }

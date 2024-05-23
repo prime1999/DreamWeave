@@ -34,7 +34,7 @@ const OrderPage = () => {
 		zipCode: "",
 	});
 	// state for the phone number value
-	const [value, setValue] = useState<string>("");
+	const [value, setValue] = useState<any>(null);
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const [resId, setResId] = useState<string>("");
 

@@ -20,7 +20,7 @@ const UpdateOrder = ({ order }: Props) => {
 	);
 	const [zipCode, setZipCode] = useState<string>(order.shippingAddress.zipCode);
 	// state for the phone number value
-	const [value, setValue] = useState<string>(order.contactInfo);
+	const [value, setValue] = useState<any>(order.contactInfo);
 
 	const [updateOrder] = useUpdateOrderMutation();
 

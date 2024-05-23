@@ -20,10 +20,10 @@ const Hero = () => {
 		gsap.to("#phone", { y: 0, duration: 1, ease: "power2.inOut" });
 	}, []);
 	return (
-		<div className="w-full h-[600px] bg-black pt-4">
+		<div className="w-full h-[600px] bg-black pt-4 overflow-hidden">
 			<Navbar />
-			<div className="w-11/12 h-[86%] px-8 mx-auto flex items-center justify-between overflow-hidden">
-				<div className="w-[400px] flex flex-col justify-center items-start overflow-hidden">
+			<div className="w-11/ px-8 pt-16 mx-auto flex flex-col items-center justify-between overflow-hidden md:flex-row md:h-[86%] md:pt-8">
+				<div className=" flex flex-col justify-center items-start overflow-hidden md:w-[400px]">
 					<p
 						id="hero-top-para"
 						className="translate-y-[-50px] opacity-0 text-sm border border-darkBorder rounded-full px-4 py-1 text-white"
@@ -48,7 +48,7 @@ const Hero = () => {
 						Start Shopping
 					</button>
 				</div>
-				<div className="w-1/2 h-full flex items-center justify-center">
+				<div className="w-10/12 h-full flex items-center justify-center md:w-1/2">
 					<img id="phone" className="translate-y-[400px]" src={IPhone} alt="" />
 				</div>
 			</div>

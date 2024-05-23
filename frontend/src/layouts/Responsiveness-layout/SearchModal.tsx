@@ -17,17 +17,17 @@ const SearchModal = ({ children }: Props) => {
 	return (
 		<Dialog>
 			<DialogTrigger className="w-full">{children}</DialogTrigger>
-			<DialogContent className="w-9/12 rounded-lg shadow-light">
+			<DialogContent className="w-11/12 rounded-lg shadow-dark">
 				<DialogHeader>
-					<DialogTitle>Search Products</DialogTitle>
+					<DialogTitle className="text-light">Search Products</DialogTitle>
 					<DialogDescription>
 						<form className="relative">
 							<input
 								type="text"
 								placeholder="Search..."
-								className="w-full border-b mt-8 py-2 pl-6 focus:outline-none"
+								className="w-full border-b border-b-darkBorder bg-navDark mt-8 py-2 pl-6 text-light focus:outline-none"
 							/>
-							<FaMagnifyingGlass className="absolute top-11 left-1" />
+							<FaMagnifyingGlass className="absolute top-11 left-1 text-light" />
 						</form>
 					</DialogDescription>
 				</DialogHeader>

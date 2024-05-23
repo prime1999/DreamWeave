@@ -67,7 +67,7 @@ const Navbar = () => {
 		}
 	};
 	return (
-		<div className="border border-darkBorder bg-navDark mx-auto w-11/12 rounded-full py-4">
+		<div className="border border-darkBorder bg-navDark mx-auto w-11/12 rounded-full py-4 hidden lg:flex">
 			<div className="w-full mx-auto hidden items-center justify-between lg:flex lg:w-full xl:w-11/12">
 				<Link to="/" className="flex items-end font-poppins">
 					<img className="w-12 mt-1" src={logo} alt="logo" />

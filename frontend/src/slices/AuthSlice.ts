@@ -36,7 +36,9 @@ const authSlice = createSlice({
 			const millisecondsIn30Days = 30 * millisecondsInADay;
 			// log the current user out after 30 days
 			setTimeout(() => {
-				state.userInfo = null;
+				if (state.userInfo !== null) {
+					state.userInfo = null;
+				}
 			}, millisecondsIn30Days);
 		},
 		// function to clear the userInfo from the local storage and redux auth store (log a user out)

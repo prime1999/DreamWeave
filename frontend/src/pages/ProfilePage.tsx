@@ -22,7 +22,7 @@ const ProfilePage = () => {
 	const [email, setEmail] = useState<string>(userInfo.email);
 	const [pic, setPic] = useState<string>(userInfo.pic);
 	// state for the phone number value
-	const [value, setValue] = useState<string>(userInfo.phoneNumber);
+	const [value, setValue] = useState<any>(userInfo.phoneNumber);
 	// state to on and off edit mode
 	const [edit, setEdit] = useState<boolean>(false);
 	// state to open change password modal

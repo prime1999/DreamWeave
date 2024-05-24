@@ -4,38 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CiHome, CiDeliveryTruck, CiShoppingCart } from "react-icons/ci";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { MdPerson } from "react-icons/md";
-import { IoIosMenu, IoIosArrowDown } from "react-icons/io";
-import { BiCategoryAlt } from "react-icons/bi";
-import {
-	MdPersonPin,
-	MdOutlineDiscount,
-	MdLogout,
-	MdLogin,
-	MdCreate,
-	MdDashboard,
-} from "react-icons/md";
-import { FaQuestion, FaTruckFast } from "react-icons/fa6";
-import { TbShoppingCartPlus } from "react-icons/tb";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import logo from "../../assets/images/logo.png";
-import laptop from "../../assets/images/d1.jpg";
-import phone from "../../assets/images/d2.jpg";
-import watch from "../../assets/images/d9.webp";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
+import { MdPersonPin, MdLogout, MdPerson, MdDashboard } from "react-icons/md";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SearchModal from "./SearchModal";
@@ -134,15 +108,55 @@ const NavBar = () => {
 						Cart
 					</p>
 				</Link>
-				<Link
-					to="/"
-					className="flex flex-col gap-2 items-center font-poppins group"
-				>
-					<MdPerson className="text-3xl text-white duration-300 ease-in-out group-hover:text-blue" />
-					<p className="text-sm text-light font-medium duration-300 ease-in-out group-hover:text-blue">
-						Account
-					</p>
-				</Link>
+				{userInfo ? (
+					<DropdownMenu>
+						<DropdownMenuTrigger className="flex flex-col gap-2 items-center group">
+							<MdPersonPin className="w-18 text-3xl text-white duration-300 ease-in-out group-hover:text-blue" />
+							<p className="font-poppins text-white text-xs font-medium duration-300 ease-in-out group-hover:text-blue">
+								Account
+							</p>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent className="border-darkBorder bg-black">
+							<DropdownMenuItem className="group">
+								<Link
+									to="/account"
+									className="flex font-cour text-xs text-white group-hover:cursor-pointer group-hover:text-black"
+								>
+									<BsFillPersonLinesFill className="mr-2" />
+									Profile
+								</Link>
+							</DropdownMenuItem>
+							{userInfo && userInfo.isAdmin && (
+								<DropdownMenuItem className="group">
+									<Link
+										to="/admin/dashboard/sales"
+										className="flex font-cour text-xs text-white hover:cursor-pointer group-hover:text-black"
+									>
+										<MdDashboard className="mr-2" />
+										Dashboard
+									</Link>
+								</DropdownMenuItem>
+							)}
+							<DropdownMenuItem
+								onClick={logOutUser}
+								className="font-cour text-xs text-white hover:cursor-pointer group-hover:text-black"
+							>
+								<MdLogout className="mr-2" />
+								Log Out
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				) : (
+					<Link
+						to="/logIn"
+						className="flex flex-col gap-2 items-center font-poppins group"
+					>
+						<MdPerson className="text-3xl text-white duration-300 ease-in-out group-hover:text-blue" />
+						<p className="text-sm text-light font-medium duration-300 ease-in-out group-hover:text-blue">
+							Sign In
+						</p>
+					</Link>
+				)}
 			</div>
 			<div></div>
 		</div>

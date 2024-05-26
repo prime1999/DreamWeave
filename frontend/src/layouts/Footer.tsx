@@ -41,7 +41,7 @@ const Footer = () => {
 			</div>
 			<div className="w-full h-1/3">
 				<div className="w-11/12 mx-auto pt-6 font-cour flex items-center justify-between">
-					<h6>&copy; 2023 Eminence</h6>
+					<h6>&copy; {new Date().getFullYear()} Eminence</h6>
 					<div>
 						<ul className="flex">
 							<li>

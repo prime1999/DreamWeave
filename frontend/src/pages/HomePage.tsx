@@ -12,6 +12,7 @@ import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
 import TopRated from "@/layouts/TopRated";
+import ProductCategoryUI from "@/components/ProductCategoryUI";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -53,14 +54,16 @@ const HomePage = () => {
 	return (
 		<div>
 			<Hero />
-			<div className="relative container mx-auto my-8 w-11/12 md:w-full">
+			<div className="relative container mx-auto my-8 w-11/12">
 				<TopRated />
 				{loadingProducts && <Loader />}
 				{data && (
 					<>
-						<Sorting setValue={setValue} data={data.products} />
+						{/* <Sorting setValue={setValue} data={data.products} /> */}
 						<div className="mt-8">
-							<h6 className="font-bold text-black text-2xl">New Products</h6>
+							<h6 className="font-poppins text-lg font-medium text-center mt-16">
+								Popular Now
+							</h6>
 							<div className="flex justify-center items-center mx-auto">
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 									{productsData.map((product: any) => (
@@ -74,10 +77,11 @@ const HomePage = () => {
 						<Paginate pages={data.pages} page={data.page} />
 					</>
 				)}
+				<ProductCategoryUI />
 				<div className="h-full">
 					{products && (
 						<div className="w-11/12 mx-auto">
-							<h6 className="font-bold text-black text-2xl">
+							<h6 className="font-poppins text-lg font-medium text-center mt-16">
 								Highly Rated Products
 							</h6>
 							<div className="">

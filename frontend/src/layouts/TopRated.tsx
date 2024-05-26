@@ -6,7 +6,7 @@ const TopRated = () => {
 
 	return (
 		<>
-			<h1 className="font-poppins text-xl font-medium text-center my-8">
+			<h1 className="font-poppins text-lg font-medium text-center my-8">
 				Top Rated Products
 			</h1>
 			<div className="flex">

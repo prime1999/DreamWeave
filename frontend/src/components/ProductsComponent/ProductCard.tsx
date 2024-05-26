@@ -34,27 +34,27 @@ const ProductCard = ({ product, cart }: Props) => {
 	};
 
 	return (
-		<Card className="w-[250px] mt-4 hover:cursor-pointer hover:shadow-md md:w-[300px]">
+		<Card className="w-[250px] mt-4 hover:cursor-pointer md:w-[300px]">
 			<Link to={`/product/${product._id}`}>
 				<CardHeader className="w-full">
-					<div className="w-full h-[300px] bg-navDark">
+					<div className="w-full h-[250px] bg-gray-300 flex items-center justify-center">
 						<img
-							className="w-full object-contain flex items-center justify-center"
+							className="w-full h-36 object-scale-down"
 							src={product.image}
 							alt="product's image"
 						/>
 					</div>
 					<div className="flex justify-between">
-						<CardTitle className="font-poppins text-md truncate">
+						<CardTitle className="w-7/12 font-poppins text-md truncate">
 							{product.name}
 						</CardTitle>
 						<p className="font-semibold text-md">${product.price}</p>
 					</div>
-					<CardDescription className="truncate font-semibold text-blue">
+					<CardDescription className="truncate font-medium text-md text-blue">
 						{product.description}
 					</CardDescription>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="-mt-3">
 					<Rating value={product.rating} text={product.numReviews} />
 				</CardContent>
 			</Link>

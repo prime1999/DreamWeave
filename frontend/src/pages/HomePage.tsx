@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
+import TopRated from "@/layouts/TopRated";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -53,6 +54,7 @@ const HomePage = () => {
 		<div>
 			<Hero />
 			<div className="relative container mx-auto my-8 w-11/12 md:w-full">
+				<TopRated />
 				{loadingProducts && <Loader />}
 				{data && (
 					<>

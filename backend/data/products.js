@@ -1,7 +1,7 @@
 const products = [
 	{
 		name: "Google Pixel 6",
-		image: "/images/d1.jpg",
+		image: "/images/d1.png",
 		description:
 			"The Google Pixel 6 boasts a powerful camera, pure Android experience, and impressive AI capabilities.",
 		brand: "Google",
@@ -13,7 +13,7 @@ const products = [
 	},
 	{
 		name: "HP Spectre x360",
-		image: "/images/d2.jpg",
+		image: "/images/d2.png",
 		description:
 			"The HP Spectre x360 is a premium 2-in-1 laptop with a sleek design, stunning display, and high-performance specifications.",
 		brand: "HP",
@@ -25,7 +25,7 @@ const products = [
 	},
 	{
 		name: "Garmin Fenix 6",
-		image: "/images/d3.jpg",
+		image: "/images/d3.png",
 		description:
 			"The Garmin Fenix 6 is a rugged smartwatch designed for outdoor enthusiasts, featuring advanced fitness tracking and navigation tools.",
 		brand: "Garmin",
@@ -37,7 +37,7 @@ const products = [
 	},
 	{
 		name: "OnePlus 9 Pro",
-		image: "/images/d4.jpg",
+		image: "/images/d4.png",
 		description:
 			"The OnePlus 9 Pro combines a smooth 120Hz display, Hasselblad camera system, and fast charging capabilities for an exceptional user experience.",
 		brand: "OnePlus",
@@ -49,7 +49,7 @@ const products = [
 	},
 	{
 		name: "Lenovo ThinkPad X1 Carbon",
-		image: "/images/d5.jpg",
+		image: "/images/d5.png",
 		description:
 			"The Lenovo ThinkPad X1 Carbon is a business-class laptop known for its durability, impressive keyboard, and high-resolution display.",
 		brand: "Lenovo",
@@ -61,7 +61,7 @@ const products = [
 	},
 	{
 		name: "Samsung Galaxy Watch 4",
-		image: "/images/d6.jpg",
+		image: "/images/d6.png",
 		description:
 			"The Samsung Galaxy Watch 4 is a stylish and feature-rich smartwatch with advanced health and fitness tracking capabilities.",
 		brand: "Samsung",
@@ -85,7 +85,7 @@ const products = [
 	},
 	{
 		name: "Asus ROG Zephyrus G14",
-		image: "/images/d8.jpg",
+		image: "/images/d8.png",
 		description:
 			"The Asus ROG Zephyrus G14 is a gaming laptop with a powerful AMD Ryzen processor, NVIDIA GeForce RTX graphics, and a compact form factor.",
 		brand: "Asus",
@@ -97,7 +97,7 @@ const products = [
 	},
 	{
 		name: "Fitbit Sense",
-		image: "/images/d9.webp",
+		image: "/images/d9.png",
 		description:
 			"The Fitbit Sense is an advanced health smartwatch with EDA and ECG sensors, stress tracking, and built-in GPS for fitness enthusiasts.",
 		brand: "Fitbit",
@@ -109,7 +109,7 @@ const products = [
 	},
 	{
 		name: "Xiaomi Mi 11",
-		image: "/images/d10.jpg",
+		image: "/images/d10.png",
 		description:
 			"The Xiaomi Mi 11 features a high-refresh-rate display, Snapdragon 888 processor, and a versatile camera setup for a flagship experience.",
 		brand: "Xiaomi",
@@ -121,7 +121,7 @@ const products = [
 	},
 	{
 		name: "Acer Predator Helios 300",
-		image: "/images/d11.webp",
+		image: "/images/d11.png",
 		description:
 			"The Acer Predator Helios 300 is a gaming laptop with a high-refresh-rate display, powerful GPU, and advanced cooling for immersive gaming.",
 		brand: "Acer",
@@ -133,7 +133,7 @@ const products = [
 	},
 	{
 		name: "Huawei Watch GT 3",
-		image: "/images/d12.jpg",
+		image: "/images/d12.png",
 		description:
 			"The Huawei Watch GT 3 combines stylish design with long battery life, fitness tracking, and a variety of health monitoring features.",
 		brand: "Huawei",
@@ -145,7 +145,7 @@ const products = [
 	},
 	{
 		name: "Sony Xperia 1 III",
-		image: "/images/d13.jpg",
+		image: "/images/d13.png",
 		description:
 			"The Sony Xperia 1 III features a 4K HDR OLED display, a triple camera system with ZEISS optics, and exceptional audio capabilities.",
 		brand: "Sony",
@@ -157,7 +157,7 @@ const products = [
 	},
 	{
 		name: "Microsoft Surface Laptop 4",
-		image: "/images/d14.jpg",
+		image: "/images/d14.png",
 		description:
 			"The Microsoft Surface Laptop 4 is a sleek and powerful ultrabook with a high-resolution PixelSense touchscreen and long-lasting battery life.",
 		brand: "Microsoft",
@@ -169,7 +169,7 @@ const products = [
 	},
 	{
 		name: "Amazfit GTR 3",
-		image: "/images/d15.jpg",
+		image: "/images/d15.png",
 		description:
 			"The Amazfit GTR 3 is a stylish and affordable smartwatch with a vibrant AMOLED display, long battery life, and comprehensive health tracking features.",
 		brand: "Amazfit",
@@ -193,7 +193,7 @@ const products = [
 	},
 	{
 		name: "Razer Blade 15",
-		image: "/images/d17.jpg",
+		image: "/images/d17.png",
 		description:
 			"The Razer Blade 15 is a gaming laptop known for its sleek design, high refresh rate display, and powerful NVIDIA GeForce graphics.",
 		brand: "Razer",
@@ -205,7 +205,7 @@ const products = [
 	},
 	{
 		name: "Fossil Gen 6",
-		image: "/images/d18.jpg",
+		image: "/images/d18.png",
 		description:
 			"The Fossil Gen 6 is a stylish smartwatch with Wear OS, heart rate tracking, and customizable watch faces for a personalized experience.",
 		brand: "Fossil",
@@ -217,7 +217,7 @@ const products = [
 	},
 	{
 		name: "LG Velvet 2 Pro",
-		image: "/images/d19.jpg",
+		image: "/images/d19.png",
 		description:
 			"The LG Velvet 2 Pro features a unique design, a vivid P-OLED display, and a capable camera system for capturing stunning photos and videos.",
 		brand: "LG",

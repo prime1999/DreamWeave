@@ -4,7 +4,7 @@ export interface ProductType {
 	name: string;
 	image: string;
 	brand: string;
-	category: string;
+	category: string[];
 	description: string;
 	rating: number;
 	numReviews: number;

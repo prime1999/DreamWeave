@@ -37,9 +37,9 @@ const ProductCard = ({ product, cart }: Props) => {
 		<Card className="w-[250px] mt-4 hover:cursor-pointer hover:shadow-md md:w-[300px]">
 			<Link to={`/product/${product._id}`}>
 				<CardHeader className="w-full">
-					<div className="w-full h-[200px]">
+					<div className="w-full h-[300px] bg-navDark">
 						<img
-							className="w-full max-h-full"
+							className="w-full object-contain flex items-center justify-center"
 							src={product.image}
 							alt="product's image"
 						/>

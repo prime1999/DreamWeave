@@ -29,7 +29,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-//import { useLogUserOutMutation } from "@/slices/UserSlice";
+import { useLogUserOutMutation } from "@/slices/UserSlice";
 import { logOut } from "@/slices/AuthSlice";
 
 import NavBar from "./Responsiveness-layout/NavBar";
@@ -45,14 +45,14 @@ const Navbar = () => {
 	// 	}
 	// }, [navigate, userInfo]);
 
-	//const [logOutApiCall] = useLogUserOutMutation() as any;
+	const [logOutApiCall] = useLogUserOutMutation() as any;
 
 	// function to log a user out
 	const logOutUser = async () => {
 		//  make a try-catch block
 		try {
 			// await on the function to log a user out
-			//await logOutApiCall({ cartItems }).unwrap();
+			await logOutApiCall({ cartItems }).unwrap();
 			// dispatch thee log out funtion to clear the local storage
 			dispatch(logOut());
 			navigate("/");

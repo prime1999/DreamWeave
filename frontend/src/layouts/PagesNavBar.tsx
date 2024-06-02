@@ -33,7 +33,7 @@ import { useLogUserOutMutation } from "@/slices/UserSlice";
 import { logOut } from "@/slices/AuthSlice";
 
 import NavBar from "./Responsiveness-layout/NavBar";
-const Navbar = () => {
+const PagesNavBar = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { cartItems } = useSelector((state: any) => state.cart);
@@ -66,18 +66,18 @@ const Navbar = () => {
 		}
 	};
 	return (
-		<div className="border border-darkBorder bg-navDark mx-auto w-11/12 rounded-full py-4 hidden lg:flex">
+		<div className="border-b border-gray-400 mx-auto w-11/12 py-4 hidden lg:flex">
 			<div className="w-full mx-auto hidden items-center justify-between lg:flex lg:w-full xl:w-11/12">
 				<Link to="/" className="flex items-end font-poppins">
 					<img className="w-12 mt-1" src={logo} alt="logo" />
-					<h1 className="font-kenia text-xl ml-1 text-white">REAMWEAVE</h1>
+					<h1 className="font-kenia text-xl ml-1 text-black">REAMWEAVE</h1>
 				</Link>
 				<div className="flex items-center justify-between">
 					<div className="relative mx-2">
 						<NavigationMenu>
-							<NavigationMenuList className="">
+							<NavigationMenuList>
 								<NavigationMenuItem>
-									<NavigationMenuTrigger className="font-poppins text-xs font-semibold text-white hover:bg-transparent hover:text-blue">
+									<NavigationMenuTrigger className="font-poppins text-xs font-semibold text-black hover:bg-transparent hover:text-gray-600">
 										Categories
 									</NavigationMenuTrigger>
 									<NavigationMenuContent className="border-darkBorder bg-black">
@@ -123,15 +123,15 @@ const Navbar = () => {
 							</NavigationMenuList>
 						</NavigationMenu>
 					</div>
-					<div className="font-poppins text-xs text-white font-medium ">
+					<div className="font-poppins text-xs text-black font-medium ">
 						<ul className="flex items-center justify-between">
-							<li>
+							<li className="duration-400 hover:text-gray-600">
 								<Link to="/deals">Deals</Link>
 							</li>
-							<li className="mx-6">
+							<li className="mx-6 duration-400 hover:text-gray-600">
 								<Link to="/new">What's new</Link>
 							</li>
-							<li>
+							<li className="duration-400 hover:text-gray-600">
 								<Link to="/delivery">Delivery</Link>
 							</li>
 						</ul>
@@ -142,7 +142,7 @@ const Navbar = () => {
 						<input
 							type="text"
 							placeholder="search.."
-							className="bg-transparent px-4 py-2 rounded-3xl pr-8 w-72 text-white text-xs border border-darkBorder focus:outline-none"
+							className="bg-transparent px-4 py-2 rounded-3xl pr-8 w-72 text-black text-xs border border-gray-400 focus:outline-none"
 						/>
 						<HiMagnifyingGlass className="absolute top-2 right-3 text-darkBorder hover:cursor-pointer" />
 					</form>
@@ -153,7 +153,7 @@ const Navbar = () => {
 						<DropdownMenu>
 							<DropdownMenuTrigger className="flex items-center">
 								<MdPersonPin className="w-18 text-3xl text-blue" />
-								<p className="font-poppins text-white text-xs font-medium">
+								<p className="font-poppins text-black text-xs font-medium duration-600 hover:text-gray-600">
 									Account
 								</p>
 							</DropdownMenuTrigger>
@@ -191,7 +191,7 @@ const Navbar = () => {
 						<DropdownMenu>
 							<DropdownMenuTrigger className="flex items-center">
 								<MdPersonPin className="w-18 text-3xl text-blue" />
-								<p className="font-poppins text-white text-xs font-medium">
+								<p className="font-poppins text-black text-xs font-medium duration-600 hover:text-gray-600">
 									Account
 								</p>
 							</DropdownMenuTrigger>
@@ -227,7 +227,7 @@ const Navbar = () => {
 								</p>
 							)}
 						</div>
-						<p className="font-poppins text-white text-xs font-medium z-50">
+						<p className="font-poppins text-black text-xs font-medium z-50 duration-600 hover:text-gray-600">
 							Cart
 						</p>
 					</Link>
@@ -240,4 +240,4 @@ const Navbar = () => {
 	);
 };
 
-export default Navbar;
+export default PagesNavBar;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import image from "@/assets/images/Mobile login-amico.png";
@@ -11,6 +11,7 @@ import { useLogUserInMutation } from "@/slices/UserSlice";
 import { clearUserInfoCart, setCredentials } from "@/slices/AuthSlice";
 import { useAddToCartMutation } from "@/slices/CartApiSlice";
 import { addToCart } from "@/slices/CartSlice";
+import LogInBg from "@/assets/images/signUp.jpg";
 
 const AuthPage: React.FC = () => {
 	// define the type of data that will be in the formData
@@ -109,90 +110,98 @@ const AuthPage: React.FC = () => {
 		}
 	};
 	return (
-		<div className="w-full h-screen flex items-center justify-center">
-			<div className="flex justify-between items-center">
-				<div className="hidden w-96 md:block">
-					<img src={image} alt="" />
-				</div>
-				<div className="shadow-md p-4 rounded-lg w-[350px]">
-					<Link
-						to="/"
-						className="flex items-center justify-center py-4 font-poppins mx-auto"
-					>
-						<img className="w-12" src={logo} alt="logo" />
-						<h1 className="font-kenia text-xl ml-1 text-black">DREAMWEAVE</h1>
-					</Link>
-					<h3 className="font-poppins text-xl">Welcome back</h3>
-					<p className="text-blue font-cour text-sm">
-						Get back to your shopping
-					</p>
-					<form onSubmit={handleRegister} className="w-full mt-4 text-black">
-						<div className="relative">
-							<input
-								type="text"
-								placeholder="Your Email"
-								id="email"
-								value={email}
-								onChange={(e) => handleChange(e)}
-								className="bg-light rounded-3xl px-4 py-2 pr-8 my-4 w-full focus:outline-none"
-							/>
-							<span className="absolute top-7 right-3 text-blue">
-								<MdEmail />
-							</span>
-						</div>
-						<div className="relative">
-							<input
-								type={showPassword ? "text" : "password"}
-								placeholder="Enter password"
-								id="password"
-								value={password}
-								onChange={(e) => handleChange(e)}
-								className="bg-light rounded-3xl px-4 py-2 mb-4 w-full focus:outline-none"
-							/>
-							<span
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute top-3 right-4 text-blue hover:cursor-pointer"
-							>
-								{showPassword ? <FaEyeSlash /> : <FaEye />}
-							</span>
-						</div>
-						<button
-							disabled={isLoading}
-							className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
-								isLoading
-									? "bg-other hover:shadow-none"
-									: "bg-blue hover:shadow-blue"
-							} rounded-full duration-500 hover:shadow-md`}
+		<div
+			className="w-full h-screen"
+			style={{ backgroundImage: `url(${LogInBg})`, backgroundSize: "cover" }}
+		>
+			<div
+				className="w-full h-screen flex items-center justify-center"
+				style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
+			>
+				<div className="flex justify-between items-center">
+					<div className="backdrop-blur-lg shadow-md p-4 rounded-lg w-[350px]">
+						<Link
+							to="/"
+							className="flex items-center justify-center py-4 font-poppins mx-auto"
 						>
-							{isLoading && <span className="btnLoader"></span>}
-							Sign In
-						</button>
-						<div className="flex items-center justify-between mt-4">
-							<hr className="w-36" />
-							<p>or</p>
-							<hr className="w-36" />
-						</div>
-						<div className="flex justify-center text-white text-lg mt-4">
-							<button className="rounded-[100%] p-4 bg-red-500 duration-500 hover:shadow-md hover:shadow-red-500">
-								<FaGoogle />
-							</button>
-						</div>
-						<div className="mt-8 text-center">
-							<h6>
-								Don't have an account?{" "}
-								<span>
-									<Link
-										to={
-											redirect ? `/register?redirect=${redirect}` : "/register"
-										}
-										className="text-blue font-bold"
-									>
-										register here
-									</Link>
+							<img className="w-12" src={logo} alt="logo" />
+							<h1 className="font-kenia text-xl ml-1 text-black">DREAMWEAVE</h1>
+						</Link>
+						<h3 className="font-poppins text-xl">Welcome back</h3>
+						<p className="text-blue font-cour text-sm">
+							Get back to your shopping
+						</p>
+						<form onSubmit={handleRegister} className="w-full mt-4 text-black">
+							<div className="relative">
+								<input
+									type="text"
+									placeholder="Your Email"
+									id="email"
+									value={email}
+									onChange={(e) => handleChange(e)}
+									className="bg-light rounded-lg px-4 py-2 pr-8 my-4 w-full focus:outline-none"
+								/>
+								<span className="absolute top-7 right-3 text-blue">
+									<MdEmail />
 								</span>
-							</h6>
-						</div>
-					</form>
+							</div>
+							<div className="relative">
+								<input
+									type={showPassword ? "text" : "password"}
+									placeholder="Enter password"
+									id="password"
+									value={password}
+									onChange={(e) => handleChange(e)}
+									className="bg-light rounded-lg px-4 py-2 mb-4 w-full focus:outline-none"
+								/>
+								<span
+									onClick={() => setShowPassword(!showPassword)}
+									className="absolute top-3 right-4 text-blue hover:cursor-pointer"
+								>
+									{showPassword ? <FaEyeSlash /> : <FaEye />}
+								</span>
+							</div>
+							<button
+								disabled={isLoading}
+								className={`flex items-center justify-center w-full text-center py-2 mt-4 text-light font-poppins font-semibold ${
+									isLoading
+										? "bg-other hover:shadow-none"
+										: "bg-blue hover:shadow-blue"
+								} rounded-lg duration-500 hover:shadow-md`}
+							>
+								{isLoading && <span className="btnLoader"></span>}
+								Sign In
+							</button>
+							<div className="flex items-center justify-between mt-4">
+								<hr className="w-36" />
+								<p>or</p>
+								<hr className="w-36" />
+							</div>
+							<div className="flex justify-center font-poppins mt-4">
+								<button className="rounded-lg flex items-center justify-center gap-2 border border-gray-300 w-full p-2 duration-500 hover:shadow-md hover:shadow-gray-300">
+									<FcGoogle className="text-2xl" />
+									<p>Google</p>
+								</button>
+							</div>
+							<div className="mt-8 text-center">
+								<h6>
+									Don't have an account?{" "}
+									<span>
+										<Link
+											to={
+												redirect
+													? `/register?redirect=${redirect}`
+													: "/register"
+											}
+											className="text-blue font-bold"
+										>
+											register here
+										</Link>
+									</span>
+								</h6>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

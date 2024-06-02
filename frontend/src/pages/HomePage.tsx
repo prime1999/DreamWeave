@@ -1,13 +1,13 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Sorting from "../components/layouts/Sorting";
+// import Sorting from "../components/layouts/Sorting";
 import Hero from "../components/layouts/Hero";
 import {
 	useGetHighlyRatedProductsQuery,
 	useGetProductsQuery,
 } from "@/slices/ProductSlice";
 import Paginate from "@/components/Paginate";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
@@ -24,31 +24,34 @@ const HomePage = () => {
 	const [value, setValue] = useState<string>("");
 	const [productsData, setProductsData] = useState<any>([]);
 
-	const { pageNumber } = useParams();
+	// const { pageNumber } = useParams();
+	const [pageNumber, setPageNumber] = useState<number>(1);
 	const { data, isLoading: loadingProducts } = useGetProductsQuery({
 		pageNumber,
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
+	console.log(data);
 
 	const { cartItems } = useSelector((state: any) => state.cart);
 
 	useEffect(() => {
-		// init a result variable to an empty array
-		let result: any[] = [];
-		// check if there is a value and there is data
-		if (value && data?.products) {
-			// if yes, then filter out the data that has the sam brand as the value passed in and store them in the reult array
-			value === "all"
-				? data?.products?.map((product: any) => result.push(product))
-				: data?.products.filter(
-						(product) => product.brand === value && result.push(product)
-				  );
-		} else {
-			// if no, then there is not value, store the whole data in the result array
-			data?.products?.map((product: any) => result.push(product));
-		}
-		// set the products to the result array
-		setProductsData(result);
+		// // init a result variable to an empty array
+		// let result: any[] = [];
+		// // check if there is a value and there is data
+		// if (value && data?.products) {
+		// 	// if yes, then filter out the data that has the sam brand as the value passed in and store them in the reult array
+		// 	value === "all"
+		// 		? data?.products?.map((product: any) => result.push(product))
+		// 		: data?.products.filter(
+		// 				(product) => product.brand === value && result.push(product)
+		// 		  );
+		// } else {
+		// 	// if no, then there is not value, store the whole data in the result array
+		// 	data?.products?.map((product: any) => result.push(product));
+		// }
+		// // set the products to the result array
+		// setProductsData(result);
+		setProductsData(data?.products);
 	}, [data, value]);
 
 	return (
@@ -66,7 +69,7 @@ const HomePage = () => {
 							</h6>
 							<div className="flex justify-center items-center mx-auto">
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-									{productsData.map((product: any) => (
+									{productsData?.map((product: any) => (
 										<Suspense key={product._id} fallback={<CardSkeleton />}>
 											<ProductCard cart={cartItems} product={product} />
 										</Suspense>
@@ -74,7 +77,11 @@ const HomePage = () => {
 								</div>
 							</div>
 						</div>
-						<Paginate pages={data.pages} page={data.page} />
+						<Paginate
+							pages={data.pages}
+							page={data.page}
+							setPageNumber={setPageNumber}
+						/>
 					</>
 				)}
 				<ProductCategoryUI />

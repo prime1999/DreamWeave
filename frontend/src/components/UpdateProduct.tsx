@@ -35,7 +35,7 @@ const UpdateProduct = ({ productId }: Props) => {
 	});
 	// state fot the form and image
 	const [pic, setPic] = useState<string>(logo);
-	const [category, setCategory] = useState<string>("");
+	const [category, setCategory] = useState<string[]>([]);
 	const [formData, setFormData] = useState<FormDataType>({
 		name: "",
 		brand: "",
@@ -55,7 +55,7 @@ const UpdateProduct = ({ productId }: Props) => {
 			countInStock: data?.countInStock || 0,
 			description: data?.description || "",
 		});
-		setCategory(data?.category || "");
+		setCategory(data?.category || []);
 		setPic(data?.image || logo);
 	}, [data]);
 
@@ -119,7 +119,7 @@ const UpdateProduct = ({ productId }: Props) => {
 			}
 		}
 		// check if all fields are filled
-		if (emptyProperties.length === 0 || category !== "" || pic !== logo) {
+		if (emptyProperties.length === 0 || category.length !== 0 || pic !== logo) {
 			try {
 				// create the product details to send to the backend
 				const productDetails = {

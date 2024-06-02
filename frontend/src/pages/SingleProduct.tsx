@@ -14,6 +14,7 @@ import ProductsSlider from "@/components/ProductsComponent/ProductsSlider";
 import { ProductType } from "@/DataTypes/ProductType";
 import SingleProductSkeleton from "@/components/miscelleneous/SingleProductSkeleton";
 import { addToCart } from "@/slices/CartSlice";
+import PagesNavBar from "@/layouts/PagesNavBar";
 
 const SingleProduct = () => {
 	const [count, setCount] = useState<number>(1);
@@ -59,6 +60,7 @@ const SingleProduct = () => {
 
 	return (
 		<>
+			<PagesNavBar />
 			{productLoading && <SingleProductSkeleton />}
 			{data && (
 				<>
@@ -90,11 +92,11 @@ const SingleProduct = () => {
 								<div className="mt-4">
 									<Rating value={data?.rating} text={data?.numReviews} />
 								</div>
-								<hr className="mt-8" />
+								<hr className="mt-8 border-1 border-black" />
 								<div className="mt-4">
 									<h6 className="font-semibold text-2xl">${data.price}</h6>
 								</div>
-								<hr className="mt-8" />
+								<hr className="mt-8 border-1 border-black" />
 								<div className="flex items-center">
 									<div className="flex items-center justify-between w-36 bg-light mt-4 rounded-3xl font-poppins font-semibold text-lg px-8 py-2">
 										<button
@@ -134,9 +136,9 @@ const SingleProduct = () => {
 									) : (
 										<button
 											onClick={() => handleCart(data)}
-											className="w-full px-4 py-3 border border-blue text-blue bg-light font-semibold rounded-full duration-500 hover:bg-blue hover:text-light md:px-8"
+											className="w-full px-4 py-3 text-white bg-black font-semibold rounded-xl duration-500 hover:bg-dark hover:text-light md:px-8"
 										>
-											Add to cart
+											Add to Cart
 										</button>
 									)}
 								</div>

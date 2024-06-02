@@ -40,11 +40,11 @@ const NavBar = () => {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, [prevScrollPS]);
 
-	useEffect(() => {
-		if (!userInfo) {
-			navigate("/");
-		}
-	}, [navigate, userInfo]);
+	// useEffect(() => {
+	// 	if (!userInfo) {
+	// 		navigate("/");
+	// 	}
+	// }, [navigate, userInfo]);
 	console.log(userInfo);
 
 	const [logOutApiCall] = useLogUserOutMutation() as any;

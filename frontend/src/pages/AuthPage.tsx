@@ -5,7 +5,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import image from "@/assets/images/Mobile login-amico.png";
 import logo from "@/assets/images/logo.png";
 import { useLogUserInMutation } from "@/slices/UserSlice";
 import { clearUserInfoCart, setCredentials } from "@/slices/AuthSlice";

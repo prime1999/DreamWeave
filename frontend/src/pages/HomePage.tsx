@@ -21,7 +21,7 @@ const ProductCard = lazy(
 
 const HomePage = () => {
 	// state for the products and the value of the brand
-	const [value, setValue] = useState<string>("");
+	//const [value, setValue] = useState<string>("");
 	const [productsData, setProductsData] = useState<any>([]);
 
 	// const { pageNumber } = useParams();
@@ -52,7 +52,7 @@ const HomePage = () => {
 		// // set the products to the result array
 		// setProductsData(result);
 		setProductsData(data?.products);
-	}, [data, value]);
+	}, [data]);
 
 	return (
 		<div>

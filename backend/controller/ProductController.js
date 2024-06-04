@@ -68,7 +68,9 @@ const getSingleProduct = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// get the product that as has the same id as the d sent from the frontend from the DB
-		const product = await Product.findById(req.params.productId);
+		const product = await Product.findById(req.params.productId).populate(
+			"review"
+		);
 		// send the found product to the frontend
 		res.status(200).json(product);
 	} catch (error) {
@@ -220,6 +222,60 @@ const updateProduct = asyncHandler(async (req, res) => {
 	}
 });
 
+// ------------------------------ function to add review to a product ------------------------------- //
+const addReview = asyncHandler(async (req, res) => {
+	const { rating, comment } = req.body;
+	// check if the user is authorized
+	const userExist = await User.findById(req.user._id);
+
+	// if no:
+	if (!userExist) {
+		throw new Error("User not authorized");
+	}
+
+	// if yes
+	// make a try-catch block
+	try {
+		// get the product to be reviewed
+		const product = await Product.findById(req.params.id);
+		// check if the products has already been reviewed by the user
+		const alreadyReviewed = product.review.find(
+			(review) => review.user.toString() === req.user._id.toString()
+		);
+		if (alreadyReviewed) {
+			throw new Error("You already reviewed this product");
+		}
+		// if not reviewed then
+		const newReview = {
+			name: req.user.name,
+			user: req.user._id,
+			rating: Number(rating),
+			comment,
+		};
+		console.log(newReview);
+		product.review.push(newReview);
+		console.log(product.review);
+
+		product.numReviews = product.review.length;
+
+		if (product.review.length > 0) {
+			const totalRating = product.review.reduce(
+				(acc, review) => acc + review.rating,
+				0
+			);
+			product.rating = totalRating / product.review.length;
+		}
+		console.log(typeof product.rating);
+		console.log(product);
+		await product.save();
+		res.status(200);
+	} catch (error) {
+		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
 export {
 	getProducts,
 	getAllProducts,
@@ -230,4 +286,5 @@ export {
 	addProduct,
 	deleteProduct,
 	updateProduct,
+	addReview,
 };

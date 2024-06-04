@@ -9,7 +9,8 @@ const products = [
 		price: 899.99,
 		countInStock: 12,
 		rating: 4.6,
-		numReviews: 25,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "HP Spectre x360",
@@ -21,7 +22,8 @@ const products = [
 		price: 1499.99,
 		countInStock: 6,
 		rating: 4.9,
-		numReviews: 22,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Garmin Fenix 6",
@@ -33,7 +35,8 @@ const products = [
 		price: 599.99,
 		countInStock: 18,
 		rating: 4.5,
-		numReviews: 15,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "OnePlus 9 Pro",
@@ -45,7 +48,8 @@ const products = [
 		price: 1099.99,
 		countInStock: 8,
 		rating: 4.7,
-		numReviews: 30,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Lenovo ThinkPad X1 Carbon",
@@ -57,7 +61,8 @@ const products = [
 		price: 1299.99,
 		countInStock: 10,
 		rating: 4.8,
-		numReviews: 18,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Samsung Galaxy Watch 4",
@@ -69,7 +74,8 @@ const products = [
 		price: 329.99,
 		countInStock: 14,
 		rating: 4.4,
-		numReviews: 20,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "iPhone 13 Pro",
@@ -81,7 +87,8 @@ const products = [
 		price: 1199.99,
 		countInStock: 15,
 		rating: 4.9,
-		numReviews: 28,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Asus ROG Zephyrus G14",
@@ -93,7 +100,8 @@ const products = [
 		price: 1599.99,
 		countInStock: 7,
 		rating: 4.7,
-		numReviews: 24,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Fitbit Sense",
@@ -105,7 +113,8 @@ const products = [
 		price: 299.99,
 		countInStock: 20,
 		rating: 4.3,
-		numReviews: 16,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Xiaomi Mi 11",
@@ -117,7 +126,8 @@ const products = [
 		price: 799.99,
 		countInStock: 13,
 		rating: 4.5,
-		numReviews: 21,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Acer Predator Helios 300",
@@ -129,7 +139,8 @@ const products = [
 		price: 1299.99,
 		countInStock: 9,
 		rating: 4.6,
-		numReviews: 19,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Huawei Watch GT 3",
@@ -141,7 +152,8 @@ const products = [
 		price: 249.99,
 		countInStock: 16,
 		rating: 4.2,
-		numReviews: 14,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Sony Xperia 1 III",
@@ -153,7 +165,8 @@ const products = [
 		price: 1099.99,
 		countInStock: 11,
 		rating: 4.7,
-		numReviews: 23,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Microsoft Surface Laptop 4",
@@ -165,7 +178,8 @@ const products = [
 		price: 1399.99,
 		countInStock: 5,
 		rating: 4.8,
-		numReviews: 17,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Amazfit GTR 3",
@@ -177,7 +191,8 @@ const products = [
 		price: 179.99,
 		countInStock: 22,
 		rating: 4.4,
-		numReviews: 18,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Motorola Edge+",
@@ -189,7 +204,8 @@ const products = [
 		price: 999.99,
 		countInStock: 14,
 		rating: 4.6,
-		numReviews: 26,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Razer Blade 15",
@@ -201,7 +217,8 @@ const products = [
 		price: 1899.99,
 		countInStock: 7,
 		rating: 4.9,
-		numReviews: 21,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Fossil Gen 6",
@@ -213,7 +230,8 @@ const products = [
 		price: 279.99,
 		countInStock: 12,
 		rating: 4.3,
-		numReviews: 15,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "LG Velvet 2 Pro",
@@ -225,7 +243,8 @@ const products = [
 		price: 899.99,
 		countInStock: 9,
 		rating: 4.5,
-		numReviews: 20,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Dell Alienware m15 R5",
@@ -237,7 +256,8 @@ const products = [
 		price: 1799.99,
 		countInStock: 11,
 		rating: 4.7,
-		numReviews: 23,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Logitech MX Master 3",
@@ -249,7 +269,8 @@ const products = [
 		price: 99.99,
 		countInStock: 25,
 		rating: 4.7,
-		numReviews: 40,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Sony PlayStation 5",
@@ -261,7 +282,8 @@ const products = [
 		price: 499.99,
 		countInStock: 10,
 		rating: 4.8,
-		numReviews: 100,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Apple MacBook Pro 16-inch",
@@ -273,7 +295,8 @@ const products = [
 		price: 2499.99,
 		countInStock: 5,
 		rating: 4.9,
-		numReviews: 50,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "IPhone 15 pro max",
@@ -285,7 +308,8 @@ const products = [
 		price: 1599.99,
 		countInStock: 25,
 		rating: 4.9,
-		numReviews: 60,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Samsung Galaxy Tab S7",
@@ -297,7 +321,8 @@ const products = [
 		price: 649.99,
 		countInStock: 20,
 		rating: 4.6,
-		numReviews: 30,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Bose QuietComfort 35 II",
@@ -309,7 +334,8 @@ const products = [
 		price: 299.99,
 		countInStock: 15,
 		rating: 4.7,
-		numReviews: 60,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Dell Ultrasharp U2720Q",
@@ -321,7 +347,8 @@ const products = [
 		price: 699.99,
 		countInStock: 8,
 		rating: 4.8,
-		numReviews: 25,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Razer BlackWidow V3",
@@ -333,7 +360,8 @@ const products = [
 		price: 129.99,
 		countInStock: 30,
 		rating: 4.5,
-		numReviews: 35,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Canon EOS R6",
@@ -345,7 +373,8 @@ const products = [
 		price: 2499.99,
 		countInStock: 7,
 		rating: 4.8,
-		numReviews: 20,
+		numReviews: 0,
+		reviews: [],
 	},
 	{
 		name: "Google Nest Hub Max",
@@ -357,7 +386,8 @@ const products = [
 		price: 229.99,
 		countInStock: 12,
 		rating: 4.6,
-		numReviews: 40,
+		numReviews: 0,
+		reviews: [],
 	},
 ];
 

@@ -3,6 +3,7 @@ import {
 	addProduct,
 	addReview,
 	deleteProduct,
+	filterProducts,
 	getAllProducts,
 	getHighlyRatedProducts,
 	getProducts,
@@ -35,5 +36,6 @@ ProductRouter.post("/product/add", protect, admin, addProduct);
 ProductRouter.delete("/delete/:id", protect, admin, deleteProduct);
 ProductRouter.put("/update/product/:id", protect, admin, updateProduct);
 ProductRouter.post("/addReview/:id", protect, addReview);
+ProductRouter.post("/filterProducts", filterProducts);
 
 export default ProductRouter;

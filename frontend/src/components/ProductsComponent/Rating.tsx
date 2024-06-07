@@ -52,7 +52,9 @@ const Rating = ({ value, text }: Props) => {
 					<FaRegStar />
 				)}
 			</span>
-			<span className="text-gray-400 ml-2 font-normal">({text})</span>
+			{text > 0 && (
+				<span className="text-gray-400 ml-2 font-normal">({text})</span>
+			)}
 		</div>
 	);
 };

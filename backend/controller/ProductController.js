@@ -68,9 +68,9 @@ const getSingleProduct = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// get the product that as has the same id as the d sent from the frontend from the DB
-		const product = await Product.findById(req.params.productId).populate(
-			"review"
-		);
+		const product = await Product.findById(req.params.productId)
+			.populate("review")
+			.populate("review.user", "pic");
 		// send the found product to the frontend
 		res.status(200).json(product);
 	} catch (error) {
@@ -86,10 +86,22 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 	try {
 		// find products based on there category
 		const categoryRegex = new RegExp(req.params.category, "i");
-		const products = await Product.find({ category: categoryRegex });
+		const products = await Product.find({
+			category: { $elemMatch: { $regex: categoryRegex } },
+		})
+			// limit the number of products to get to the page size you want
+			.limit(pageSize)
+			// leave out the once that are not to be on the page
+			.skip(pageSize * (page - 1));
 
 		// send the found products to the frontend
-		res.status(200).json(products);
+		res
+			.status(200)
+			.json({
+				products,
+				page,
+				pages: Math.ceil(filteredProducts.length / pageSize),
+			});
 	} catch (error) {
 		// if an error occurs in the try block, then:
 		res.status(400);
@@ -252,9 +264,7 @@ const addReview = asyncHandler(async (req, res) => {
 			rating: Number(rating),
 			comment,
 		};
-		console.log(newReview);
 		product.review.push(newReview);
-		console.log(product.review);
 
 		product.numReviews = product.review.length;
 
@@ -265,12 +275,60 @@ const addReview = asyncHandler(async (req, res) => {
 			);
 			product.rating = totalRating / product.review.length;
 		}
-		console.log(typeof product.rating);
-		console.log(product);
+
 		await product.save();
 		res.status(200);
 	} catch (error) {
 		// if an error occurs in the try block, then:
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+// ------------------------------------ function to filter the products ----------------------- //
+const filterProducts = asyncHandler(async (req, res) => {
+	const { rating, minPrice, maxPrice, brand, category } = req.body;
+	// get the page size form the .env file
+	const pageSize = process.env.PAGE_SIZE;
+	// get the page number query from the frontend or use one incase there is none
+	const page = Number(req.query.pageNumber) || 1;
+	// get products between the price range
+	let products;
+	try {
+		if (rating !== null) {
+			products = await Product.find({ rating: { $gte: rating } })
+				// limit the number of products to get to the page size you want
+				.limit(pageSize)
+				// leave out the once that are not to be on the page
+				.skip(pageSize * (page - 1));
+		}
+		if (category.length > 0) {
+			products = await Product.find({
+				category: { $elemMatch: { $regex: new RegExp(category, "i") } },
+			})
+				// limit the number of products to get to the page size you want
+				.limit(pageSize)
+				// leave out the once that are not to be on the page
+				.skip(pageSize * (page - 1));
+		}
+		if (brand !== "") {
+			products = await Product.find({
+				brand: { $regex: new RegExp(brand, "i") },
+			})
+				// limit the number of products to get to the page size you want
+				.limit(pageSize)
+				// leave out the once that are not to be on the page
+				.skip(pageSize * (page - 1));
+		}
+		const filteredProducts = products.filter(
+			(product) => product.price >= minPrice && product.price <= maxPrice
+		);
+		res.status(200).json({
+			products: filteredProducts,
+			page,
+			pages: Math.ceil(filteredProducts.length / pageSize),
+		});
+	} catch (error) {
 		res.status(400);
 		throw new Error(error.message);
 	}
@@ -287,4 +345,5 @@ export {
 	deleteProduct,
 	updateProduct,
 	addReview,
+	filterProducts,
 };

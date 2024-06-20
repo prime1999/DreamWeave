@@ -47,9 +47,7 @@ function App() {
 					<Route path="/order/:orderId" element={<PrivateUserRoutes />}>
 						<Route path="/order/:orderId" element={<OrderDetailsPage />} />
 					</Route>
-					<Route path="/category/:category" element={<PrivateUserRoutes />}>
-						<Route path="/category/:category" element={<CategoryPage />} />
-					</Route>
+					<Route path="/category/:category" element={<CategoryPage />} />
 
 					{/* Admin routes */}
 					<Route path="/admin/dashboard" element={<PrivateAdminRoutes />}>

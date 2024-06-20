@@ -45,7 +45,6 @@ const NavBar = () => {
 	// 		navigate("/");
 	// 	}
 	// }, [navigate, userInfo]);
-	console.log(userInfo);
 
 	const [logOutApiCall] = useLogUserOutMutation() as any;
 	const { cartItems } = useSelector((state) => (state as any).cart);

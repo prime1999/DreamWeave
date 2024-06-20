@@ -2,14 +2,17 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/UserModel.js";
 import Product from "../models/ProductModel.js";
 
+// get the page size form the .env file
+const pageSize = process.env.PAGE_SIZE;
+
 // ------------------------- function to get all the products in the DB based on pagination ----------------------------- //
 const getProducts = asyncHandler(async (req, res) => {
+	// get the page size form the .env file
+	const pageSize = process.env.PAGE_SIZE;
+	// get the page number query from the frontend or use one incase there is none
+	const page = Number(req.query.pageNumber) || 1;
 	// make a try-catch block
 	try {
-		// get the page size form the .env file
-		const pageSize = process.env.PAGE_SIZE;
-		// get the page number query from the frontend or use one incase there is none
-		const page = Number(req.query.pageNumber) || 1;
 		// get the number of documents available in the produts collection in the DB
 		const count = await Product.countDocuments({});
 		// get the products from the frontend
@@ -82,6 +85,10 @@ const getSingleProduct = asyncHandler(async (req, res) => {
 
 // --------------------------------- function to get products based on there category ------------------------ //
 const getProductsByCategory = asyncHandler(async (req, res) => {
+	// get the page size form the .env file
+	const pageSize = process.env.PAGE_SIZE;
+	// get the page number query from the frontend or use one incase there is none
+	const page = Number(req.query.pageNumber) || 1;
 	// make a try-catch block
 	try {
 		// find products based on there category
@@ -95,13 +102,11 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 			.skip(pageSize * (page - 1));
 
 		// send the found products to the frontend
-		res
-			.status(200)
-			.json({
-				products,
-				page,
-				pages: Math.ceil(filteredProducts.length / pageSize),
-			});
+		res.status(200).json({
+			products,
+			page,
+			pages: Math.ceil(products.length / pageSize),
+		});
 	} catch (error) {
 		// if an error occurs in the try block, then:
 		res.status(400);
@@ -295,39 +300,49 @@ const filterProducts = asyncHandler(async (req, res) => {
 	// get products between the price range
 	let products;
 	try {
-		if (rating !== null) {
-			products = await Product.find({ rating: { $gte: rating } })
-				// limit the number of products to get to the page size you want
-				.limit(pageSize)
-				// leave out the once that are not to be on the page
-				.skip(pageSize * (page - 1));
+		if (rating === null && brand === null && category === null) {
+			res.status(200).json({
+				products: null,
+				page: 0,
+				pages: 0,
+			});
+		} else {
+			if (rating !== null) {
+				products = await Product.find({ rating: { $gte: rating } })
+					// limit the number of products to get to the page size you want
+					.limit(pageSize)
+					// leave out the once that are not to be on the page
+					.skip(pageSize * (page - 1));
+			}
+			if (category !== null) {
+				products = await Product.find({
+					category: {
+						$in: category.map((category) => new RegExp(category, "i")),
+					},
+				})
+					// limit the number of products to get to the page size you want
+					.limit(pageSize)
+					// leave out the once that are not to be on the page
+					.skip(pageSize * (page - 1));
+			}
+			if (brand !== null) {
+				products = await Product.find({
+					brand: { $in: brand.map((brand) => new RegExp(brand, "i")) },
+				})
+					// limit the number of products to get to the page size you want
+					.limit(pageSize)
+					// leave out the once that are not to be on the page
+					.skip(pageSize * (page - 1));
+			}
+			const filteredProducts = products.filter(
+				(product) => product.price >= minPrice && product.price <= maxPrice
+			);
+			res.status(200).json({
+				products: filteredProducts,
+				page,
+				pages: Math.ceil(filteredProducts.length / pageSize),
+			});
 		}
-		if (category.length > 0) {
-			products = await Product.find({
-				category: { $elemMatch: { $regex: new RegExp(category, "i") } },
-			})
-				// limit the number of products to get to the page size you want
-				.limit(pageSize)
-				// leave out the once that are not to be on the page
-				.skip(pageSize * (page - 1));
-		}
-		if (brand !== "") {
-			products = await Product.find({
-				brand: { $regex: new RegExp(brand, "i") },
-			})
-				// limit the number of products to get to the page size you want
-				.limit(pageSize)
-				// leave out the once that are not to be on the page
-				.skip(pageSize * (page - 1));
-		}
-		const filteredProducts = products.filter(
-			(product) => product.price >= minPrice && product.price <= maxPrice
-		);
-		res.status(200).json({
-			products: filteredProducts,
-			page,
-			pages: Math.ceil(filteredProducts.length / pageSize),
-		});
 	} catch (error) {
 		res.status(400);
 		throw new Error(error.message);

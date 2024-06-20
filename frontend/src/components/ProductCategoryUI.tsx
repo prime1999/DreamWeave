@@ -18,7 +18,7 @@ const ProductCategoryUI = () => {
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
 						<h6>Smart Phone</h6>
 						<Link
-							to="/"
+							to="/category/smartphones"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now
@@ -32,7 +32,7 @@ const ProductCategoryUI = () => {
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
 						<h6>Laptops</h6>
 						<Link
-							to="/"
+							to="/category/laptops"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now
@@ -50,7 +50,7 @@ const ProductCategoryUI = () => {
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
 						<h6>Smart Watch</h6>
 						<Link
-							to="/"
+							to="/category/smartwatch"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now
@@ -66,9 +66,9 @@ const ProductCategoryUI = () => {
 				/>
 				<div className="absolute w-full h-full top-0 left-0">
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
-						<h6>Ear Phones</h6>
+						<h6>Head Phones</h6>
 						<Link
-							to="/"
+							to="/category/headphones"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now
@@ -84,9 +84,9 @@ const ProductCategoryUI = () => {
 				/>
 				<div className="absolute w-full h-full top-0 left-0">
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
-						<h6>Play Stations</h6>
+						<h6>Gaming</h6>
 						<Link
-							to="/"
+							to="/category/gaming"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now

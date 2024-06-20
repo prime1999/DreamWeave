@@ -1,10 +1,10 @@
-import smartphone from "@/assets/images/smartphone.jpg";
+import PhoneImg from "@/assets/images/smartphone.jpg";
 
 const SmartPhoneHero = () => {
 	return (
 		<div
 			className="w-full relative h-[500px]"
-			style={{ backgroundImage: `url(${smartphone})`, backgroundSize: "cover" }}
+			style={{ backgroundImage: `url(${PhoneImg})`, backgroundSize: "cover" }}
 		>
 			<div
 				className="w-full absolute top-0 left-0 h-full"
@@ -23,7 +23,6 @@ const SmartPhoneHero = () => {
 					</div>
 				</div>
 			</div>
-			dv
 		</div>
 	);
 };

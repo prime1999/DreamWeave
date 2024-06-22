@@ -2,13 +2,15 @@ import PhoneImg from "@/assets/images/smartphone.jpg";
 
 const SmartPhoneHero = () => {
 	return (
-		<div
-			className="w-full relative h-[500px]"
-			style={{ backgroundImage: `url(${PhoneImg})`, backgroundSize: "cover" }}
-		>
+		<div className="w-full relative h-[500px]">
+			<img
+				src={PhoneImg}
+				alt="phone-image"
+				className="w-full h-full object-cover"
+			/>
 			<div
 				className="w-full absolute top-0 left-0 h-full"
-				style={{ backgroundColor: `rgba(0, 0, 0, 0.5)` }}
+				style={{ backgroundColor: `rgba(0, 0, 0, 0.7)` }}
 			>
 				<div className="w-full h-full flex items-center justify-center">
 					<div className="w-[400px] mx-auto flex flex-col justify-center items-center md:w-7/12">

@@ -292,11 +292,11 @@ const addReview = asyncHandler(async (req, res) => {
 
 // ------------------------------------ function to filter the products ----------------------- //
 const filterProducts = asyncHandler(async (req, res) => {
-	const { rating, minPrice, maxPrice, brand, category } = req.body;
+	const { rating, minPrice, maxPrice, brand, category, pageNumber } = req.body;
 	// get the page size form the .env file
-	const pageSize = process.env.PAGE_SIZE;
+	const pageSize = Number(process.env.PAGE_SIZE);
 	// get the page number query from the frontend or use one incase there is none
-	const page = Number(req.query.pageNumber) || 1;
+	const page = Number(pageNumber) || 1;
 	// get products between the price range
 	let products;
 	try {
@@ -315,11 +315,15 @@ const filterProducts = asyncHandler(async (req, res) => {
 					.skip(pageSize * (page - 1));
 			}
 			if (category !== null) {
-				products = await Product.find({
-					category: {
-						$in: category.map((category) => new RegExp(category, "i")),
+				products = await Product.aggregate([
+					{
+						$match: {
+							category: {
+								$all: category.map((cat) => new RegExp(cat, "i")),
+							},
+						},
 					},
-				})
+				])
 					// limit the number of products to get to the page size you want
 					.limit(pageSize)
 					// leave out the once that are not to be on the page

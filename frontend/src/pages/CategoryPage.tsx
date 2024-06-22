@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { CiHome } from "react-icons/ci";
 import {
 	Breadcrumb,
@@ -20,6 +20,8 @@ import Sorting from "@/components/layouts/Sorting";
 import SmartPhoneHero from "@/components/layouts/CategoryHero/SmartPhoneHero";
 import LaptopHero from "@/components/layouts/CategoryHero/LaptopHero";
 import ProductFilter from "@/components/ProductsComponent/ProductFilter";
+import PagesNavBar from "@/layouts/PagesNavBar";
+import Paginate from "@/components/Paginate";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -40,7 +42,9 @@ const CategoryPage = () => {
 		rating: null,
 		minPrice: 0,
 		maxPrice: 20000,
+		pageNumber: 1,
 	});
+
 	const [filterProduct] = useFilterProductMutation() as any;
 	//state for the breadCrumb
 	const [breadCrumb, setBreadCrumb] = useState<string[]>([]);
@@ -52,15 +56,12 @@ const CategoryPage = () => {
 
 	useEffect(() => {
 		const filter = async () => {
-			console.log(details);
 			const res = await filterProduct({ ...details }).unwrap();
-			console.log(res.products);
 
 			// init a result variable to an empty array
 			let result: any[] = [];
 			// check if the products are been filtered
 			if (res.products === null) {
-				console.log(data);
 				// if yes the products are not been filtered
 				data?.products?.map((product: any) => result.push(product));
 			} else {
@@ -79,6 +80,7 @@ const CategoryPage = () => {
 	}, []);
 	return (
 		<>
+			<PagesNavBar />
 			{isLoading && <Loader />}
 			<div>{params.category === "wearable tech" && <WearableHero />}</div>
 			<div>{params.category === "laptops" && <LaptopHero />}</div>
@@ -123,6 +125,7 @@ const CategoryPage = () => {
 							details={details}
 							setDetails={setDetails}
 							products={products}
+							param={params.category}
 						/>
 						{/* <Sorting setValue={setValue} data={data} /> */}
 					</div>
@@ -139,6 +142,11 @@ const CategoryPage = () => {
 						</div>
 					</div>
 				</div>
+				<Paginate
+					page={products.page}
+					pages={products.pages}
+					setDetails={setDetails}
+				/>
 			</div>
 		</>
 	);

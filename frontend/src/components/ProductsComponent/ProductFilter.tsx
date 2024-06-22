@@ -12,6 +12,7 @@ type Props = {
 	products: ProductType[];
 	details: any;
 	categoryProducts: any;
+	param: any;
 	setDetails: React.Dispatch<any>;
 };
 
@@ -19,13 +20,27 @@ const ProductFilter = ({
 	categoryProducts,
 	products,
 	details,
+	param,
 	setDetails,
 }: Props) => {
+	// for the brands
 	const [isOpen, setIsOpen] = useState<boolean>(true);
 	const [isChecked, setIsChecked] = useState<any>([]);
 	const [brands, setBrands] = useState<string[]>([]);
+	// for the categories
+	const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(true);
+	const [isCategoryChecked, setIsCategoryChecked] = useState<string[]>([]);
+	const [category, setCategory] = useState<string[]>([]);
 
 	useEffect(() => {
+		let categoryArray: any[] = [];
+		products.map((product: any) =>
+			product.category.map(
+				(c: any) =>
+					c !== param && !categoryArray.includes(c) && categoryArray.push(c)
+			)
+		);
+		setCategory(categoryArray);
 		let brandsArray: string[] = [];
 		categoryProducts?.map(
 			(product: any) =>
@@ -35,38 +50,27 @@ const ProductFilter = ({
 		setBrands(brandsArray);
 	}, [products]);
 
-	// const getFilteredDetails = (brand: any) => {
-	// 	if (isChecked.length > 0) {
-	// 		setDetails((prevState: any) => ({
-	// 			...prevState,
-	// 			brand: isChecked,
-	// 		}));
-	// 	} else {
-	// 		setDetails((prevState: any) => ({
-	// 			...prevState,
-	// 			brand: [brand],
-	// 		}));
-	// 	}
-	// 	console.log(isChecked);
-	// 	console.log(details);
-	// };
-
+	// function to filter the products based on there brands
 	const handleCheckboxChange = useCallback((brand: any) => {
 		setIsChecked((prevState: any) => {
 			const updatedState = prevState.includes(brand)
 				? prevState.filter((c: any) => c !== brand)
 				: [...prevState, brand];
-
+			console.log(updatedState);
 			// Update details state based on the updated isChecked state
 			if (updatedState.length > 0) {
 				setDetails((prevDetails: any) => ({
 					...prevDetails,
 					brand: updatedState,
+					category: [param],
 				}));
 			} else {
+				console.log("here");
+				console.log(updatedState.length);
 				setDetails((prevDetails: any) => ({
 					...prevDetails,
-					brand: [brand],
+					brand: null,
+					category: [param],
 				}));
 			}
 
@@ -74,10 +78,29 @@ const ProductFilter = ({
 		});
 	}, []);
 
-	// Use useEffect to log the updated details state
-	useEffect(() => {
-		console.log(details);
-	}, [details]);
+	// function to filter producs based on there category
+	const handleCategoryCheckboxChange = useCallback((c: any) => {
+		setIsCategoryChecked((prevState: any) => {
+			const updatedState = prevState.includes(c)
+				? prevState.filter((c: any) => c !== c)
+				: [...prevState, c];
+
+			// Update details state based on the updated isCategoyChecked state
+			if (!updatedState.includes(c)) {
+				setDetails((prevDetails: any) => ({
+					...prevDetails,
+					category: [param, ...updatedState],
+				}));
+			} else {
+				setDetails((prevDetails: any) => ({
+					...prevDetails,
+					category: [param, c],
+				}));
+			}
+
+			return updatedState;
+		});
+	}, []);
 
 	return (
 		<div>
@@ -104,6 +127,35 @@ const ProductFilter = ({
 						))}
 					</CollapsibleContent>
 				</Collapsible>
+				<hr className="border border-gray-300 my-8" />
+				<div>
+					<Collapsible
+						open={isCategoryOpen}
+						onOpenChange={() => setIsCategoryOpen(!isCategoryOpen)}
+					>
+						<CollapsibleTrigger className="w-full flex items-center justify-between font-medium">
+							Category{" "}
+							<span>
+								{isCategoryOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+							</span>
+						</CollapsibleTrigger>
+						<CollapsibleContent>
+							{category.map((c: any, index: number) => (
+								<div
+									key={index}
+									className="w-full flex items-center justify-between"
+								>
+									<p className="my-4 text-sm text-gray-500 font-medium">{c}</p>
+									<Checkbox
+										className="w-4 h-4"
+										checked={isCategoryChecked.includes(c)}
+										onCheckedChange={() => handleCategoryCheckboxChange(c)}
+									/>
+								</div>
+							))}
+						</CollapsibleContent>
+					</Collapsible>
+				</div>
 			</div>
 		</div>
 	);

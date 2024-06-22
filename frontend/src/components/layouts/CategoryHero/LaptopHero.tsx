@@ -1,14 +1,18 @@
-import laptop from "@/assets/images/laptop.jpg";
+import laptopImg from "@/assets/images/laptop2.jpg";
 
 const LaptopHero = () => {
 	return (
 		<div
 			className="w-full relative h-[500px]"
-			style={{ backgroundImage: `url(${laptop})`, backgroundSize: "cover" }}
+			// style={{
+			// 	backgroundImage: `url(${laptopImg})`,
+			// 	backgroundSize: "",
+			// }}
 		>
+			<img src={laptopImg} alt="laptop-image" className="w-full h-full" />
 			<div
 				className="w-full absolute top-0 left-0 h-full"
-				style={{ backgroundColor: `rgba(0, 0, 0, 0.5)` }}
+				style={{ backgroundColor: `rgba(0, 0, 0, 0.6)` }}
 			>
 				<div className="w-full h-full flex items-center justify-center">
 					<div className="w-[400px] mx-auto flex flex-col justify-center items-center md:w-7/12">

@@ -3,9 +3,10 @@
 type Props = {
 	pages: number;
 	page: number;
-	setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+	setPageNumber?: any;
+	setDetails?: any;
 };
-const Paginate = ({ pages, page, setPageNumber }: Props) => {
+const Paginate = ({ pages, page, setPageNumber, setDetails }: Props) => {
 	return (
 		<div className="my-8 flex items-center justify-center">
 			{[...Array(pages).keys()].map((x) => (
@@ -23,7 +24,13 @@ const Paginate = ({ pages, page, setPageNumber }: Props) => {
 					className={`font-poppins font-semibold text-black duration-500 mr-2 rounded-[100%] border border-blue w-10 h-10 p-4 flex items-center justify-center hover:bg-blue hover:text-white ${
 						x + 1 === page && "bg=blue"
 					}`}
-					onClick={() => setPageNumber(x + 1)}
+					onClick={() => {
+						setPageNumber(x + 1);
+						setDetails((prevstate: any) => ({
+							...prevstate,
+							pageNumber: x + 1,
+						}));
+					}}
 				>
 					{x + 1}
 				</button>

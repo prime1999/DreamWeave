@@ -46,7 +46,6 @@ const ProductFilter = ({
 			(product: any) =>
 				!brandsArray.includes(product.brand) && brandsArray.push(product.brand)
 		);
-		console.log(brandsArray);
 		setBrands(brandsArray);
 	}, [products]);
 
@@ -56,7 +55,6 @@ const ProductFilter = ({
 			const updatedState = prevState.includes(brand)
 				? prevState.filter((c: any) => c !== brand)
 				: [...prevState, brand];
-			console.log(updatedState);
 			// Update details state based on the updated isChecked state
 			if (updatedState.length > 0) {
 				setDetails((prevDetails: any) => ({
@@ -65,8 +63,6 @@ const ProductFilter = ({
 					category: [param],
 				}));
 			} else {
-				console.log("here");
-				console.log(updatedState.length);
 				setDetails((prevDetails: any) => ({
 					...prevDetails,
 					brand: null,

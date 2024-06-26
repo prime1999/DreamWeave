@@ -92,9 +92,14 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 	// make a try-catch block
 	try {
 		// find products based on there category
-		const categoryRegex = new RegExp(req.params.category, "i");
+		let categoryRegex = new RegExp(req.params.category, "i");
 		const products = await Product.find({
-			category: { $elemMatch: { $regex: categoryRegex } },
+			$or: [
+				{ name: new RegExp(categoryRegex, "i") },
+				{ brand: new RegExp(categoryRegex, "i") },
+				{ category: { $in: [new RegExp(categoryRegex, "i")] } },
+				{ description: new RegExp(categoryRegex, "i") },
+			],
 		})
 			// limit the number of products to get to the page size you want
 			.limit(pageSize)

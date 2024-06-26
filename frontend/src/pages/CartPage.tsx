@@ -3,12 +3,14 @@ import { ProductType } from "@/DataTypes/ProductType";
 import CartItems from "@/components/CartItems";
 import ClearCartModal from "@/components/Modals/ClearCartModal";
 import { Link } from "react-router-dom";
+import PagesNavBar from "@/layouts/PagesNavBar";
 
 const CartPage = () => {
 	const { cartItems, itemsPrice } = useSelector((state) => (state as any).cart);
 
 	return (
 		<>
+			<PagesNavBar />
 			{cartItems.length === 0 ? (
 				<>
 					<div className="flex items-center justify-center">

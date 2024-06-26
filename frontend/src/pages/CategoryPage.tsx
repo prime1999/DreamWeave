@@ -16,12 +16,13 @@ import {
 import WearableHero from "@/components/layouts/CategoryHero/WearableHero";
 import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
-import Sorting from "@/components/layouts/Sorting";
 import SmartPhoneHero from "@/components/layouts/CategoryHero/SmartPhoneHero";
 import LaptopHero from "@/components/layouts/CategoryHero/LaptopHero";
 import ProductFilter from "@/components/ProductsComponent/ProductFilter";
 import PagesNavBar from "@/layouts/PagesNavBar";
 import Paginate from "@/components/Paginate";
+import HeadphoneHero from "@/components/layouts/CategoryHero/HeadphoneHero";
+import GamingHero from "@/components/layouts/CategoryHero/GamingHero";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -85,6 +86,8 @@ const CategoryPage = () => {
 			<div>{params.category === "wearable tech" && <WearableHero />}</div>
 			<div>{params.category === "laptops" && <LaptopHero />}</div>
 			<div>{params.category === "smartphones" && <SmartPhoneHero />}</div>
+			<div>{params.category === "headphones" && <HeadphoneHero />}</div>
+			<div>{params.category === "gaming" && <GamingHero />}</div>
 			<div className="w-11/12 mx-auto mt-8">
 				<Breadcrumb>
 					<BreadcrumbList>

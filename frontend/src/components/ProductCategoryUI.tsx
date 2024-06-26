@@ -50,7 +50,7 @@ const ProductCategoryUI = () => {
 					<div className="absolute bottom-0 p-8 text-white font-poppins font-medium">
 						<h6>Smart Watch</h6>
 						<Link
-							to="/category/smartwatch"
+							to="/category/wearable tech"
 							className="text-sm duration-300 ease-in-out hover:underline hover:cursor-pointer"
 						>
 							Shop Now

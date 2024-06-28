@@ -89,10 +89,15 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 	const pageSize = process.env.PAGE_SIZE;
 	// get the page number query from the frontend or use one incase there is none
 	const page = Number(req.query.pageNumber) || 1;
+	let category = "";
 	// make a try-catch block
 	try {
-		// find products based on there category
+		// removed any spaces in the search param
+		//const searchValue = req.params.category.replace(/\s+/g, "");
+		// made the seatch param case insensitive
 		let categoryRegex = new RegExp(req.params.category, "i");
+		console.log(categoryRegex);
+		// find products based on there category
 		const products = await Product.find({
 			$or: [
 				{ name: new RegExp(categoryRegex, "i") },
@@ -105,11 +110,20 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
 			.limit(pageSize)
 			// leave out the once that are not to be on the page
 			.skip(pageSize * (page - 1));
+		let categoryMatch;
+		if (products.length > 0) {
+			categoryMatch = products.some((product) =>
+				product.category.some(
+					(c) => c.toLowerCase() === req.params.category.toLowerCase()
+				)
+			);
+		}
 
 		// send the found products to the frontend
 		res.status(200).json({
 			products,
 			page,
+			category: categoryMatch ? req.params.category : "",
 			pages: Math.ceil(products.length / pageSize),
 		});
 	} catch (error) {

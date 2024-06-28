@@ -35,7 +35,6 @@ const CategoryPage = () => {
 	const { data, isLoading } = useGetProductsByCategoryQuery({
 		category: params.category,
 	});
-	console.log(data);
 	// state to filter products
 	const [details, setDetails] = useState<any>({
 		brand: null,
@@ -49,8 +48,6 @@ const CategoryPage = () => {
 	const [filterProduct] = useFilterProductMutation() as any;
 	//state for the breadCrumb
 	const [breadCrumb, setBreadCrumb] = useState<string[]>([]);
-	// state for the products and the value of the brand
-	const [value, setValue] = useState<string>("");
 	const [products, setProducts] = useState<any>([]);
 
 	const { cartItems } = useSelector((state: any) => state.cart);
@@ -79,15 +76,55 @@ const CategoryPage = () => {
 		const url = location.pathname.split("/");
 		setBreadCrumb(url);
 	}, []);
+
+	const renderHero = () => {
+		if (data) {
+			if (data?.category) {
+				if (data.category === "wearable tech") {
+					return <WearableHero />;
+				}
+				if (data.category === "laptops") {
+					return <LaptopHero />;
+				}
+				if (data.category === "headphones") {
+					return <HeadphoneHero />;
+				}
+				if (data.category === "gaming") {
+					return <GamingHero />;
+				}
+				if (data.category === "smartphones") {
+					return <SmartPhoneHero />;
+				}
+			} else {
+				for (const product of data?.products || []) {
+					if (product.category.includes("wearable tech")) {
+						return <WearableHero />;
+					}
+					if (product.category.includes("laptops")) {
+						return <LaptopHero />;
+					}
+					if (product.category.includes("headphones")) {
+						return <HeadphoneHero />;
+					}
+					if (product.category.includes("gaming")) {
+						return <GamingHero />;
+					}
+					if (product.category.includes("smartphones")) {
+						return <SmartPhoneHero />;
+					}
+				}
+			}
+		}
+	};
 	return (
 		<>
 			<PagesNavBar />
 			{isLoading && <Loader />}
-			<div>{params.category === "wearable tech" && <WearableHero />}</div>
-			<div>{params.category === "laptops" && <LaptopHero />}</div>
+			<div>{renderHero()}</div>
+			{/* <div>{params.category === "laptops" && <LaptopHero />}</div>
 			<div>{params.category === "smartphones" && <SmartPhoneHero />}</div>
 			<div>{params.category === "headphones" && <HeadphoneHero />}</div>
-			<div>{params.category === "gaming" && <GamingHero />}</div>
+			<div>{params.category === "gaming" && <GamingHero />}</div> */}
 			<div className="w-11/12 mx-auto mt-8">
 				<Breadcrumb>
 					<BreadcrumbList>

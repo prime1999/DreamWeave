@@ -30,7 +30,6 @@ const HomePage = () => {
 		pageNumber,
 	});
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
-	console.log(data);
 
 	const { cartItems } = useSelector((state: any) => state.cart);
 
@@ -51,6 +50,7 @@ const HomePage = () => {
 		// }
 		// // set the products to the result array
 		// setProductsData(result);
+		console.log(data);
 		setProductsData(data?.products);
 	}, [data]);
 

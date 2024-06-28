@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -38,6 +39,7 @@ const Navbar = () => {
 	const navigate = useNavigate();
 	const { cartItems } = useSelector((state: any) => state.cart);
 	const { userInfo } = useSelector((state: any) => state.auth);
+	const [searchValue, setSearchValue] = useState<string>("");
 
 	// useEffect(() => {
 	// 	if (!userInfo) {
@@ -64,6 +66,10 @@ const Navbar = () => {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const handleSearch = () => {
+		navigate(`/category/${searchValue}`);
 	};
 	return (
 		<div className="border border-darkBorder bg-navDark mx-auto w-11/12 rounded-full py-4 hidden lg:flex">
@@ -138,13 +144,18 @@ const Navbar = () => {
 					</div>
 				</div>
 				<div>
-					<form className="relative">
+					<form className="relative" onSubmit={handleSearch}>
 						<input
+							value={searchValue}
+							onChange={(e) => setSearchValue(e.target.value)}
 							type="text"
 							placeholder="search.."
 							className="bg-transparent px-4 py-2 rounded-3xl pr-8 w-72 text-white text-xs border border-darkBorder focus:outline-none"
 						/>
-						<HiMagnifyingGlass className="absolute top-2 right-3 text-darkBorder hover:cursor-pointer" />
+						<HiMagnifyingGlass
+							onClick={handleSearch}
+							className="absolute top-2 right-3 text-darkBorder hover:cursor-pointer"
+						/>
 					</form>
 				</div>
 				<div className="flex items-center justify-between">

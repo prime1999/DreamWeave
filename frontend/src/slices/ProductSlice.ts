@@ -5,6 +5,7 @@ import { ProductType } from "@/DataTypes/ProductType";
 
 type dataType = {
 	products: ProductType[];
+	category: string;
 	page: number;
 	pages: number;
 };

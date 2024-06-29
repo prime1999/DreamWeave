@@ -306,16 +306,15 @@ const sendMessage = asyncHandler(async (req, res) => {
 				console.error("Error sending email:", err);
 			} else {
 				res.status(200).json({
-					username,
 					email,
-					userType,
+					msgType: "success",
 					message: "Email sent successfully",
 				});
 			}
 		});
 	} catch (error) {
 		// if an error occurred, send a 400 response with the error message
-		res.status(400).json({ error: error.message });
+		res.status(400).json({ error: error.message, msgType: "error" });
 	}
 });
 

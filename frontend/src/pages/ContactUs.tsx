@@ -1,9 +1,64 @@
 import { FaEnvelope } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import SignUpBg from "@/assets/images/signUp.jpg";
+import { useSendMessagerMutation } from "@/slices/UserSlice";
 import PagesNavBar from "@/layouts/PagesNavBar";
+import { useState } from "react";
 
 const ContactUs = () => {
+	const [sendMessage, { isLoading }] = useSendMessagerMutation();
+	const [formDetails, setFormDetails] = useState<{
+		firstName: string;
+		lastName: string;
+		email: string;
+		message: string;
+	}>({
+		firstName: "",
+		lastName: "",
+		email: "",
+		message: "",
+	});
+	console.log(isLoading);
+
+	// function to check if the email is an email
+	const isValidEmail = (email: string) => {
+		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		return emailRegex.test(email);
+	};
+
+	const handleSendMessage = async (e: any) => {
+		e.preventDefault();
+
+		if (firstName === "" || lastName === "" || email === "" || message === "") {
+			// TODO
+			// show error message
+			console.log("must fill all fields");
+			return;
+		}
+		if (!isValidEmail(email)) {
+			// TODO
+			// show err msg
+			console.log("email not valid");
+			return;
+		}
+		const name = `${lastName} ${firstName}`;
+		const details = {
+			name,
+			email,
+			message,
+		};
+		console.log(details);
+		const isSent = await sendMessage(details).unwrap();
+		// TODO
+		// show message
+		setFormDetails({
+			firstName: "",
+			lastName: "",
+			email: "",
+			message: "",
+		});
+	};
+
+	const { firstName, lastName, email, message } = formDetails;
 	return (
 		<>
 			<PagesNavBar />
@@ -74,6 +129,13 @@ const ContactUs = () => {
 									First-Name *
 								</label>
 								<input
+									value={firstName}
+									onChange={(e) =>
+										setFormDetails((prevstate) => ({
+											...prevstate,
+											firstName: e.target.value,
+										}))
+									}
 									type="text"
 									placeholder="First-Name"
 									className="p-2 h-8"
@@ -85,6 +147,13 @@ const ContactUs = () => {
 									Last-Name *
 								</label>
 								<input
+									value={lastName}
+									onChange={(e) =>
+										setFormDetails((prevstate) => ({
+											...prevstate,
+											lastName: e.target.value,
+										}))
+									}
 									type="text"
 									placeholder="Last-Name"
 									className="p-2 h-8"
@@ -96,6 +165,13 @@ const ContactUs = () => {
 							Email *
 						</label>
 						<input
+							value={email}
+							onChange={(e) =>
+								setFormDetails((prevstate) => ({
+									...prevstate,
+									email: e.target.value,
+								}))
+							}
 							type="email"
 							placeholder="Email"
 							className="p-2 h-8 mb-4"
@@ -105,13 +181,25 @@ const ContactUs = () => {
 							Message *
 						</label>
 						<textarea
+							value={message}
+							onChange={(e) =>
+								setFormDetails((prevstate) => ({
+									...prevstate,
+									message: e.target.value,
+								}))
+							}
 							placeholder="Message"
 							className="p-2 h-36 mb-4"
 							style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
 						></textarea>
 						<div className="flex justify-end">
-							<button className="w-24 items-end bg-blue p-2 font-poppins font-medium cursor-pointer text-white rounded-md">
-								Send
+							<button
+								onClick={handleSendMessage}
+								className={`w-24 items-end p-2 font-poppins font-medium cursor-pointer text-white rounded-md ${
+									isLoading ? "bg-light" : "bg-blue"
+								}`}
+							>
+								{isLoading ? "loading" : "Send"}
 							</button>
 						</div>
 					</form>

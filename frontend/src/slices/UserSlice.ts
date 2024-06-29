@@ -44,6 +44,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				body: cartItems,
 			}),
 		}),
+		sendMessage: builder.mutation<any, any>({
+			query: (details) => ({
+				url: `${USERS_URL}/sendMessage`,
+				method: "POST",
+				body: details,
+			}),
+		}),
 	}),
 });
 
@@ -64,3 +71,6 @@ export const useLogUserOutMutation =
 //
 export const useUpdateUserMutation =
 	userApiSlice.endpoints.updateUser.useMutation;
+//
+export const useSendMessagerMutation =
+	userApiSlice.endpoints.sendMessage.useMutation;

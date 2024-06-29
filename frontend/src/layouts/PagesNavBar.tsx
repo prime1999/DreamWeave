@@ -129,7 +129,7 @@ const PagesNavBar = () => {
 								<Link to="/deals">Deals</Link>
 							</li>
 							<li className="mx-6 duration-400 hover:text-gray-600">
-								<Link to="/new">What's new</Link>
+								<Link to="/contact">Contact us</Link>
 							</li>
 							<li className="duration-400 hover:text-gray-600">
 								<Link to="/delivery">Delivery</Link>

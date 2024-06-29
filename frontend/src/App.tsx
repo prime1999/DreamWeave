@@ -26,6 +26,7 @@ import CategoryPage from "./pages/CategoryPage";
 import NotFound from "./pages/NotFound";
 import PrivateUserRoutes from "./components/PrivateRoutes/PrivateUserRoutes";
 import PrivateAdminRoutes from "./components/PrivateRoutes/PrivateAdminRoutes";
+import ContactUs from "./pages/ContactUs";
 function App() {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -34,6 +35,7 @@ function App() {
 					<Route index={true} path="/" element={<HomePage />} />
 					<Route path="/page/:pageNumber" element={<HomePage />} />
 					<Route path="/product/:productId" element={<SingleProduct />} />
+					<Route path="/contact" element={<ContactUs />}></Route>
 					<Route path="/cart" element={<CartPage />} />
 					<Route path="/order" element={<PrivateUserRoutes />}>
 						<Route path="/order" element={<OrderPage />} />

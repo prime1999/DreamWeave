@@ -135,7 +135,7 @@ const Navbar = () => {
 								<Link to="/deals">Deals</Link>
 							</li>
 							<li className="mx-6">
-								<Link to="/new">What's new</Link>
+								<Link to="/contact">Contact us</Link>
 							</li>
 							<li>
 								<Link to="/delivery">Delivery</Link>

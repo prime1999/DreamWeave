@@ -5,6 +5,7 @@ import Order from "../models/OrderModel.js";
 import { isEqual } from "../Utils/CheckCartEquality.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import generateToken from "../Utils/GenerateToken.js";
+import nodemailer from "nodemailer";
 
 // ------------------------ function to register a user ------------------------------------ //
 const registerUser = asyncHandler(async (req, res) => {
@@ -278,6 +279,46 @@ const getUserDetails = asyncHandler(async (req, res) => {
 	}
 });
 
+// --------------------------------------- function to send a message t dreamweave -------------------- //
+const sendMessage = asyncHandler(async (req, res) => {
+	const { name, email, message } = req.body;
+	try {
+		const transporter = nodemailer.createTransport({
+			service: "Gmail",
+			auth: {
+				user: process.env.APP_MAIL, // app email address
+				pass: process.env.APP_PASSWORD, // app email password
+			},
+			tls: {
+				rejectUnauthorized: false, // allow access from any domain
+			},
+		});
+		let mailDetails = {
+			from: email,
+			to: process.env.APP_MAIL,
+			subject: `Message from ${name}`,
+			text: message,
+		};
+		console.log(mailDetails);
+		// send the mail with verification code to the user
+		transporter.sendMail(mailDetails, function (err, data) {
+			if (err) {
+				console.error("Error sending email:", err);
+			} else {
+				res.status(200).json({
+					username,
+					email,
+					userType,
+					message: "Email sent successfully",
+				});
+			}
+		});
+	} catch (error) {
+		// if an error occurred, send a 400 response with the error message
+		res.status(400).json({ error: error.message });
+	}
+});
+
 export {
 	registerUser,
 	authUser,
@@ -285,4 +326,5 @@ export {
 	updateUser,
 	getUsers,
 	getUserDetails,
+	sendMessage,
 };

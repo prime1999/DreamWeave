@@ -24,8 +24,11 @@ const SingleProduct = () => {
 	const { data: products, isLoading: productLoading } =
 		useGetProductsWithSimilarCategoryQuery({ productId });
 	const [addItemToCart] = useAddToCartMutation();
+	// get the user's state (if the user is logged in or not)
 	const { userInfo } = useSelector((state: any) => state.auth);
+	// get the items in the user's cart
 	const { cartItems } = useSelector((state: any) => state.cart);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -181,20 +184,34 @@ const SingleProduct = () => {
 								What People think about the{" "}
 								<span className="text-xl">{data?.name}</span>
 							</h3>
-							<h3 className="duration-400 hover:cursor-pointer hover:text-gray-600">
-								See All
-							</h3>
+
+							{data?.review && data?.review?.length > 1 && (
+								<h3 className="duration-400 hover:cursor-pointer hover:text-gray-600">
+									See All
+								</h3>
+							)}
 						</div>
 						<hr className="border-black mt-4" />
 						<div className="w-11/12 mx-auto">
-							{data?.review ? (
+							{data?.review && data?.review.length !== 0 ? (
 								<div className="py-8 grid grid-cols-1 md:grid-cols-2">
 									{data?.review.map((review, index) => (
 										<ProductReviewCard key={index} review={review} />
 									))}
 								</div>
 							) : (
-								""
+								<div className="mt-8">
+									<h3 className="text-black">
+										Be the first to review this product
+									</h3>
+									{userInfo ? (
+										<form>
+											<textarea></textarea>
+										</form>
+									) : (
+										""
+									)}
+								</div>
 							)}
 						</div>
 					</div>

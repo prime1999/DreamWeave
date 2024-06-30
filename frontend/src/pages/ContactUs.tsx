@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { FaEnvelope } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { useSendMessagerMutation } from "@/slices/UserSlice";
@@ -29,15 +30,13 @@ const ContactUs = () => {
 		e.preventDefault();
 
 		if (firstName === "" || lastName === "" || email === "" || message === "") {
-			// TODO
 			// show error message
-			console.log("must fill all fields");
+			toast.error("Please fill all required fields");
 			return;
 		}
 		if (!isValidEmail(email)) {
-			// TODO
 			// show err msg
-			console.log("email not valid");
+			toast.error("Please input a valid email");
 			return;
 		}
 		const name = `${lastName} ${firstName}`;
@@ -46,10 +45,10 @@ const ContactUs = () => {
 			email,
 			message,
 		};
-		console.log(details);
-		const isSent = await sendMessage(details).unwrap();
-		// TODO
+		await sendMessage(details).unwrap();
+
 		// show message
+		toast.success("Message sent, we will get back to you");
 		setFormDetails({
 			firstName: "",
 			lastName: "",

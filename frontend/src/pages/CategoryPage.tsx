@@ -162,7 +162,6 @@ const CategoryPage = () => {
 					<div className="my-4 col-span-1">
 						<ProductFilter
 							categoryProducts={data?.products}
-							details={details}
 							setDetails={setDetails}
 							products={products}
 							param={params.category}

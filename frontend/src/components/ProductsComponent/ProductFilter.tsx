@@ -10,7 +10,6 @@ import { ProductType } from "@/DataTypes/ProductType";
 
 type Props = {
 	products: ProductType[];
-	details: any;
 	categoryProducts: any;
 	param: any;
 	setDetails: React.Dispatch<any>;
@@ -19,7 +18,6 @@ type Props = {
 const ProductFilter = ({
 	categoryProducts,
 	products,
-	details,
 	param,
 	setDetails,
 }: Props) => {

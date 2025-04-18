@@ -5,7 +5,13 @@ import { toast } from "react-toastify";
 import { CiHome, CiDeliveryTruck, CiShoppingCart } from "react-icons/ci";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { MdPersonPin, MdLogout, MdPerson, MdDashboard } from "react-icons/md";
+import {
+	MdPersonPin,
+	MdLogout,
+	MdPerson,
+	MdDashboard,
+	MdOutlineContactSupport,
+} from "react-icons/md";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -85,12 +91,12 @@ const NavBar = () => {
 					</p>
 				</Link>
 				<Link
-					to="/"
+					to="/contact"
 					className="flex flex-col gap-2 items-center font-poppins group"
 				>
-					<CiDeliveryTruck className="text-3xl text-white duration-300 ease-in-out group-hover:text-blue" />
+					<MdOutlineContactSupport className="text-3xl text-white duration-300 ease-in-out group-hover:text-blue" />
 					<p className="text-sm text-light font-medium duration-300 ease-in-out group-hover:text-blue">
-						Delivery
+						Contact-us
 					</p>
 				</Link>
 				<button className="flex flex-col gap-2 items-center font-poppins">

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CiHome, CiDeliveryTruck, CiShoppingCart } from "react-icons/ci";
+import { CiHome, CiShoppingCart } from "react-icons/ci";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import {

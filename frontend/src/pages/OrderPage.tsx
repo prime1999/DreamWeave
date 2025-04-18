@@ -185,7 +185,7 @@ const OrderPage = () => {
 									</div>
 								</div>
 								<PhoneInput
-									className={`custom-phone-input mb-4 rounded-md py-2 px-4 bg-transparent border border-slate-400 rounded-md border-gray-200 focus:outline-none`}
+									className={`custom-phone-input mb-4 py-2 px-4 bg-transparent border border-slate-400 rounded-md focus:outline-none`}
 									placeholder="Enter phone number"
 									value={value}
 									international={true}

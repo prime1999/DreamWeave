@@ -13,6 +13,7 @@ import CardSkeleton from "@/components/miscelleneous/CardSkeleton";
 import Loader from "@/components/Loader";
 import TopRated from "@/layouts/TopRated";
 import ProductCategoryUI from "@/components/ProductCategoryUI";
+import HomePageSkeleton from "@/components/miscelleneous/HomePageSkeleton";
 
 // for the lazy loading
 const ProductCard = lazy(
@@ -50,7 +51,7 @@ const HomePage = () => {
 		// }
 		// // set the products to the result array
 		// setProductsData(result);
-		console.log(data);
+		console.log({ data, loadingProducts });
 		setProductsData(data?.products);
 	}, [data]);
 
@@ -59,15 +60,15 @@ const HomePage = () => {
 			<Hero />
 			<div className="relative container mx-auto my-8 w-11/12">
 				<TopRated />
-				{loadingProducts && <Loader />}
+				{loadingProducts && <HomePageSkeleton />}
 				{data && (
 					<>
 						{/* <Sorting setValue={setValue} data={data.products} /> */}
-						<div className="mt-8">
+						<div className="mt-8 w-[90vw] mx-auto">
 							<h6 className="font-poppins text-lg font-medium text-center mt-16">
 								Popular Now
 							</h6>
-							<div className="flex justify-center items-center mx-auto">
+							<div className="w-11/12 flex justify-center items-center mx-auto">
 								<div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 									{productsData?.map((product: any) => (
 										<Suspense key={product._id} fallback={<CardSkeleton />}>
@@ -85,7 +86,7 @@ const HomePage = () => {
 					</>
 				)}
 				<ProductCategoryUI />
-				<div className="h-full">
+				<div className="">
 					{products && (
 						<div className="w-11/12 mx-auto">
 							<h6 className="font-poppins text-lg font-medium text-center mt-16">

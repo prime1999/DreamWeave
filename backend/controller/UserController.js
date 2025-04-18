@@ -279,7 +279,7 @@ const getUserDetails = asyncHandler(async (req, res) => {
 	}
 });
 
-// --------------------------------------- function to send a message t dreamweave -------------------- //
+// --------------------------------------- function to send a message to dreamweave -------------------- //
 const sendMessage = asyncHandler(async (req, res) => {
 	const { name, email, message } = req.body;
 	try {

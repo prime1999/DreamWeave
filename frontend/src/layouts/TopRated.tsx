@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGetHighlyRatedProductsQuery } from "@/slices/ProductSlice";
+import TopRatedSlider from "@/components/GsapSliders/TopRatedSlider";
 
 const TopRated = () => {
 	const { data: products } = useGetHighlyRatedProductsQuery({} as any);
@@ -9,7 +10,7 @@ const TopRated = () => {
 			<h1 className="font-poppins text-lg font-medium text-center my-8">
 				Top Rated Products
 			</h1>
-			<div className="flex">
+			<div className="hidden lg:flex">
 				{products?.map(
 					(product, index) =>
 						index <= 4 && (
@@ -36,6 +37,7 @@ const TopRated = () => {
 						)
 				)}
 			</div>
+			<TopRatedSlider />
 		</>
 	);
 };

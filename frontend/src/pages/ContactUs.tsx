@@ -62,7 +62,7 @@ const ContactUs = () => {
 		<>
 			<PagesNavBar />
 			<div className="w-full h-screen flex items-center justify-center">
-				<div className="w-8/12 flex items-center justify-between gap-4">
+				<div className="w-10/12 mx-auto flex flex-col items-center justify-center gap-4 md:flex-row md:items-start md:justify-between">
 					<div>
 						<h4 className="flex flex-col justify-start items-start gap-2">
 							<hr className="w-12 border-blue" />
@@ -71,59 +71,31 @@ const ContactUs = () => {
 							</span>
 						</h4>
 						<h1 className="font-cour text-4xl mt-4">Contact Us</h1>
-						<p className="mt-4 font-poppins text-sm font-medium">Dream-weave</p>
-						<div className="w-full">
-							<h5 className="flex items-center gap-2 text-blue mt-4">
+						<p className="mt-4 font-poppins text-sm font-semibold">
+							Dream-weave
+						</p>
+						<div className="w-full text-sm">
+							<h5 className="flex items-center gap-2 text-blue mt-4 text-xs">
 								<FaEnvelope />
 								<span className="font-poppins font-medium">
 									info@dreamweave.org
 								</span>
 							</h5>
-							<h5 className="flex items-center gap-2 text-blue mt-4">
+							<h5 className="flex items-center gap-2 text-blue mt-4 text-xs">
 								<BsFillTelephoneFill />{" "}
 								<span className="font-poppins font-medium">
 									234-706-828-0718
 								</span>
 							</h5>
-							<div className="grid grid-cols-2 mt-8 gap-6">
-								<div className="font-poppins text-sm gap-2">
-									<h3 className="font-semibold">Yakubu Moshood</h3>
-									<p className="font-medium my-2">Founder/CEO Dreamweave</p>
-									<p className="font-cour text-sm underline text-blue">
-										moshoodolabanji22@gmail.com
-									</p>
-								</div>
-								<div className="font-poppins text-sm gap-2">
-									<h3 className="font-semibold">Yakubu Moshood</h3>
-									<p className="font-medium my-2">Founder/CEO Dreamweave</p>
-									<p className="font-cour text-sm underline text-blue">
-										moshoodolabanji22@gmail.com
-									</p>
-								</div>
-								<div className="font-poppins text-sm gap-2">
-									<h3 className="font-semibold">Yakubu Moshood</h3>
-									<p className="font-medium my-2">Founder/CEO Dreamweave</p>
-									<p className="font-cour text-sm underline text-blue">
-										moshoodolabanji22@gmail.com
-									</p>
-								</div>
-								<div className="font-poppins text-sm gap-2">
-									<h3 className="font-semibold">Yakubu Moshood</h3>
-									<p className="font-medium my-2">Founder/CEO Dreamweave</p>
-									<p className="font-cour text-sm underline text-blue">
-										moshoodolabanji22@gmail.com
-									</p>
-								</div>
-							</div>
 						</div>
 					</div>
 
 					<form
-						className="w-[450px] flex flex-col p-4"
+						className="w-[300px] flex flex-col p-4 text-sm md:w-[450px]"
 						style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
 					>
-						<div className="flex items-center justify-center gap-2 my-4">
-							<div>
+						<div className="flex flex-col items-center justify-center gap-2 my-4 md:flex-row">
+							<div className="w-full">
 								<label className="font-poppins font-medium text-sm text-blue mb-4">
 									First-Name *
 								</label>
@@ -137,7 +109,7 @@ const ContactUs = () => {
 									}
 									type="text"
 									placeholder="First-Name"
-									className="p-2 h-8"
+									className="w-full p-2 h-8"
 									style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
 								/>
 							</div>
@@ -155,7 +127,7 @@ const ContactUs = () => {
 									}
 									type="text"
 									placeholder="Last-Name"
-									className="p-2 h-8"
+									className="w-full p-2 h-8"
 									style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
 								/>
 							</div>

@@ -47,7 +47,7 @@ const CartItems = ({ item }: Props) => {
 				</Link>
 				<div className="ml-4 flex flex-col">
 					<h6 className="font-semibold truncate">{item.name}</h6>
-					<p className="text-gray-300">{item.brand}</p>
+					<p className="text-gray-500">{item.brand}</p>
 				</div>
 			</div>
 			<div className="flex items-center justify-center ml-16 font-normal">

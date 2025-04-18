@@ -137,12 +137,12 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 92vw;
-		height: 1500px;
+		width: 100vw;
+		height: 100vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: rgba(255, 255, 255, 0.99);
+		background-color: rgba(0, 0, 0, 0.9);
 		z-index: 1000;
 	}
 }
@@ -207,4 +207,31 @@ input[type="number"] {
 #processing {
 	color: blue;
 	background-color: rgba(0, 0, 255, 0.1);
+}
+
+/* Apply to any element with scroll */
+.custom-scrollbar {
+	scrollbar-width: thin; /* For Firefox */
+	scrollbar-color: #3894a3 transparent; /* For Firefox */
+}
+
+/* Webkit-based browsers */
+.custom-scrollbar::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #3894a3;
+	border-radius: 8px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: #555;
 }

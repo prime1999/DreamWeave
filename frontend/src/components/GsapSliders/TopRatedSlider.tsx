@@ -24,7 +24,7 @@ const TopRatedSlider = () => {
 	};
 	return (
 		<div className="relative mb-32 lg:hidden">
-			<div className="w-full mx-auto flex items-center justify-between gap-4 overflow-x-auto my-12 no-scrollbar relative">
+			<div className="w-full mx-auto flex items-center justify-between gap-4 overflow-x-auto my-12 no-scrollbar relative md:gap-12">
 				{products?.map(
 					(product, index) =>
 						index <= 4 && (
@@ -53,7 +53,7 @@ const TopRatedSlider = () => {
 						)
 				)}
 			</div>
-			<div className="absolute right-20 -bottom-13 text-black flex gap-4 text-2xl font-semibold">
+			<div className="w-full absolute -bottom-13 flex justify-center items-center text-black gap-4 text-2xl font-semibold">
 				<button
 					disabled={productId === 0}
 					onClick={() => handleMove(productId - 1)}

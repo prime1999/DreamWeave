@@ -34,12 +34,12 @@ const ProductCard = ({ product, cart }: Props) => {
 	};
 
 	return (
-		<Card className="w-[250px] mt-4 hover:cursor-pointer md:w-[300px]">
+		<Card className="w-[200px] mt-4 hover:cursor-pointer md:w-[280px]">
 			<Link to={`/product/${product._id}`}>
 				<CardHeader className="w-full">
-					<div className="w-full h-[250px] bg-gray-300 flex items-center justify-center">
+					<div className="w-full h-[180px] bg-gray-300 flex items-center justify-center md:h-[250px]">
 						<img
-							className="w-full h-36 object-scale-down"
+							className="w-full h-36 scale-[0.8] md:object-scale-down"
 							src={product.image}
 							alt="product's image"
 						/>

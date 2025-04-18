@@ -13,6 +13,7 @@ import Loader from "@/components/Loader";
 import { setCredentials } from "@/slices/AuthSlice";
 import ChangePasswordModal from "@/components/Modals/ChangePasswordModal";
 import { useUploadProductImageMutation } from "@/slices/ProductSlice";
+import PagesNavBar from "@/layouts/PagesNavBar";
 
 const ProfilePage = () => {
 	const dispatch = useDispatch();
@@ -91,11 +92,12 @@ const ProfilePage = () => {
 
 	return (
 		<>
+			<PagesNavBar />
 			{userLoading ? (
 				<Loader />
 			) : (
 				<>
-					<div className="w-11/12 mx-auto md:w-9/12">
+					<div className="w-11/12 mx-auto mt-8 md:w-9/12">
 						<div className="flex items-start">
 							<div className="relative w-[150px]">
 								<img
@@ -120,7 +122,7 @@ const ProfilePage = () => {
 									<FiEdit onClick={() => setEdit(!edit)} />
 								</div>
 
-								<form className="w-full">
+								<form className="w-full text-sm">
 									<div className="flex flex-col">
 										<label className="text-blue">Name</label>
 										<input

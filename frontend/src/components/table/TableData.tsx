@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({
 					onChange={(event) =>
 						table.getColumn("status")?.setFilterValue(event.target.value)
 					}
-					className="max-w-md border rounded-md p-2 focus:outline-none"
+					className="max-w-md border rounded-md p-2 bg-transparent border-gray-500 focus:outline-none"
 				/>
 			</div>
 			<div className="rounded-md border">

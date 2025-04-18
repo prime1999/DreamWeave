@@ -72,7 +72,7 @@ const NavBar = () => {
 		<div
 			className={`${
 				isVisible ? "flex" : "hidden"
-			} fixed bottom-0 left-0 w-full py-4 px-4 duration-300 ease-in-out z-50 bg-navDark lg:hidden`}
+			} fixed bottom-0 left-0 w-full py-4 px-4 duration-300 ease-in-out z-50 bg-navDark md:hidden`}
 		>
 			<div className="w-full flex items-center justify-between">
 				<Link

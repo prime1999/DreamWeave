@@ -170,6 +170,8 @@ const getStatusOrder = asyncHandler(async (req, res) => {
 const payOrder = asyncHandler(async (req, res) => {
 	// check if the user is authorized
 	const userExist = await User.findById(req.user._id);
+	console.log(req.user._id);
+	console.log(req.body.id);
 
 	// if no:
 	if (!userExist) {
@@ -180,18 +182,21 @@ const payOrder = asyncHandler(async (req, res) => {
 	try {
 		// check if the transaction is a new transaction
 		const newTransaction = await checkIfNewTransaction(Order, req.body.id);
+
 		// if the order is not a new transaction, then:
 		if (!newTransaction) {
 			throw new Order("Transaction has been used");
 		}
 		// verify the payment on paypal
 		const { verified, value } = await verifyPayPalPayment(req.body.id);
+
 		// if the paymant is not verified
 		if (!verified) {
 			throw new Error("Payment not verified");
 		}
 		// get the order from the request params
 		const order = await Order.findById(req.params.orderId);
+
 		// if the order was not found then
 		if (!order) {
 			throw new Error("order not placed");
@@ -200,12 +205,16 @@ const payOrder = asyncHandler(async (req, res) => {
 		if (order.status === "cancelled") {
 			throw new Error("This Order was cancelled");
 		}
+		const orderAmount = order.totalAmount.toString();
+
 		// get the amount to pay for the order
-		const paidCorrectAmount = order.totalAmount.toString() === value;
+		const paidCorrectAmount = `${orderAmount}.00` === value;
+
 		// if the correct amount is not what is been paid, then
 		if (!paidCorrectAmount) {
 			throw new Error("Incorrect Amoun paid");
 		}
+
 		// if all the checks is passed then we proceed
 		order.isPaid = true;
 		order.status = "processing";
@@ -216,8 +225,10 @@ const payOrder = asyncHandler(async (req, res) => {
 			update_time: req.body.update_time,
 			email_address: req.body.payer.email_address,
 		};
+
 		// save the updated order to the DB
 		const updatedOrder = await order.save();
+
 		res.status(201).json(updatedOrder);
 	} catch (error) {
 		// if an error occured in the try block, then:

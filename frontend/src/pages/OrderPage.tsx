@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import logo from "../assets/images/logo.png";
 import { usePlaceOrderMutation } from "@/slices/OrderSlice";
 import { useClearCartMutation } from "@/slices/CartApiSlice";
 import Loader from "@/components/Loader";
 import { clearCartItems } from "@/slices/CartSlice";
 import PaymentModal from "@/components/Modals/PaymentModal";
+import PagesNavBar from "@/layouts/PagesNavBar";
 
 const OrderPage = () => {
 	const dispatch = useDispatch();
@@ -53,13 +56,11 @@ const OrderPage = () => {
 				shippingAddress: formData,
 				phoneNumber: value,
 			};
-			console.log(shippingDetails);
 			const res = await placeOrder({
 				shippingDetails,
 				paymentMethod: "PayPal",
 			});
 			const { data } = res as any;
-			console.log(data);
 			setResId(data._id);
 			setOpenModal(true);
 			await clearCart({});
@@ -70,11 +71,10 @@ const OrderPage = () => {
 			postalCode = "";
 			zipCode = "";
 		} catch (error) {
-			console.log(error);
 			// throw an error if they don't
 			toast.error("Something went wrong, please try again", {
-				className: "bg-red-200",
-				bodyClassName: "text-light",
+				className: "border border-red-100 bg-slate-300",
+				bodyClassName: "text-black",
 				progressClassName: "bg-transparent",
 			});
 		}
@@ -86,7 +86,15 @@ const OrderPage = () => {
 
 	return (
 		<>
-			<div className="container w-full text-black lg:w-9/12">
+			<PagesNavBar />
+			<div className="container w-full text-black mt-8 lg:w-9/12">
+				<Link
+					to="/"
+					className="flex items-end justify-center mb-8 font-poppins"
+				>
+					<img className="w-12 mt-1" src={logo} alt="logo" />
+					<h1 className="font-kenia text-xl ml-1 text-black">REAMWEAVE</h1>
+				</Link>
 				<h1 className="text-center font-poppins text-2xl font-semibold">
 					Place your Order
 				</h1>
@@ -94,7 +102,7 @@ const OrderPage = () => {
 					Cancel anytime . worldwide shipping
 				</p>
 				<div className="flex flex-col items-start mt-8 w-full md:flex-row">
-					<div className="md:w-2/3">
+					<div className="w-full md:w-2/3">
 						<div className="border p-4 mb-4">
 							<form>
 								<h6 className="font-semibold uppercase text-lg mb-4">
@@ -105,14 +113,14 @@ const OrderPage = () => {
 									type="text"
 									value={userInfo.name}
 									disabled
-									className="w-full border px-4 py-2 bg-transparent mt-2 mb-8 capitalize focus:outline-none"
+									className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 mb-8 capitalize focus:outline-none"
 								/>
 								<label className="text-gray-400">Customer's Email</label>
 								<input
 									type="text"
 									value={userInfo.email}
 									disabled
-									className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+									className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 								/>
 							</form>
 						</div>
@@ -128,7 +136,7 @@ const OrderPage = () => {
 										id="address"
 										value={address}
 										onChange={(e) => handleChangeInput(e)}
-										className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+										className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 									/>
 								</div>
 								<div className="flex justify-between mb-4 gap-2">
@@ -139,7 +147,7 @@ const OrderPage = () => {
 											id="city"
 											value={city}
 											onChange={(e) => handleChangeInput(e)}
-											className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+											className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 										/>
 									</div>
 									<div>
@@ -149,7 +157,7 @@ const OrderPage = () => {
 											id="postalCode"
 											value={postalCode}
 											onChange={(e) => handleChangeInput(e)}
-											className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+											className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 										/>
 									</div>
 								</div>
@@ -162,7 +170,7 @@ const OrderPage = () => {
 											id="country"
 											value={country}
 											onChange={(e) => handleChangeInput(e)}
-											className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+											className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 										/>
 									</div>
 									<div>
@@ -172,12 +180,12 @@ const OrderPage = () => {
 											id="zipCode"
 											value={zipCode}
 											onChange={(e) => handleChangeInput(e)}
-											className="w-full border px-4 py-2 bg-transparent mt-2 focus:outline-none"
+											className="w-full border border-slate-400 rounded-md px-4 py-2 bg-transparent mt-2 focus:outline-none"
 										/>
 									</div>
 								</div>
 								<PhoneInput
-									className={`custom-phone-input mb-4 rounded-md py-2 px-4 bg-transparent border border-gray-200 focus:outline-none`}
+									className={`custom-phone-input mb-4 rounded-md py-2 px-4 bg-transparent border border-slate-400 rounded-md border-gray-200 focus:outline-none`}
 									placeholder="Enter phone number"
 									value={value}
 									international={true}
@@ -203,7 +211,7 @@ const OrderPage = () => {
 							Place Your Order
 						</button>
 					</div>
-					<div className="w-full mt-4 lg:w-1/3 md:ml-4">
+					<div className="w-full md:w-1/3 mt-4 lg:w-1/3 md:ml-4">
 						<div className="w-full border p-4">
 							<div>
 								<h5 className="font-semibold text-lg text-center">

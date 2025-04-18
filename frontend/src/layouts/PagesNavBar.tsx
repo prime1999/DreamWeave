@@ -39,12 +39,6 @@ const PagesNavBar = () => {
 	const { cartItems } = useSelector((state: any) => state.cart);
 	const { userInfo } = useSelector((state: any) => state.auth);
 
-	// useEffect(() => {
-	// 	if (!userInfo) {
-	// 		navigate("/");
-	// 	}
-	// }, [navigate, userInfo]);
-
 	const [logOutApiCall] = useLogUserOutMutation() as any;
 
 	// function to log a user out
@@ -66,28 +60,28 @@ const PagesNavBar = () => {
 		}
 	};
 	return (
-		<div className="border-b border-gray-400 mx-auto w-11/12 py-4 hidden lg:flex">
-			<div className="w-full mx-auto hidden items-center justify-between lg:flex lg:w-full xl:w-11/12">
+		<div className="border-b border-gray-400 mx-auto w-11/12 py-4 hidden md:flex">
+			<div className="w-full mx-auto hidden items-center justify-between md:flex md:w-full xl:w-11/12">
 				<Link to="/" className="flex items-end font-poppins">
 					<img className="w-12 mt-1" src={logo} alt="logo" />
 					<h1 className="font-kenia text-xl ml-1 text-black">REAMWEAVE</h1>
 				</Link>
 				<div className="flex items-center justify-between">
-					<div className="relative mx-2">
+					<div className="relative mx-2 hidden lg:block">
 						<NavigationMenu>
 							<NavigationMenuList>
 								<NavigationMenuItem>
 									<NavigationMenuTrigger className="font-poppins text-xs font-semibold text-black hover:bg-transparent hover:text-gray-600">
 										Categories
 									</NavigationMenuTrigger>
-									<NavigationMenuContent className="border-darkBorder bg-black">
+									<NavigationMenuContent className="border-gray-500 bg-light">
 										<NavigationMenuLink>
 											<div className="p-4 border-none bg-transparent w-96">
-												<h6 className="font-poppins text-sm font-semibold text-white mb-2">
+												<h6 className="font-poppins text-sm font-semibold text-black mb-2">
 													Popular Categories
 												</h6>
 												<ul className="w-full font-semibold">
-													<hr className="mb-4 border-darkBorder" />
+													<hr className="mb-4 border-gray-500" />
 													<li className="flex">
 														<img className="w-24" src={laptop} alt="" />
 														<Link
@@ -125,13 +119,13 @@ const PagesNavBar = () => {
 					</div>
 					<div className="font-poppins text-xs text-black font-medium ">
 						<ul className="flex items-center justify-between">
-							<li className="duration-400 hover:text-gray-600">
+							<li className="duration-400 hover:text-gray-600 hidden lg:block">
 								<Link to="/deals">Deals</Link>
 							</li>
-							<li className="mx-6 duration-400 hover:text-gray-600">
+							<li className="mx-6 duration-400 hover:text-gray-600 hidden lg:block">
 								<Link to="/contact">Contact us</Link>
 							</li>
-							<li className="duration-400 hover:text-gray-600">
+							<li className="duration-400 hover:text-gray-600 hidden lg:block">
 								<Link to="/delivery">Delivery</Link>
 							</li>
 						</ul>

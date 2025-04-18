@@ -27,7 +27,7 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 				{data &&
 					data.map((order: any) => (
 						<>
-							<DialogContent className="w-[400px] h-[600px] rounded-lg shadow-light text-black  overflow-y-auto md:w-[500px]">
+							<DialogContent className="w-[400px] h-[530px] rounded-lg shadow-light text-black  overflow-y-auto custom-scrollbar md:w-[500px]">
 								<DialogHeader>
 									<DialogTitle className="mb-2 text-center font-bold">
 										<h4>Make Your Payment</h4>
@@ -55,7 +55,7 @@ const PaymentModal = ({ orderId, open, setOpen }: Props) => {
 												</p>
 												<p
 													id={`${order.status}`}
-													className="px-4 py-1 rounded-md font-semibold"
+													className="flex items-center justify-center px-4 py-1 rounded-md font-semibold"
 												>
 													{order.status}
 												</p>

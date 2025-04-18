@@ -7,7 +7,7 @@ const TopRated = () => {
 
 	return (
 		<>
-			<h1 className="font-poppins text-lg font-medium text-center my-8">
+			<h1 className="font-poppins text-lg font-medium text-center my-12">
 				Top Rated Products
 			</h1>
 			<div className="hidden lg:flex">
@@ -15,6 +15,7 @@ const TopRated = () => {
 					(product, index) =>
 						index <= 4 && (
 							<Link
+								key={index}
 								to={`/product/${product._id}`}
 								className="w-96 h-48 flex flex-col items-center justify-center"
 							>

@@ -41,12 +41,6 @@ const Navbar = () => {
 	const { userInfo } = useSelector((state: any) => state.auth);
 	const [searchValue, setSearchValue] = useState<string>("");
 
-	// useEffect(() => {
-	// 	if (!userInfo) {
-	// 		navigate("/");
-	// 	}
-	// }, [navigate, userInfo]);
-
 	const [logOutApiCall] = useLogUserOutMutation() as any;
 
 	// function to log a user out

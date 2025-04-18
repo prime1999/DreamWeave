@@ -20,7 +20,7 @@ const Hero = () => {
 		gsap.to("#phone", { y: 0, duration: 1, ease: "power2.inOut" });
 	}, []);
 	return (
-		<div className="w-full h-[600px] bg-black pt-4 overflow-hidden">
+		<div className="relative w-full h-[600px] bg-black pt-4 overflow-hidden">
 			<Navbar />
 			<div className="w-11/ px-8 pt-16 mx-auto flex flex-col items-center justify-between overflow-hidden md:flex-row md:h-[86%] md:pt-8">
 				<div className=" flex flex-col justify-center items-start overflow-hidden md:w-[400px]">
@@ -48,7 +48,7 @@ const Hero = () => {
 						Start Shopping
 					</button>
 				</div>
-				<div className="w-10/12 h-full flex items-center justify-center md:w-1/2">
+				<div className="absolute -bottom-[150px] right-0 w-10/12 h-full flex items-center justify-center md:w-1/2 md:-bottom-[100px] lg:-bottom-15">
 					<img id="phone" className="translate-y-[400px]" src={IPhone} alt="" />
 				</div>
 			</div>
